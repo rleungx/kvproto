@@ -1,7 +1,8 @@
-pub use crate::prost::*;
+include!(concat!(env!("OUT_DIR"), "/protos/mod.rs"));
 
-mod prost;
+use raft_proto::eraftpb;
 
+#[cfg(feature = "prost-codec")]
 pub mod prost_adapt {
     use crate::import_kvpb::{write_engine_request, WriteBatch, WriteEngineRequest, WriteHead};
     use crate::import_sstpb::{upload_request, SstMeta, UploadRequest};

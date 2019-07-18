@@ -12,22 +12,10 @@
 // limitations under the License.
 
 use protobuf_build::*;
-use std::fs::{read_dir, remove_file, File};
-use std::io::Write;
-use std::path::Path;
+use std::fs::read_dir;
 
 fn main() {
-    // This build script creates files in the `src` directory. Since that is
-    // outside Cargo's OUT_DIR it will cause an error when this crate is used
-    // as a dependency. Therefore, the user must opt-in to regenerating the
-    // Rust files.
-    if !cfg!(feature = "gen") {
-        println!("cargo:rerun-if-changed=build.rs");
-        return;
-    }
-
-    check_protoc_version();
-
+    let out_dir = format!("{}/protos", std::env::var("OUT_DIR").unwrap());
     let file_names: Vec<_> = read_dir("proto")
         .expect("Couldn't read proto directory")
         .map(|e| {
@@ -38,55 +26,5 @@ fn main() {
         })
         .collect();
 
-    for f in &file_names {
-        println!("cargo:rerun-if-changed={}", f);
-    }
-
-    // Generate Prost files.
-    generate_prost_files(&file_names, "src/prost");
-    remove_file("src/prost/gogoproto.rs").unwrap();
-    remove_file("src/prost/google.protobuf.rs").unwrap();
-    remove_file("src/prost/eraftpb.rs").unwrap();
-    let mod_names = module_names_for_dir("src/prost");
-    generate_wrappers(
-        &mod_names
-            .iter()
-            .map(|m| format!("src/prost/{}.rs", m))
-            .collect::<Vec<_>>(),
-        "src/prost",
-        GenOpt::MUT
-            | GenOpt::TRIVIAL_GET
-            | GenOpt::TRIVIAL_SET
-            | GenOpt::HAS
-            | GenOpt::TAKE
-            | GenOpt::CLEAR,
-    );
-    generate_prost_rs(&mod_names);
-
-    for m in &mod_names {
-        protobuf_build::rustfmt(Path::new(&format!("src/prost/{}.rs", m)));
-        protobuf_build::rustfmt(Path::new(&format!("src/prost/wrapper_{}.rs", m)));
-    }
-    protobuf_build::rustfmt(Path::new("src/prost.rs"));
-}
-
-fn generate_prost_rs(mod_names: &[String]) {
-    let mut text = "#![allow(dead_code)]\n\npub use raft_proto::eraftpb;\n\n".to_owned();
-
-    for mod_name in mod_names {
-        text.push_str("pub mod ");
-        text.push_str(mod_name);
-        text.push_str("{\n");
-        text.push_str("include!(\"prost/");
-        text.push_str(mod_name);
-        text.push_str(".rs\");");
-        text.push_str("include!(\"prost/wrapper_");
-        text.push_str(mod_name);
-        text.push_str(".rs\");");
-        text.push_str("}\n");
-    }
-
-    let mut lib = File::create("src/prost.rs").expect("Could not create prost.rs");
-    lib.write_all(text.as_bytes())
-        .expect("Could not write prost.rs");
+    generate_files(&["include".to_owned(), "proto".to_owned()], &file_names, &out_dir);
 }
