@@ -1,0 +1,97 @@
+syntax = "proto3";
+package configpb;
+
+import "gogoproto/gogo.proto";
+import "rustproto.proto";
+
+option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+option (rustproto.lite_runtime_all) = true;
+
+service Config {
+    rpc Create(CreateRequest) returns (CreateResponse) {}
+    rpc Get(GetRequest) returns (GetResponse) {}
+    rpc Update(UpdateRequest) returns (UpdateResponse) {}
+}
+
+message Error {
+    enum ErrorType {
+        UNKNOWN = 0;
+        FAILED = 1;
+        STALE_VERSION = 3;
+    }
+    ErrorType type = 1;
+    string message = 2;
+    Version version = 3;
+}
+
+message Version {
+    uint64 local = 1;
+    uint64 global = 2;
+}
+
+enum Component {
+    UNKNOWN = 0;
+    PD = 1;
+    TiKV = 2;
+    TiDB = 3;
+}
+
+message Local {
+    bytes component_id = 1;
+}
+
+message Global {
+    Component component = 1;
+}
+
+message ConfigEntry {
+    oneof type {
+        Local local = 1;
+        Global global = 2;
+    }
+
+    string name = 3;
+    string value = 4;
+}
+
+message CreateRequest {
+    uint64 cluster_id = 1;
+    Version version = 2;
+    bytes component_id = 3;
+    string config = 4;
+}
+
+message CreateResponse {
+    uint64 cluster_id = 1;
+    Error error = 2;
+    Version version = 3;
+    string config = 4;
+}
+
+message GetRequest {
+    uint64 cluster_id = 1;
+    Version version = 2;
+    bytes component_id = 4;
+}
+
+message GetResponse {
+    uint64 cluster_id = 1;
+    Error error = 2;
+    Version version = 3;
+    string config = 4;
+}
+
+message UpdateRequest {
+    uint64 cluster_id = 1;
+    Version version = 2;
+    repeated ConfigEntry entries = 3;
+}
+
+message UpdateResponse {
+    uint64 cluster_id = 1;
+    Error error = 2;
+    Version version = 3;
+    string config = 4;
+}
