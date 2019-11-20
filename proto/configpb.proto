@@ -15,13 +15,13 @@ service Config {
     rpc Update(UpdateRequest) returns (UpdateResponse) {}
 }
 
-message Error {
-    enum ErrorType {
+message Status {
+    enum StatusCode {
         UNKNOWN = 0;
         FAILED = 1;
         STALE_VERSION = 3;
     }
-    ErrorType type = 1;
+    StatusCode code = 1;
     string message = 2;
     Version version = 3;
 }
@@ -65,7 +65,7 @@ message CreateRequest {
 
 message CreateResponse {
     uint64 cluster_id = 1;
-    Error error = 2;
+    Status status = 2;
     Version version = 3;
     string config = 4;
 }
@@ -73,12 +73,13 @@ message CreateResponse {
 message GetRequest {
     uint64 cluster_id = 1;
     Version version = 2;
+    Component component = 3;
     bytes component_id = 4;
 }
 
 message GetResponse {
     uint64 cluster_id = 1;
-    Error error = 2;
+    Status status = 2;
     Version version = 3;
     string config = 4;
 }
@@ -91,7 +92,7 @@ message UpdateRequest {
 
 message UpdateResponse {
     uint64 cluster_id = 1;
-    Error error = 2;
+    Status status = 2;
     Version version = 3;
     string config = 4;
 }
