@@ -18,7 +18,8 @@ service Config {
 message Status {
     enum StatusCode {
         UNKNOWN = 0;
-        FAILED = 1;
+        OK = 1;
+        FAILED = 2;
         STALE_VERSION = 3;
     }
     StatusCode code = 1;
