@@ -61,7 +61,8 @@ message CreateRequest {
     uint64 cluster_id = 1;
     Version version = 2;
     bytes component_id = 3;
-    string config = 4;
+    Component component = 4;
+    string config = 5;
 }
 
 message CreateResponse {
