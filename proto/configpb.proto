@@ -32,19 +32,12 @@ message Version {
     uint64 global = 2;
 }
 
-enum Component {
-    UNKNOWN = 0;
-    PD = 1;
-    TiKV = 2;
-    TiDB = 3;
-}
-
 message Local {
-    bytes component_id = 1;
+    string component_id = 1;
 }
 
 message Global {
-    Component component = 1;
+    string component = 1;
 }
 
 message ConfigEntry {
@@ -60,8 +53,8 @@ message ConfigEntry {
 message CreateRequest {
     uint64 cluster_id = 1;
     Version version = 2;
-    bytes component_id = 3;
-    Component component = 4;
+    string component = 3;
+    string component_id = 4;
     string config = 5;
 }
 
@@ -75,8 +68,8 @@ message CreateResponse {
 message GetRequest {
     uint64 cluster_id = 1;
     Version version = 2;
-    Component component = 3;
-    bytes component_id = 4;
+    string component = 3;
+    string component_id = 4;
 }
 
 message GetResponse {
