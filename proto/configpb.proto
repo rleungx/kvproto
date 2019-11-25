@@ -22,6 +22,7 @@ message Status {
         OK = 1;
         FAILED = 2;
         STALE_VERSION = 3;
+        NOT_CHANGE = 4;
     }
     StatusCode code = 1;
     string message = 2;
