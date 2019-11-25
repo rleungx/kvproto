@@ -57,8 +57,12 @@ message ConfigEntry {
     string value = 4;
 }
 
-message CreateRequest {
+message Header {
     uint64 cluster_id = 1;
+}
+
+message CreateRequest {
+    Header header = 1;
     Version version = 2;
     string component = 3;
     string component_id = 4;
@@ -66,41 +70,41 @@ message CreateRequest {
 }
 
 message CreateResponse {
-    uint64 cluster_id = 1;
+    Header header = 1;
     Status status = 2;
     Version version = 3;
     string config = 4;
 }
 
 message GetRequest {
-    uint64 cluster_id = 1;
+    Header header = 1;
     Version version = 2;
     string component = 3;
     string component_id = 4;
 }
 
 message GetResponse {
-    uint64 cluster_id = 1;
+    Header header = 1;
     Status status = 2;
     Version version = 3;
     string config = 4;
 }
 
 message UpdateRequest {
-    uint64 cluster_id = 1;
+    Header header = 1;
     Version version = 2;
     repeated ConfigEntry entries = 3;
 }
 
 message UpdateResponse {
-    uint64 cluster_id = 1;
+    Header header = 1;
     Status status = 2;
     Version version = 3;
     string config = 4;
 }
 
 message DeleteRequest {
-    uint64 cluster_id = 1;
+    Header header = 1;
     Version version = 2;
 
     oneof kind {
@@ -110,6 +114,6 @@ message DeleteRequest {
 }
 
 message DeleteResponse {
-    uint64 cluster_id = 1;
+    Header header = 1;
     Status status = 2;
 }

@@ -54,7 +54,7 @@ func (x Status_StatusCode) String() string {
 	return proto.EnumName(Status_StatusCode_name, int32(x))
 }
 func (Status_StatusCode) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_5915284339c320c5, []int{0, 0}
+	return fileDescriptor_configpb_7208f9f717d34356, []int{0, 0}
 }
 
 type Status struct {
@@ -70,7 +70,7 @@ func (m *Status) Reset()         { *m = Status{} }
 func (m *Status) String() string { return proto.CompactTextString(m) }
 func (*Status) ProtoMessage()    {}
 func (*Status) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_5915284339c320c5, []int{0}
+	return fileDescriptor_configpb_7208f9f717d34356, []int{0}
 }
 func (m *Status) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -138,7 +138,7 @@ func (m *Version) Reset()         { *m = Version{} }
 func (m *Version) String() string { return proto.CompactTextString(m) }
 func (*Version) ProtoMessage()    {}
 func (*Version) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_5915284339c320c5, []int{1}
+	return fileDescriptor_configpb_7208f9f717d34356, []int{1}
 }
 func (m *Version) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -192,7 +192,7 @@ func (m *Local) Reset()         { *m = Local{} }
 func (m *Local) String() string { return proto.CompactTextString(m) }
 func (*Local) ProtoMessage()    {}
 func (*Local) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_5915284339c320c5, []int{2}
+	return fileDescriptor_configpb_7208f9f717d34356, []int{2}
 }
 func (m *Local) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -239,7 +239,7 @@ func (m *Global) Reset()         { *m = Global{} }
 func (m *Global) String() string { return proto.CompactTextString(m) }
 func (*Global) ProtoMessage()    {}
 func (*Global) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_5915284339c320c5, []int{3}
+	return fileDescriptor_configpb_7208f9f717d34356, []int{3}
 }
 func (m *Global) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -291,7 +291,7 @@ func (m *ConfigEntry) Reset()         { *m = ConfigEntry{} }
 func (m *ConfigEntry) String() string { return proto.CompactTextString(m) }
 func (*ConfigEntry) ProtoMessage()    {}
 func (*ConfigEntry) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_5915284339c320c5, []int{4}
+	return fileDescriptor_configpb_7208f9f717d34356, []int{4}
 }
 func (m *ConfigEntry) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -445,8 +445,55 @@ func _ConfigEntry_OneofSizer(msg proto.Message) (n int) {
 	return n
 }
 
-type CreateRequest struct {
+type Header struct {
 	ClusterId            uint64   `protobuf:"varint,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Header) Reset()         { *m = Header{} }
+func (m *Header) String() string { return proto.CompactTextString(m) }
+func (*Header) ProtoMessage()    {}
+func (*Header) Descriptor() ([]byte, []int) {
+	return fileDescriptor_configpb_7208f9f717d34356, []int{5}
+}
+func (m *Header) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Header) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Header.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *Header) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Header.Merge(dst, src)
+}
+func (m *Header) XXX_Size() int {
+	return m.Size()
+}
+func (m *Header) XXX_DiscardUnknown() {
+	xxx_messageInfo_Header.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Header proto.InternalMessageInfo
+
+func (m *Header) GetClusterId() uint64 {
+	if m != nil {
+		return m.ClusterId
+	}
+	return 0
+}
+
+type CreateRequest struct {
+	Header               *Header  `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	Version              *Version `protobuf:"bytes,2,opt,name=version" json:"version,omitempty"`
 	Component            string   `protobuf:"bytes,3,opt,name=component,proto3" json:"component,omitempty"`
 	ComponentId          string   `protobuf:"bytes,4,opt,name=component_id,json=componentId,proto3" json:"component_id,omitempty"`
@@ -460,7 +507,7 @@ func (m *CreateRequest) Reset()         { *m = CreateRequest{} }
 func (m *CreateRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateRequest) ProtoMessage()    {}
 func (*CreateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_5915284339c320c5, []int{5}
+	return fileDescriptor_configpb_7208f9f717d34356, []int{6}
 }
 func (m *CreateRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -489,11 +536,11 @@ func (m *CreateRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_CreateRequest proto.InternalMessageInfo
 
-func (m *CreateRequest) GetClusterId() uint64 {
+func (m *CreateRequest) GetHeader() *Header {
 	if m != nil {
-		return m.ClusterId
+		return m.Header
 	}
-	return 0
+	return nil
 }
 
 func (m *CreateRequest) GetVersion() *Version {
@@ -525,7 +572,7 @@ func (m *CreateRequest) GetConfig() string {
 }
 
 type CreateResponse struct {
-	ClusterId            uint64   `protobuf:"varint,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
+	Header               *Header  `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	Status               *Status  `protobuf:"bytes,2,opt,name=status" json:"status,omitempty"`
 	Version              *Version `protobuf:"bytes,3,opt,name=version" json:"version,omitempty"`
 	Config               string   `protobuf:"bytes,4,opt,name=config,proto3" json:"config,omitempty"`
@@ -538,7 +585,7 @@ func (m *CreateResponse) Reset()         { *m = CreateResponse{} }
 func (m *CreateResponse) String() string { return proto.CompactTextString(m) }
 func (*CreateResponse) ProtoMessage()    {}
 func (*CreateResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_5915284339c320c5, []int{6}
+	return fileDescriptor_configpb_7208f9f717d34356, []int{7}
 }
 func (m *CreateResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -567,11 +614,11 @@ func (m *CreateResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_CreateResponse proto.InternalMessageInfo
 
-func (m *CreateResponse) GetClusterId() uint64 {
+func (m *CreateResponse) GetHeader() *Header {
 	if m != nil {
-		return m.ClusterId
+		return m.Header
 	}
-	return 0
+	return nil
 }
 
 func (m *CreateResponse) GetStatus() *Status {
@@ -596,7 +643,7 @@ func (m *CreateResponse) GetConfig() string {
 }
 
 type GetRequest struct {
-	ClusterId            uint64   `protobuf:"varint,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
+	Header               *Header  `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	Version              *Version `protobuf:"bytes,2,opt,name=version" json:"version,omitempty"`
 	Component            string   `protobuf:"bytes,3,opt,name=component,proto3" json:"component,omitempty"`
 	ComponentId          string   `protobuf:"bytes,4,opt,name=component_id,json=componentId,proto3" json:"component_id,omitempty"`
@@ -609,7 +656,7 @@ func (m *GetRequest) Reset()         { *m = GetRequest{} }
 func (m *GetRequest) String() string { return proto.CompactTextString(m) }
 func (*GetRequest) ProtoMessage()    {}
 func (*GetRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_5915284339c320c5, []int{7}
+	return fileDescriptor_configpb_7208f9f717d34356, []int{8}
 }
 func (m *GetRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -638,11 +685,11 @@ func (m *GetRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_GetRequest proto.InternalMessageInfo
 
-func (m *GetRequest) GetClusterId() uint64 {
+func (m *GetRequest) GetHeader() *Header {
 	if m != nil {
-		return m.ClusterId
+		return m.Header
 	}
-	return 0
+	return nil
 }
 
 func (m *GetRequest) GetVersion() *Version {
@@ -667,7 +714,7 @@ func (m *GetRequest) GetComponentId() string {
 }
 
 type GetResponse struct {
-	ClusterId            uint64   `protobuf:"varint,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
+	Header               *Header  `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	Status               *Status  `protobuf:"bytes,2,opt,name=status" json:"status,omitempty"`
 	Version              *Version `protobuf:"bytes,3,opt,name=version" json:"version,omitempty"`
 	Config               string   `protobuf:"bytes,4,opt,name=config,proto3" json:"config,omitempty"`
@@ -680,7 +727,7 @@ func (m *GetResponse) Reset()         { *m = GetResponse{} }
 func (m *GetResponse) String() string { return proto.CompactTextString(m) }
 func (*GetResponse) ProtoMessage()    {}
 func (*GetResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_5915284339c320c5, []int{8}
+	return fileDescriptor_configpb_7208f9f717d34356, []int{9}
 }
 func (m *GetResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -709,11 +756,11 @@ func (m *GetResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_GetResponse proto.InternalMessageInfo
 
-func (m *GetResponse) GetClusterId() uint64 {
+func (m *GetResponse) GetHeader() *Header {
 	if m != nil {
-		return m.ClusterId
+		return m.Header
 	}
-	return 0
+	return nil
 }
 
 func (m *GetResponse) GetStatus() *Status {
@@ -738,7 +785,7 @@ func (m *GetResponse) GetConfig() string {
 }
 
 type UpdateRequest struct {
-	ClusterId            uint64         `protobuf:"varint,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
+	Header               *Header        `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	Version              *Version       `protobuf:"bytes,2,opt,name=version" json:"version,omitempty"`
 	Entries              []*ConfigEntry `protobuf:"bytes,3,rep,name=entries" json:"entries,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
@@ -750,7 +797,7 @@ func (m *UpdateRequest) Reset()         { *m = UpdateRequest{} }
 func (m *UpdateRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateRequest) ProtoMessage()    {}
 func (*UpdateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_5915284339c320c5, []int{9}
+	return fileDescriptor_configpb_7208f9f717d34356, []int{10}
 }
 func (m *UpdateRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -779,11 +826,11 @@ func (m *UpdateRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_UpdateRequest proto.InternalMessageInfo
 
-func (m *UpdateRequest) GetClusterId() uint64 {
+func (m *UpdateRequest) GetHeader() *Header {
 	if m != nil {
-		return m.ClusterId
+		return m.Header
 	}
-	return 0
+	return nil
 }
 
 func (m *UpdateRequest) GetVersion() *Version {
@@ -801,7 +848,7 @@ func (m *UpdateRequest) GetEntries() []*ConfigEntry {
 }
 
 type UpdateResponse struct {
-	ClusterId            uint64   `protobuf:"varint,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
+	Header               *Header  `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	Status               *Status  `protobuf:"bytes,2,opt,name=status" json:"status,omitempty"`
 	Version              *Version `protobuf:"bytes,3,opt,name=version" json:"version,omitempty"`
 	Config               string   `protobuf:"bytes,4,opt,name=config,proto3" json:"config,omitempty"`
@@ -814,7 +861,7 @@ func (m *UpdateResponse) Reset()         { *m = UpdateResponse{} }
 func (m *UpdateResponse) String() string { return proto.CompactTextString(m) }
 func (*UpdateResponse) ProtoMessage()    {}
 func (*UpdateResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_5915284339c320c5, []int{10}
+	return fileDescriptor_configpb_7208f9f717d34356, []int{11}
 }
 func (m *UpdateResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -843,11 +890,11 @@ func (m *UpdateResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_UpdateResponse proto.InternalMessageInfo
 
-func (m *UpdateResponse) GetClusterId() uint64 {
+func (m *UpdateResponse) GetHeader() *Header {
 	if m != nil {
-		return m.ClusterId
+		return m.Header
 	}
-	return 0
+	return nil
 }
 
 func (m *UpdateResponse) GetStatus() *Status {
@@ -872,8 +919,8 @@ func (m *UpdateResponse) GetConfig() string {
 }
 
 type DeleteRequest struct {
-	ClusterId uint64   `protobuf:"varint,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
-	Version   *Version `protobuf:"bytes,2,opt,name=version" json:"version,omitempty"`
+	Header  *Header  `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Version *Version `protobuf:"bytes,2,opt,name=version" json:"version,omitempty"`
 	// Types that are valid to be assigned to Kind:
 	//	*DeleteRequest_Local
 	//	*DeleteRequest_Global
@@ -887,7 +934,7 @@ func (m *DeleteRequest) Reset()         { *m = DeleteRequest{} }
 func (m *DeleteRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteRequest) ProtoMessage()    {}
 func (*DeleteRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_5915284339c320c5, []int{11}
+	return fileDescriptor_configpb_7208f9f717d34356, []int{12}
 }
 func (m *DeleteRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -939,11 +986,11 @@ func (m *DeleteRequest) GetKind() isDeleteRequest_Kind {
 	return nil
 }
 
-func (m *DeleteRequest) GetClusterId() uint64 {
+func (m *DeleteRequest) GetHeader() *Header {
 	if m != nil {
-		return m.ClusterId
+		return m.Header
 	}
-	return 0
+	return nil
 }
 
 func (m *DeleteRequest) GetVersion() *Version {
@@ -1042,7 +1089,7 @@ func _DeleteRequest_OneofSizer(msg proto.Message) (n int) {
 }
 
 type DeleteResponse struct {
-	ClusterId            uint64   `protobuf:"varint,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
+	Header               *Header  `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	Status               *Status  `protobuf:"bytes,2,opt,name=status" json:"status,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -1053,7 +1100,7 @@ func (m *DeleteResponse) Reset()         { *m = DeleteResponse{} }
 func (m *DeleteResponse) String() string { return proto.CompactTextString(m) }
 func (*DeleteResponse) ProtoMessage()    {}
 func (*DeleteResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_5915284339c320c5, []int{12}
+	return fileDescriptor_configpb_7208f9f717d34356, []int{13}
 }
 func (m *DeleteResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1082,11 +1129,11 @@ func (m *DeleteResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_DeleteResponse proto.InternalMessageInfo
 
-func (m *DeleteResponse) GetClusterId() uint64 {
+func (m *DeleteResponse) GetHeader() *Header {
 	if m != nil {
-		return m.ClusterId
+		return m.Header
 	}
-	return 0
+	return nil
 }
 
 func (m *DeleteResponse) GetStatus() *Status {
@@ -1102,6 +1149,7 @@ func init() {
 	proto.RegisterType((*Local)(nil), "configpb.Local")
 	proto.RegisterType((*Global)(nil), "configpb.Global")
 	proto.RegisterType((*ConfigEntry)(nil), "configpb.ConfigEntry")
+	proto.RegisterType((*Header)(nil), "configpb.Header")
 	proto.RegisterType((*CreateRequest)(nil), "configpb.CreateRequest")
 	proto.RegisterType((*CreateResponse)(nil), "configpb.CreateResponse")
 	proto.RegisterType((*GetRequest)(nil), "configpb.GetRequest")
@@ -1479,6 +1527,32 @@ func (m *ConfigEntry_Global) MarshalTo(dAtA []byte) (int, error) {
 	}
 	return i, nil
 }
+func (m *Header) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Header) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.ClusterId != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintConfigpb(dAtA, i, uint64(m.ClusterId))
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
 func (m *CreateRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1494,20 +1568,25 @@ func (m *CreateRequest) MarshalTo(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.ClusterId != 0 {
-		dAtA[i] = 0x8
+	if m.Header != nil {
+		dAtA[i] = 0xa
 		i++
-		i = encodeVarintConfigpb(dAtA, i, uint64(m.ClusterId))
+		i = encodeVarintConfigpb(dAtA, i, uint64(m.Header.Size()))
+		n5, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n5
 	}
 	if m.Version != nil {
 		dAtA[i] = 0x12
 		i++
 		i = encodeVarintConfigpb(dAtA, i, uint64(m.Version.Size()))
-		n5, err := m.Version.MarshalTo(dAtA[i:])
+		n6, err := m.Version.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n5
+		i += n6
 	}
 	if len(m.Component) > 0 {
 		dAtA[i] = 0x1a
@@ -1548,30 +1627,35 @@ func (m *CreateResponse) MarshalTo(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.ClusterId != 0 {
-		dAtA[i] = 0x8
+	if m.Header != nil {
+		dAtA[i] = 0xa
 		i++
-		i = encodeVarintConfigpb(dAtA, i, uint64(m.ClusterId))
+		i = encodeVarintConfigpb(dAtA, i, uint64(m.Header.Size()))
+		n7, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n7
 	}
 	if m.Status != nil {
 		dAtA[i] = 0x12
 		i++
 		i = encodeVarintConfigpb(dAtA, i, uint64(m.Status.Size()))
-		n6, err := m.Status.MarshalTo(dAtA[i:])
+		n8, err := m.Status.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n6
+		i += n8
 	}
 	if m.Version != nil {
 		dAtA[i] = 0x1a
 		i++
 		i = encodeVarintConfigpb(dAtA, i, uint64(m.Version.Size()))
-		n7, err := m.Version.MarshalTo(dAtA[i:])
+		n9, err := m.Version.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n7
+		i += n9
 	}
 	if len(m.Config) > 0 {
 		dAtA[i] = 0x22
@@ -1600,20 +1684,25 @@ func (m *GetRequest) MarshalTo(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.ClusterId != 0 {
-		dAtA[i] = 0x8
+	if m.Header != nil {
+		dAtA[i] = 0xa
 		i++
-		i = encodeVarintConfigpb(dAtA, i, uint64(m.ClusterId))
+		i = encodeVarintConfigpb(dAtA, i, uint64(m.Header.Size()))
+		n10, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n10
 	}
 	if m.Version != nil {
 		dAtA[i] = 0x12
 		i++
 		i = encodeVarintConfigpb(dAtA, i, uint64(m.Version.Size()))
-		n8, err := m.Version.MarshalTo(dAtA[i:])
+		n11, err := m.Version.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n8
+		i += n11
 	}
 	if len(m.Component) > 0 {
 		dAtA[i] = 0x1a
@@ -1648,30 +1737,35 @@ func (m *GetResponse) MarshalTo(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.ClusterId != 0 {
-		dAtA[i] = 0x8
+	if m.Header != nil {
+		dAtA[i] = 0xa
 		i++
-		i = encodeVarintConfigpb(dAtA, i, uint64(m.ClusterId))
+		i = encodeVarintConfigpb(dAtA, i, uint64(m.Header.Size()))
+		n12, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n12
 	}
 	if m.Status != nil {
 		dAtA[i] = 0x12
 		i++
 		i = encodeVarintConfigpb(dAtA, i, uint64(m.Status.Size()))
-		n9, err := m.Status.MarshalTo(dAtA[i:])
+		n13, err := m.Status.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n9
+		i += n13
 	}
 	if m.Version != nil {
 		dAtA[i] = 0x1a
 		i++
 		i = encodeVarintConfigpb(dAtA, i, uint64(m.Version.Size()))
-		n10, err := m.Version.MarshalTo(dAtA[i:])
+		n14, err := m.Version.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n10
+		i += n14
 	}
 	if len(m.Config) > 0 {
 		dAtA[i] = 0x22
@@ -1700,20 +1794,25 @@ func (m *UpdateRequest) MarshalTo(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.ClusterId != 0 {
-		dAtA[i] = 0x8
+	if m.Header != nil {
+		dAtA[i] = 0xa
 		i++
-		i = encodeVarintConfigpb(dAtA, i, uint64(m.ClusterId))
+		i = encodeVarintConfigpb(dAtA, i, uint64(m.Header.Size()))
+		n15, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n15
 	}
 	if m.Version != nil {
 		dAtA[i] = 0x12
 		i++
 		i = encodeVarintConfigpb(dAtA, i, uint64(m.Version.Size()))
-		n11, err := m.Version.MarshalTo(dAtA[i:])
+		n16, err := m.Version.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n11
+		i += n16
 	}
 	if len(m.Entries) > 0 {
 		for _, msg := range m.Entries {
@@ -1748,30 +1847,35 @@ func (m *UpdateResponse) MarshalTo(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.ClusterId != 0 {
-		dAtA[i] = 0x8
+	if m.Header != nil {
+		dAtA[i] = 0xa
 		i++
-		i = encodeVarintConfigpb(dAtA, i, uint64(m.ClusterId))
+		i = encodeVarintConfigpb(dAtA, i, uint64(m.Header.Size()))
+		n17, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n17
 	}
 	if m.Status != nil {
 		dAtA[i] = 0x12
 		i++
 		i = encodeVarintConfigpb(dAtA, i, uint64(m.Status.Size()))
-		n12, err := m.Status.MarshalTo(dAtA[i:])
+		n18, err := m.Status.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n12
+		i += n18
 	}
 	if m.Version != nil {
 		dAtA[i] = 0x1a
 		i++
 		i = encodeVarintConfigpb(dAtA, i, uint64(m.Version.Size()))
-		n13, err := m.Version.MarshalTo(dAtA[i:])
+		n19, err := m.Version.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n13
+		i += n19
 	}
 	if len(m.Config) > 0 {
 		dAtA[i] = 0x22
@@ -1800,27 +1904,32 @@ func (m *DeleteRequest) MarshalTo(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.ClusterId != 0 {
-		dAtA[i] = 0x8
+	if m.Header != nil {
+		dAtA[i] = 0xa
 		i++
-		i = encodeVarintConfigpb(dAtA, i, uint64(m.ClusterId))
+		i = encodeVarintConfigpb(dAtA, i, uint64(m.Header.Size()))
+		n20, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n20
 	}
 	if m.Version != nil {
 		dAtA[i] = 0x12
 		i++
 		i = encodeVarintConfigpb(dAtA, i, uint64(m.Version.Size()))
-		n14, err := m.Version.MarshalTo(dAtA[i:])
+		n21, err := m.Version.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n14
+		i += n21
 	}
 	if m.Kind != nil {
-		nn15, err := m.Kind.MarshalTo(dAtA[i:])
+		nn22, err := m.Kind.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += nn15
+		i += nn22
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -1834,11 +1943,11 @@ func (m *DeleteRequest_Local) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0x1a
 		i++
 		i = encodeVarintConfigpb(dAtA, i, uint64(m.Local.Size()))
-		n16, err := m.Local.MarshalTo(dAtA[i:])
+		n23, err := m.Local.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n16
+		i += n23
 	}
 	return i, nil
 }
@@ -1848,11 +1957,11 @@ func (m *DeleteRequest_Global) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0x22
 		i++
 		i = encodeVarintConfigpb(dAtA, i, uint64(m.Global.Size()))
-		n17, err := m.Global.MarshalTo(dAtA[i:])
+		n24, err := m.Global.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n17
+		i += n24
 	}
 	return i, nil
 }
@@ -1871,20 +1980,25 @@ func (m *DeleteResponse) MarshalTo(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.ClusterId != 0 {
-		dAtA[i] = 0x8
+	if m.Header != nil {
+		dAtA[i] = 0xa
 		i++
-		i = encodeVarintConfigpb(dAtA, i, uint64(m.ClusterId))
+		i = encodeVarintConfigpb(dAtA, i, uint64(m.Header.Size()))
+		n25, err := m.Header.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n25
 	}
 	if m.Status != nil {
 		dAtA[i] = 0x12
 		i++
 		i = encodeVarintConfigpb(dAtA, i, uint64(m.Status.Size()))
-		n18, err := m.Status.MarshalTo(dAtA[i:])
+		n26, err := m.Status.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n18
+		i += n26
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -2000,11 +2114,24 @@ func (m *ConfigEntry_Global) Size() (n int) {
 	}
 	return n
 }
-func (m *CreateRequest) Size() (n int) {
+func (m *Header) Size() (n int) {
 	var l int
 	_ = l
 	if m.ClusterId != 0 {
 		n += 1 + sovConfigpb(uint64(m.ClusterId))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *CreateRequest) Size() (n int) {
+	var l int
+	_ = l
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovConfigpb(uint64(l))
 	}
 	if m.Version != nil {
 		l = m.Version.Size()
@@ -2031,8 +2158,9 @@ func (m *CreateRequest) Size() (n int) {
 func (m *CreateResponse) Size() (n int) {
 	var l int
 	_ = l
-	if m.ClusterId != 0 {
-		n += 1 + sovConfigpb(uint64(m.ClusterId))
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovConfigpb(uint64(l))
 	}
 	if m.Status != nil {
 		l = m.Status.Size()
@@ -2055,8 +2183,9 @@ func (m *CreateResponse) Size() (n int) {
 func (m *GetRequest) Size() (n int) {
 	var l int
 	_ = l
-	if m.ClusterId != 0 {
-		n += 1 + sovConfigpb(uint64(m.ClusterId))
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovConfigpb(uint64(l))
 	}
 	if m.Version != nil {
 		l = m.Version.Size()
@@ -2079,8 +2208,9 @@ func (m *GetRequest) Size() (n int) {
 func (m *GetResponse) Size() (n int) {
 	var l int
 	_ = l
-	if m.ClusterId != 0 {
-		n += 1 + sovConfigpb(uint64(m.ClusterId))
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovConfigpb(uint64(l))
 	}
 	if m.Status != nil {
 		l = m.Status.Size()
@@ -2103,8 +2233,9 @@ func (m *GetResponse) Size() (n int) {
 func (m *UpdateRequest) Size() (n int) {
 	var l int
 	_ = l
-	if m.ClusterId != 0 {
-		n += 1 + sovConfigpb(uint64(m.ClusterId))
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovConfigpb(uint64(l))
 	}
 	if m.Version != nil {
 		l = m.Version.Size()
@@ -2125,8 +2256,9 @@ func (m *UpdateRequest) Size() (n int) {
 func (m *UpdateResponse) Size() (n int) {
 	var l int
 	_ = l
-	if m.ClusterId != 0 {
-		n += 1 + sovConfigpb(uint64(m.ClusterId))
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovConfigpb(uint64(l))
 	}
 	if m.Status != nil {
 		l = m.Status.Size()
@@ -2149,8 +2281,9 @@ func (m *UpdateResponse) Size() (n int) {
 func (m *DeleteRequest) Size() (n int) {
 	var l int
 	_ = l
-	if m.ClusterId != 0 {
-		n += 1 + sovConfigpb(uint64(m.ClusterId))
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovConfigpb(uint64(l))
 	}
 	if m.Version != nil {
 		l = m.Version.Size()
@@ -2186,8 +2319,9 @@ func (m *DeleteRequest_Global) Size() (n int) {
 func (m *DeleteResponse) Size() (n int) {
 	var l int
 	_ = l
-	if m.ClusterId != 0 {
-		n += 1 + sovConfigpb(uint64(m.ClusterId))
+	if m.Header != nil {
+		l = m.Header.Size()
+		n += 1 + l + sovConfigpb(uint64(l))
 	}
 	if m.Status != nil {
 		l = m.Status.Size()
@@ -2766,6 +2900,76 @@ func (m *ConfigEntry) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *Header) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowConfigpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Header: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Header: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ClusterId", wireType)
+			}
+			m.ClusterId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowConfigpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ClusterId |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipConfigpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthConfigpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *CreateRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -2796,10 +3000,10 @@ func (m *CreateRequest) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ClusterId", wireType)
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
 			}
-			m.ClusterId = 0
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowConfigpb
@@ -2809,11 +3013,25 @@ func (m *CreateRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ClusterId |= (uint64(b) & 0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			if msglen < 0 {
+				return ErrInvalidLengthConfigpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &Header{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Version", wireType)
@@ -2986,10 +3204,10 @@ func (m *CreateResponse) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ClusterId", wireType)
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
 			}
-			m.ClusterId = 0
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowConfigpb
@@ -2999,11 +3217,25 @@ func (m *CreateResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ClusterId |= (uint64(b) & 0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			if msglen < 0 {
+				return ErrInvalidLengthConfigpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &Header{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
@@ -3151,10 +3383,10 @@ func (m *GetRequest) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ClusterId", wireType)
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
 			}
-			m.ClusterId = 0
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowConfigpb
@@ -3164,11 +3396,25 @@ func (m *GetRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ClusterId |= (uint64(b) & 0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			if msglen < 0 {
+				return ErrInvalidLengthConfigpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &Header{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Version", wireType)
@@ -3312,10 +3558,10 @@ func (m *GetResponse) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ClusterId", wireType)
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
 			}
-			m.ClusterId = 0
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowConfigpb
@@ -3325,11 +3571,25 @@ func (m *GetResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ClusterId |= (uint64(b) & 0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			if msglen < 0 {
+				return ErrInvalidLengthConfigpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &Header{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
@@ -3477,10 +3737,10 @@ func (m *UpdateRequest) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ClusterId", wireType)
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
 			}
-			m.ClusterId = 0
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowConfigpb
@@ -3490,11 +3750,25 @@ func (m *UpdateRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ClusterId |= (uint64(b) & 0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			if msglen < 0 {
+				return ErrInvalidLengthConfigpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &Header{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Version", wireType)
@@ -3611,10 +3885,10 @@ func (m *UpdateResponse) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ClusterId", wireType)
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
 			}
-			m.ClusterId = 0
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowConfigpb
@@ -3624,11 +3898,25 @@ func (m *UpdateResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ClusterId |= (uint64(b) & 0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			if msglen < 0 {
+				return ErrInvalidLengthConfigpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &Header{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
@@ -3776,10 +4064,10 @@ func (m *DeleteRequest) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ClusterId", wireType)
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
 			}
-			m.ClusterId = 0
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowConfigpb
@@ -3789,11 +4077,25 @@ func (m *DeleteRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ClusterId |= (uint64(b) & 0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			if msglen < 0 {
+				return ErrInvalidLengthConfigpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &Header{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Version", wireType)
@@ -3943,10 +4245,10 @@ func (m *DeleteResponse) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ClusterId", wireType)
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Header", wireType)
 			}
-			m.ClusterId = 0
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowConfigpb
@@ -3956,11 +4258,25 @@ func (m *DeleteResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ClusterId |= (uint64(b) & 0x7F) << shift
+				msglen |= (int(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			if msglen < 0 {
+				return ErrInvalidLengthConfigpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Header == nil {
+				m.Header = &Header{}
+			}
+			if err := m.Header.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
@@ -4121,49 +4437,51 @@ var (
 	ErrIntOverflowConfigpb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("configpb.proto", fileDescriptor_configpb_5915284339c320c5) }
+func init() { proto.RegisterFile("configpb.proto", fileDescriptor_configpb_7208f9f717d34356) }
 
-var fileDescriptor_configpb_5915284339c320c5 = []byte{
-	// 651 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x55, 0x4f, 0x6b, 0x13, 0x41,
-	0x14, 0xdf, 0xc9, 0x6e, 0x37, 0xcd, 0x5b, 0x93, 0xa6, 0x43, 0xaa, 0x4b, 0xd4, 0x10, 0xf7, 0xa0,
-	0xa1, 0x42, 0x0b, 0xab, 0xe0, 0xa9, 0x60, 0xff, 0xc4, 0x36, 0xb4, 0xa4, 0x30, 0xb5, 0x15, 0x4f,
-	0x65, 0x9b, 0x1d, 0x43, 0x70, 0xbb, 0x13, 0x77, 0x27, 0x05, 0xbf, 0x83, 0x47, 0x0f, 0x8a, 0xe0,
-	0xd9, 0x0f, 0xe0, 0xc1, 0xb3, 0x27, 0x8f, 0x1e, 0x3d, 0x4a, 0xfc, 0x18, 0x5e, 0x24, 0x33, 0xfb,
-	0xb7, 0x39, 0x44, 0xc1, 0x42, 0x4e, 0x99, 0xf7, 0xff, 0xf7, 0x7e, 0xef, 0xed, 0x0b, 0x54, 0x7a,
-	0xcc, 0x7f, 0x31, 0xe8, 0x0f, 0xcf, 0xd6, 0x86, 0x01, 0xe3, 0x0c, 0x2f, 0xc6, 0x72, 0xbd, 0xd6,
-	0x67, 0x7d, 0x26, 0x94, 0xeb, 0x93, 0x97, 0xb4, 0xd7, 0x97, 0x82, 0x51, 0xc8, 0xc5, 0x53, 0x2a,
-	0xac, 0xaf, 0x08, 0xf4, 0x23, 0xee, 0xf0, 0x51, 0x88, 0xd7, 0x41, 0xeb, 0x31, 0x97, 0x9a, 0xa8,
-	0x89, 0x5a, 0x15, 0xfb, 0xe6, 0x5a, 0x92, 0x5a, 0xda, 0xa3, 0x9f, 0x6d, 0xe6, 0x52, 0x22, 0x1c,
-	0xb1, 0x09, 0xc5, 0x73, 0x1a, 0x86, 0x4e, 0x9f, 0x9a, 0x85, 0x26, 0x6a, 0x95, 0x48, 0x2c, 0xe2,
-	0xfb, 0x50, 0xbc, 0xa0, 0x41, 0x38, 0x60, 0xbe, 0xa9, 0x36, 0x51, 0xcb, 0xb0, 0x97, 0xd3, 0x6c,
-	0x27, 0xd2, 0x40, 0x62, 0x0f, 0xeb, 0x31, 0x40, 0x9a, 0x1a, 0x1b, 0x50, 0x3c, 0xee, 0xee, 0x77,
-	0x0f, 0x9f, 0x75, 0xab, 0x0a, 0xd6, 0xa1, 0x70, 0xb8, 0x5f, 0x45, 0x18, 0x40, 0x7f, 0xb2, 0xd9,
-	0x39, 0x68, 0xef, 0x54, 0x0b, 0x78, 0x19, 0xca, 0x47, 0x4f, 0x37, 0x0f, 0xda, 0xa7, 0x27, 0x6d,
-	0x72, 0xd4, 0x39, 0xec, 0x56, 0x55, 0xeb, 0x11, 0x14, 0xa3, 0xac, 0xb8, 0x06, 0x0b, 0x1e, 0xeb,
-	0x39, 0x9e, 0xe8, 0x42, 0x23, 0x52, 0xc0, 0xd7, 0x41, 0xef, 0x7b, 0xec, 0xcc, 0xf1, 0x04, 0x50,
-	0x8d, 0x44, 0x92, 0xb5, 0x0a, 0x0b, 0x07, 0xc2, 0xe1, 0x0e, 0x5c, 0xeb, 0xb1, 0xf3, 0x21, 0xf3,
-	0xa9, 0xcf, 0x4f, 0x07, 0xae, 0x88, 0x2e, 0x11, 0x23, 0xd1, 0x75, 0x5c, 0xeb, 0x2e, 0xe8, 0xbb,
-	0x22, 0x0a, 0xdf, 0x82, 0x52, 0x62, 0x88, 0x3c, 0x53, 0x85, 0xf5, 0x16, 0x81, 0xb1, 0x2d, 0x9a,
-	0x6d, 0xfb, 0x3c, 0x78, 0x8d, 0xef, 0x65, 0x11, 0x19, 0xf6, 0x52, 0xca, 0x84, 0x28, 0xbd, 0xa7,
-	0xc4, 0x20, 0x57, 0x73, 0x20, 0x0d, 0xbb, 0x9a, 0x7a, 0xca, 0xc2, 0x7b, 0x4a, 0x0c, 0x1c, 0x63,
-	0xd0, 0x7c, 0xe7, 0x9c, 0x0a, 0x76, 0x4b, 0x44, 0xbc, 0x27, 0xad, 0x5f, 0x38, 0xde, 0x88, 0x9a,
-	0x9a, 0x50, 0x4a, 0x61, 0x4b, 0x07, 0xed, 0xe5, 0xc0, 0x77, 0xad, 0xcf, 0x08, 0xca, 0xdb, 0x01,
-	0x75, 0x38, 0x25, 0xf4, 0xd5, 0x88, 0x86, 0x1c, 0xdf, 0x06, 0xe8, 0x79, 0xa3, 0x90, 0xd3, 0x20,
-	0xee, 0x58, 0x23, 0xa5, 0x48, 0xd3, 0x71, 0xb3, 0x33, 0x2c, 0xcc, 0x9a, 0x61, 0x9e, 0x12, 0xf5,
-	0x12, 0x25, 0x53, 0xec, 0x6a, 0x53, 0xec, 0x4e, 0x26, 0x24, 0xb3, 0x9b, 0x0b, 0xc2, 0x18, 0x49,
-	0xd6, 0x47, 0x04, 0x95, 0x18, 0x76, 0x38, 0x64, 0x7e, 0x48, 0x67, 0xe1, 0x6e, 0x81, 0x1e, 0x8a,
-	0x75, 0x9a, 0xa6, 0x51, 0xae, 0x19, 0x89, 0xec, 0xff, 0xb4, 0xa5, 0x19, 0x80, 0x5a, 0x0e, 0xe0,
-	0x7b, 0x04, 0xb0, 0x4b, 0xf9, 0x3c, 0x92, 0x6a, 0x7d, 0x40, 0x60, 0x08, 0x6c, 0x73, 0xc9, 0xdc,
-	0x1b, 0x04, 0xe5, 0xe3, 0xa1, 0x7b, 0x45, 0x1b, 0xb9, 0x0e, 0x45, 0xea, 0xf3, 0x60, 0x40, 0x43,
-	0x53, 0x6d, 0xaa, 0x2d, 0xc3, 0x5e, 0x49, 0x9d, 0x33, 0x9f, 0x27, 0x89, 0xbd, 0xc4, 0xa6, 0xc5,
-	0x70, 0xe6, 0x92, 0xaf, 0x2f, 0x08, 0xca, 0x3b, 0xd4, 0xa3, 0x57, 0xc3, 0x57, 0x72, 0xa6, 0xd4,
-	0xbf, 0x3e, 0x53, 0xda, 0xac, 0x33, 0x95, 0x1c, 0x9f, 0xe7, 0x50, 0x89, 0x91, 0xff, 0x67, 0x6a,
-	0xed, 0xdf, 0x08, 0x74, 0x39, 0x4f, 0xbc, 0x01, 0xba, 0x3c, 0x15, 0xf8, 0x46, 0x66, 0xd6, 0xd9,
-	0x9b, 0x57, 0x37, 0xa7, 0x0d, 0x12, 0x90, 0xa5, 0xe0, 0x87, 0xa0, 0xee, 0x52, 0x8e, 0x6b, 0x99,
-	0x7e, 0x92, 0xef, 0xba, 0xbe, 0x72, 0x49, 0x9b, 0x44, 0x6d, 0x80, 0x2e, 0xb7, 0x26, 0x5b, 0x34,
-	0xb7, 0xd6, 0xd9, 0xa2, 0xf9, 0x05, 0x93, 0xe1, 0x92, 0x99, 0x6c, 0x78, 0x6e, 0xca, 0xd9, 0xf0,
-	0x3c, 0x89, 0x96, 0xb2, 0x55, 0xfb, 0xf1, 0x69, 0x11, 0x7d, 0x1b, 0x37, 0xd0, 0xf7, 0x71, 0x03,
-	0xfd, 0x1c, 0x37, 0xd0, 0xbb, 0x5f, 0x0d, 0xe5, 0x4c, 0x17, 0xff, 0xed, 0x0f, 0xfe, 0x04, 0x00,
-	0x00, 0xff, 0xff, 0x67, 0xf3, 0x85, 0xe0, 0x1e, 0x08, 0x00, 0x00,
+var fileDescriptor_configpb_7208f9f717d34356 = []byte{
+	// 673 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x56, 0x4d, 0x6b, 0x13, 0x4f,
+	0x18, 0xcf, 0x64, 0xb7, 0x93, 0xe6, 0xd9, 0x7f, 0xd2, 0x74, 0x48, 0xff, 0x2e, 0x51, 0x43, 0xdc,
+	0x83, 0x0d, 0x15, 0x5a, 0x88, 0x82, 0xa7, 0x82, 0x7d, 0x89, 0x6d, 0x68, 0x49, 0x61, 0x6a, 0xeb,
+	0xb1, 0x6c, 0xb3, 0x63, 0x0c, 0x6e, 0x77, 0xe2, 0xee, 0xa4, 0xe0, 0xf7, 0x10, 0xf4, 0x03, 0x88,
+	0xe8, 0xa7, 0x10, 0xf4, 0xe2, 0xd1, 0xa3, 0x47, 0xa9, 0x1f, 0xc3, 0x8b, 0x74, 0x66, 0x5f, 0x66,
+	0x9b, 0x43, 0xed, 0xa1, 0xd0, 0x53, 0xe6, 0x79, 0xff, 0x3d, 0xbf, 0xe7, 0xd9, 0x87, 0x40, 0x75,
+	0xc0, 0x83, 0x17, 0xa3, 0xe1, 0xf8, 0x78, 0x79, 0x1c, 0x72, 0xc1, 0xc9, 0x6c, 0x22, 0x37, 0xea,
+	0x43, 0x3e, 0xe4, 0x52, 0xb9, 0x72, 0xfe, 0x52, 0xf6, 0xc6, 0x5c, 0x38, 0x89, 0x84, 0x7c, 0x2a,
+	0x85, 0xf3, 0x15, 0x01, 0xde, 0x17, 0xae, 0x98, 0x44, 0x64, 0x05, 0xcc, 0x01, 0xf7, 0x98, 0x8d,
+	0x5a, 0xa8, 0x5d, 0xed, 0xdc, 0x5e, 0x4e, 0x53, 0x2b, 0x7b, 0xfc, 0xb3, 0xc1, 0x3d, 0x46, 0xa5,
+	0x23, 0xb1, 0xa1, 0x74, 0xc2, 0xa2, 0xc8, 0x1d, 0x32, 0xbb, 0xd8, 0x42, 0xed, 0x32, 0x4d, 0x44,
+	0xf2, 0x00, 0x4a, 0xa7, 0x2c, 0x8c, 0x46, 0x3c, 0xb0, 0x8d, 0x16, 0x6a, 0x5b, 0x9d, 0xf9, 0x2c,
+	0xdb, 0xa1, 0x32, 0xd0, 0xc4, 0xc3, 0x79, 0x02, 0x90, 0xa5, 0x26, 0x16, 0x94, 0x0e, 0xfa, 0x3b,
+	0xfd, 0xbd, 0xe7, 0xfd, 0x5a, 0x81, 0x60, 0x28, 0xee, 0xed, 0xd4, 0x10, 0x01, 0xc0, 0x4f, 0xd7,
+	0x7a, 0xbb, 0xdd, 0xcd, 0x5a, 0x91, 0xcc, 0x43, 0x65, 0xff, 0xd9, 0xda, 0x6e, 0xf7, 0xe8, 0xb0,
+	0x4b, 0xf7, 0x7b, 0x7b, 0xfd, 0x9a, 0xe1, 0x3c, 0x86, 0x52, 0x9c, 0x95, 0xd4, 0x61, 0xc6, 0xe7,
+	0x03, 0xd7, 0x97, 0x5d, 0x98, 0x54, 0x09, 0xe4, 0x7f, 0xc0, 0x43, 0x9f, 0x1f, 0xbb, 0xbe, 0x04,
+	0x6a, 0xd2, 0x58, 0x72, 0x96, 0x60, 0x66, 0x57, 0x3a, 0xdc, 0x83, 0xff, 0x06, 0xfc, 0x64, 0xcc,
+	0x03, 0x16, 0x88, 0xa3, 0x91, 0x27, 0xa3, 0xcb, 0xd4, 0x4a, 0x75, 0x3d, 0xcf, 0xb9, 0x0f, 0x78,
+	0x4b, 0x46, 0x91, 0x3b, 0x50, 0x4e, 0x0d, 0xb1, 0x67, 0xa6, 0x70, 0xde, 0x22, 0xb0, 0x36, 0x64,
+	0xb3, 0xdd, 0x40, 0x84, 0x6f, 0xc8, 0xa2, 0x8e, 0xc8, 0xea, 0xcc, 0x65, 0x4c, 0xc8, 0xd2, 0xdb,
+	0x85, 0x04, 0xe4, 0x52, 0x0e, 0xa4, 0xd5, 0xa9, 0x65, 0x9e, 0xaa, 0xf0, 0x76, 0x21, 0x01, 0x4e,
+	0x08, 0x98, 0x81, 0x7b, 0xc2, 0x24, 0xbb, 0x65, 0x2a, 0xdf, 0xe7, 0xad, 0x9f, 0xba, 0xfe, 0x84,
+	0xd9, 0xa6, 0x54, 0x2a, 0x61, 0x1d, 0x83, 0xf9, 0x6a, 0x14, 0x78, 0xce, 0x22, 0xe0, 0x6d, 0xe6,
+	0x7a, 0x2c, 0x24, 0x77, 0x01, 0x06, 0xfe, 0x24, 0x12, 0x2c, 0x4c, 0x3a, 0x35, 0x69, 0x39, 0xd6,
+	0xf4, 0x3c, 0xe7, 0x0b, 0x82, 0xca, 0x46, 0xc8, 0x5c, 0xc1, 0x28, 0x7b, 0x3d, 0x61, 0x91, 0x20,
+	0x6d, 0xc0, 0x2f, 0x65, 0x68, 0xdc, 0x82, 0x06, 0x4c, 0xa5, 0xa4, 0xb1, 0x5d, 0x9f, 0x7b, 0xf1,
+	0xb2, 0xb9, 0xe7, 0x69, 0x34, 0x2e, 0xd0, 0x38, 0x35, 0x11, 0x73, 0x6a, 0x22, 0xe7, 0x53, 0x55,
+	0xd9, 0xed, 0x19, 0x69, 0x8c, 0x25, 0xe7, 0x33, 0x82, 0x6a, 0xd2, 0x41, 0x34, 0xe6, 0x41, 0xc4,
+	0xae, 0xd0, 0x42, 0x1b, 0x70, 0x24, 0xb7, 0x71, 0x7a, 0x0a, 0x6a, 0x4b, 0x69, 0x6c, 0xbf, 0xd2,
+	0x92, 0x6b, 0x58, 0xcd, 0x1c, 0xd6, 0x0f, 0x08, 0x60, 0x8b, 0x89, 0x1b, 0x4e, 0xb5, 0xf3, 0x11,
+	0x81, 0x25, 0x61, 0xde, 0x74, 0x3e, 0xdf, 0x21, 0xa8, 0x1c, 0x8c, 0xbd, 0xeb, 0xdf, 0xde, 0x15,
+	0x28, 0xb1, 0x40, 0x84, 0x23, 0x16, 0xd9, 0x46, 0xcb, 0x68, 0x5b, 0x9d, 0x85, 0xcc, 0x59, 0xfb,
+	0xfc, 0x69, 0xe2, 0x25, 0xb7, 0x32, 0x41, 0x76, 0xd3, 0x59, 0xfc, 0x86, 0xa0, 0xb2, 0xc9, 0x7c,
+	0x76, 0xed, 0x2c, 0xa6, 0xc7, 0xd1, 0xf8, 0xe7, 0xe3, 0x68, 0x5e, 0x76, 0x1c, 0xd3, 0x93, 0xe7,
+	0x41, 0x35, 0x69, 0xe2, 0xfa, 0x08, 0xef, 0xfc, 0x41, 0x80, 0xd5, 0xc0, 0xc9, 0x2a, 0x60, 0x75,
+	0x77, 0xc8, 0x2d, 0x6d, 0x19, 0xf4, 0x5b, 0xda, 0xb0, 0xa7, 0x0d, 0x0a, 0x9b, 0x53, 0x20, 0x8f,
+	0xc0, 0xd8, 0x62, 0x82, 0xd4, 0xb5, 0xd6, 0xd2, 0xcb, 0xd0, 0x58, 0xb8, 0xa0, 0x4d, 0xa3, 0x56,
+	0x01, 0xab, 0xb5, 0xd2, 0x8b, 0xe6, 0x3e, 0x01, 0xbd, 0x68, 0x7e, 0x03, 0x55, 0xb8, 0x22, 0x49,
+	0x0f, 0xcf, 0xcd, 0x5e, 0x0f, 0xcf, 0xf3, 0xe9, 0x14, 0xd6, 0xeb, 0x3f, 0x3f, 0xcd, 0xa2, 0xef,
+	0x67, 0x4d, 0xf4, 0xe3, 0xac, 0x89, 0x7e, 0x9d, 0x35, 0xd1, 0xfb, 0xdf, 0xcd, 0xc2, 0x31, 0x96,
+	0x7f, 0x2e, 0x1e, 0xfe, 0x0d, 0x00, 0x00, 0xff, 0xff, 0x66, 0x22, 0xf5, 0x1d, 0x9f, 0x08, 0x00,
+	0x00,
 }
