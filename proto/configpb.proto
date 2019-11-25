@@ -13,6 +13,7 @@ service Config {
     rpc Create(CreateRequest) returns (CreateResponse) {}
     rpc Get(GetRequest) returns (GetResponse) {}
     rpc Update(UpdateRequest) returns (UpdateResponse) {}
+    rpc Delete(DeleteRequest) returns (DeleteResponse) {}
 }
 
 message Status {
@@ -27,6 +28,12 @@ message Status {
     Version version = 3;
 }
 
+// The version is used to tell the configuration which can be shared
+// or not apart.
+// Global version represents the version of these configuration
+// which can be shared, each kind of component only have one.
+// For local version, every component will have one to represent
+// the version of these configuration which cannot be shared.
 message Version {
     uint64 local = 1;
     uint64 global = 2;
@@ -41,7 +48,7 @@ message Global {
 }
 
 message ConfigEntry {
-    oneof type {
+    oneof kind {
         Local local = 1;
         Global global = 2;
     }
@@ -90,4 +97,19 @@ message UpdateResponse {
     Status status = 2;
     Version version = 3;
     string config = 4;
+}
+
+message DeleteRequest {
+    uint64 cluster_id = 1;
+    Version version = 2;
+
+    oneof kind {
+        Local local = 3;
+        Global global = 4;
+    }
+}
+
+message DeleteResponse {
+    uint64 cluster_id = 1;
+    Status status = 2;
 }
