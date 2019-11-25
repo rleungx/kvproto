@@ -48,12 +48,14 @@ message Global {
     string component = 1;
 }
 
-message ConfigEntry {
+message ConfigKind {
     oneof kind {
         Local local = 1;
         Global global = 2;
     }
+}
 
+message ConfigEntry {
     string name = 3;
     string value = 4;
 }
@@ -94,7 +96,8 @@ message GetResponse {
 message UpdateRequest {
     Header header = 1;
     Version version = 2;
-    repeated ConfigEntry entries = 3;
+    ConfigKind kind = 3;
+    repeated ConfigEntry entries = 4;
 }
 
 message UpdateResponse {
@@ -107,11 +110,7 @@ message UpdateResponse {
 message DeleteRequest {
     Header header = 1;
     Version version = 2;
-
-    oneof kind {
-        Local local = 3;
-        Global global = 4;
-    }
+    ConfigKind kind = 3;
 }
 
 message DeleteResponse {

@@ -57,7 +57,7 @@ func (x Status_StatusCode) String() string {
 	return proto.EnumName(Status_StatusCode_name, int32(x))
 }
 func (Status_StatusCode) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_04ce12243efde1ff, []int{0, 0}
+	return fileDescriptor_configpb_60457d6fa9a6d52b, []int{0, 0}
 }
 
 type Status struct {
@@ -73,7 +73,7 @@ func (m *Status) Reset()         { *m = Status{} }
 func (m *Status) String() string { return proto.CompactTextString(m) }
 func (*Status) ProtoMessage()    {}
 func (*Status) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_04ce12243efde1ff, []int{0}
+	return fileDescriptor_configpb_60457d6fa9a6d52b, []int{0}
 }
 func (m *Status) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -141,7 +141,7 @@ func (m *Version) Reset()         { *m = Version{} }
 func (m *Version) String() string { return proto.CompactTextString(m) }
 func (*Version) ProtoMessage()    {}
 func (*Version) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_04ce12243efde1ff, []int{1}
+	return fileDescriptor_configpb_60457d6fa9a6d52b, []int{1}
 }
 func (m *Version) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -195,7 +195,7 @@ func (m *Local) Reset()         { *m = Local{} }
 func (m *Local) String() string { return proto.CompactTextString(m) }
 func (*Local) ProtoMessage()    {}
 func (*Local) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_04ce12243efde1ff, []int{2}
+	return fileDescriptor_configpb_60457d6fa9a6d52b, []int{2}
 }
 func (m *Local) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -242,7 +242,7 @@ func (m *Global) Reset()         { *m = Global{} }
 func (m *Global) String() string { return proto.CompactTextString(m) }
 func (*Global) ProtoMessage()    {}
 func (*Global) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_04ce12243efde1ff, []int{3}
+	return fileDescriptor_configpb_60457d6fa9a6d52b, []int{3}
 }
 func (m *Global) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -278,23 +278,173 @@ func (m *Global) GetComponent() string {
 	return ""
 }
 
-type ConfigEntry struct {
+type ConfigKind struct {
 	// Types that are valid to be assigned to Kind:
-	//	*ConfigEntry_Local
-	//	*ConfigEntry_Global
-	Kind                 isConfigEntry_Kind `protobuf_oneof:"kind"`
-	Name                 string             `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
-	Value                string             `protobuf:"bytes,4,opt,name=value,proto3" json:"value,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
-	XXX_unrecognized     []byte             `json:"-"`
-	XXX_sizecache        int32              `json:"-"`
+	//	*ConfigKind_Local
+	//	*ConfigKind_Global
+	Kind                 isConfigKind_Kind `protobuf_oneof:"kind"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
+}
+
+func (m *ConfigKind) Reset()         { *m = ConfigKind{} }
+func (m *ConfigKind) String() string { return proto.CompactTextString(m) }
+func (*ConfigKind) ProtoMessage()    {}
+func (*ConfigKind) Descriptor() ([]byte, []int) {
+	return fileDescriptor_configpb_60457d6fa9a6d52b, []int{4}
+}
+func (m *ConfigKind) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ConfigKind) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ConfigKind.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *ConfigKind) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ConfigKind.Merge(dst, src)
+}
+func (m *ConfigKind) XXX_Size() int {
+	return m.Size()
+}
+func (m *ConfigKind) XXX_DiscardUnknown() {
+	xxx_messageInfo_ConfigKind.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ConfigKind proto.InternalMessageInfo
+
+type isConfigKind_Kind interface {
+	isConfigKind_Kind()
+	MarshalTo([]byte) (int, error)
+	Size() int
+}
+
+type ConfigKind_Local struct {
+	Local *Local `protobuf:"bytes,1,opt,name=local,oneof"`
+}
+type ConfigKind_Global struct {
+	Global *Global `protobuf:"bytes,2,opt,name=global,oneof"`
+}
+
+func (*ConfigKind_Local) isConfigKind_Kind()  {}
+func (*ConfigKind_Global) isConfigKind_Kind() {}
+
+func (m *ConfigKind) GetKind() isConfigKind_Kind {
+	if m != nil {
+		return m.Kind
+	}
+	return nil
+}
+
+func (m *ConfigKind) GetLocal() *Local {
+	if x, ok := m.GetKind().(*ConfigKind_Local); ok {
+		return x.Local
+	}
+	return nil
+}
+
+func (m *ConfigKind) GetGlobal() *Global {
+	if x, ok := m.GetKind().(*ConfigKind_Global); ok {
+		return x.Global
+	}
+	return nil
+}
+
+// XXX_OneofFuncs is for the internal use of the proto package.
+func (*ConfigKind) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
+	return _ConfigKind_OneofMarshaler, _ConfigKind_OneofUnmarshaler, _ConfigKind_OneofSizer, []interface{}{
+		(*ConfigKind_Local)(nil),
+		(*ConfigKind_Global)(nil),
+	}
+}
+
+func _ConfigKind_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
+	m := msg.(*ConfigKind)
+	// kind
+	switch x := m.Kind.(type) {
+	case *ConfigKind_Local:
+		_ = b.EncodeVarint(1<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.Local); err != nil {
+			return err
+		}
+	case *ConfigKind_Global:
+		_ = b.EncodeVarint(2<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.Global); err != nil {
+			return err
+		}
+	case nil:
+	default:
+		return fmt.Errorf("ConfigKind.Kind has unexpected type %T", x)
+	}
+	return nil
+}
+
+func _ConfigKind_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
+	m := msg.(*ConfigKind)
+	switch tag {
+	case 1: // kind.local
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(Local)
+		err := b.DecodeMessage(msg)
+		m.Kind = &ConfigKind_Local{msg}
+		return true, err
+	case 2: // kind.global
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(Global)
+		err := b.DecodeMessage(msg)
+		m.Kind = &ConfigKind_Global{msg}
+		return true, err
+	default:
+		return false, nil
+	}
+}
+
+func _ConfigKind_OneofSizer(msg proto.Message) (n int) {
+	m := msg.(*ConfigKind)
+	// kind
+	switch x := m.Kind.(type) {
+	case *ConfigKind_Local:
+		s := proto.Size(x.Local)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case *ConfigKind_Global:
+		s := proto.Size(x.Global)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case nil:
+	default:
+		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
+	}
+	return n
+}
+
+type ConfigEntry struct {
+	Name                 string   `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	Value                string   `protobuf:"bytes,4,opt,name=value,proto3" json:"value,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *ConfigEntry) Reset()         { *m = ConfigEntry{} }
 func (m *ConfigEntry) String() string { return proto.CompactTextString(m) }
 func (*ConfigEntry) ProtoMessage()    {}
 func (*ConfigEntry) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_04ce12243efde1ff, []int{4}
+	return fileDescriptor_configpb_60457d6fa9a6d52b, []int{5}
 }
 func (m *ConfigEntry) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -323,43 +473,6 @@ func (m *ConfigEntry) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_ConfigEntry proto.InternalMessageInfo
 
-type isConfigEntry_Kind interface {
-	isConfigEntry_Kind()
-	MarshalTo([]byte) (int, error)
-	Size() int
-}
-
-type ConfigEntry_Local struct {
-	Local *Local `protobuf:"bytes,1,opt,name=local,oneof"`
-}
-type ConfigEntry_Global struct {
-	Global *Global `protobuf:"bytes,2,opt,name=global,oneof"`
-}
-
-func (*ConfigEntry_Local) isConfigEntry_Kind()  {}
-func (*ConfigEntry_Global) isConfigEntry_Kind() {}
-
-func (m *ConfigEntry) GetKind() isConfigEntry_Kind {
-	if m != nil {
-		return m.Kind
-	}
-	return nil
-}
-
-func (m *ConfigEntry) GetLocal() *Local {
-	if x, ok := m.GetKind().(*ConfigEntry_Local); ok {
-		return x.Local
-	}
-	return nil
-}
-
-func (m *ConfigEntry) GetGlobal() *Global {
-	if x, ok := m.GetKind().(*ConfigEntry_Global); ok {
-		return x.Global
-	}
-	return nil
-}
-
 func (m *ConfigEntry) GetName() string {
 	if m != nil {
 		return m.Name
@@ -374,80 +487,6 @@ func (m *ConfigEntry) GetValue() string {
 	return ""
 }
 
-// XXX_OneofFuncs is for the internal use of the proto package.
-func (*ConfigEntry) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
-	return _ConfigEntry_OneofMarshaler, _ConfigEntry_OneofUnmarshaler, _ConfigEntry_OneofSizer, []interface{}{
-		(*ConfigEntry_Local)(nil),
-		(*ConfigEntry_Global)(nil),
-	}
-}
-
-func _ConfigEntry_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
-	m := msg.(*ConfigEntry)
-	// kind
-	switch x := m.Kind.(type) {
-	case *ConfigEntry_Local:
-		_ = b.EncodeVarint(1<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.Local); err != nil {
-			return err
-		}
-	case *ConfigEntry_Global:
-		_ = b.EncodeVarint(2<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.Global); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("ConfigEntry.Kind has unexpected type %T", x)
-	}
-	return nil
-}
-
-func _ConfigEntry_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
-	m := msg.(*ConfigEntry)
-	switch tag {
-	case 1: // kind.local
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(Local)
-		err := b.DecodeMessage(msg)
-		m.Kind = &ConfigEntry_Local{msg}
-		return true, err
-	case 2: // kind.global
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(Global)
-		err := b.DecodeMessage(msg)
-		m.Kind = &ConfigEntry_Global{msg}
-		return true, err
-	default:
-		return false, nil
-	}
-}
-
-func _ConfigEntry_OneofSizer(msg proto.Message) (n int) {
-	m := msg.(*ConfigEntry)
-	// kind
-	switch x := m.Kind.(type) {
-	case *ConfigEntry_Local:
-		s := proto.Size(x.Local)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *ConfigEntry_Global:
-		s := proto.Size(x.Global)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	return n
-}
-
 type Header struct {
 	ClusterId            uint64   `protobuf:"varint,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -459,7 +498,7 @@ func (m *Header) Reset()         { *m = Header{} }
 func (m *Header) String() string { return proto.CompactTextString(m) }
 func (*Header) ProtoMessage()    {}
 func (*Header) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_04ce12243efde1ff, []int{5}
+	return fileDescriptor_configpb_60457d6fa9a6d52b, []int{6}
 }
 func (m *Header) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -510,7 +549,7 @@ func (m *CreateRequest) Reset()         { *m = CreateRequest{} }
 func (m *CreateRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateRequest) ProtoMessage()    {}
 func (*CreateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_04ce12243efde1ff, []int{6}
+	return fileDescriptor_configpb_60457d6fa9a6d52b, []int{7}
 }
 func (m *CreateRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -588,7 +627,7 @@ func (m *CreateResponse) Reset()         { *m = CreateResponse{} }
 func (m *CreateResponse) String() string { return proto.CompactTextString(m) }
 func (*CreateResponse) ProtoMessage()    {}
 func (*CreateResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_04ce12243efde1ff, []int{7}
+	return fileDescriptor_configpb_60457d6fa9a6d52b, []int{8}
 }
 func (m *CreateResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -659,7 +698,7 @@ func (m *GetRequest) Reset()         { *m = GetRequest{} }
 func (m *GetRequest) String() string { return proto.CompactTextString(m) }
 func (*GetRequest) ProtoMessage()    {}
 func (*GetRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_04ce12243efde1ff, []int{8}
+	return fileDescriptor_configpb_60457d6fa9a6d52b, []int{9}
 }
 func (m *GetRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -730,7 +769,7 @@ func (m *GetResponse) Reset()         { *m = GetResponse{} }
 func (m *GetResponse) String() string { return proto.CompactTextString(m) }
 func (*GetResponse) ProtoMessage()    {}
 func (*GetResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_04ce12243efde1ff, []int{9}
+	return fileDescriptor_configpb_60457d6fa9a6d52b, []int{10}
 }
 func (m *GetResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -790,7 +829,8 @@ func (m *GetResponse) GetConfig() string {
 type UpdateRequest struct {
 	Header               *Header        `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	Version              *Version       `protobuf:"bytes,2,opt,name=version" json:"version,omitempty"`
-	Entries              []*ConfigEntry `protobuf:"bytes,3,rep,name=entries" json:"entries,omitempty"`
+	Kind                 *ConfigKind    `protobuf:"bytes,3,opt,name=kind" json:"kind,omitempty"`
+	Entries              []*ConfigEntry `protobuf:"bytes,4,rep,name=entries" json:"entries,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`
@@ -800,7 +840,7 @@ func (m *UpdateRequest) Reset()         { *m = UpdateRequest{} }
 func (m *UpdateRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateRequest) ProtoMessage()    {}
 func (*UpdateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_04ce12243efde1ff, []int{10}
+	return fileDescriptor_configpb_60457d6fa9a6d52b, []int{11}
 }
 func (m *UpdateRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -843,6 +883,13 @@ func (m *UpdateRequest) GetVersion() *Version {
 	return nil
 }
 
+func (m *UpdateRequest) GetKind() *ConfigKind {
+	if m != nil {
+		return m.Kind
+	}
+	return nil
+}
+
 func (m *UpdateRequest) GetEntries() []*ConfigEntry {
 	if m != nil {
 		return m.Entries
@@ -864,7 +911,7 @@ func (m *UpdateResponse) Reset()         { *m = UpdateResponse{} }
 func (m *UpdateResponse) String() string { return proto.CompactTextString(m) }
 func (*UpdateResponse) ProtoMessage()    {}
 func (*UpdateResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_04ce12243efde1ff, []int{11}
+	return fileDescriptor_configpb_60457d6fa9a6d52b, []int{12}
 }
 func (m *UpdateResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -922,22 +969,19 @@ func (m *UpdateResponse) GetConfig() string {
 }
 
 type DeleteRequest struct {
-	Header  *Header  `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
-	Version *Version `protobuf:"bytes,2,opt,name=version" json:"version,omitempty"`
-	// Types that are valid to be assigned to Kind:
-	//	*DeleteRequest_Local
-	//	*DeleteRequest_Global
-	Kind                 isDeleteRequest_Kind `protobuf_oneof:"kind"`
-	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
-	XXX_unrecognized     []byte               `json:"-"`
-	XXX_sizecache        int32                `json:"-"`
+	Header               *Header     `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
+	Version              *Version    `protobuf:"bytes,2,opt,name=version" json:"version,omitempty"`
+	Kind                 *ConfigKind `protobuf:"bytes,3,opt,name=kind" json:"kind,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
+	XXX_unrecognized     []byte      `json:"-"`
+	XXX_sizecache        int32       `json:"-"`
 }
 
 func (m *DeleteRequest) Reset()         { *m = DeleteRequest{} }
 func (m *DeleteRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteRequest) ProtoMessage()    {}
 func (*DeleteRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_04ce12243efde1ff, []int{12}
+	return fileDescriptor_configpb_60457d6fa9a6d52b, []int{13}
 }
 func (m *DeleteRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -966,29 +1010,6 @@ func (m *DeleteRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_DeleteRequest proto.InternalMessageInfo
 
-type isDeleteRequest_Kind interface {
-	isDeleteRequest_Kind()
-	MarshalTo([]byte) (int, error)
-	Size() int
-}
-
-type DeleteRequest_Local struct {
-	Local *Local `protobuf:"bytes,3,opt,name=local,oneof"`
-}
-type DeleteRequest_Global struct {
-	Global *Global `protobuf:"bytes,4,opt,name=global,oneof"`
-}
-
-func (*DeleteRequest_Local) isDeleteRequest_Kind()  {}
-func (*DeleteRequest_Global) isDeleteRequest_Kind() {}
-
-func (m *DeleteRequest) GetKind() isDeleteRequest_Kind {
-	if m != nil {
-		return m.Kind
-	}
-	return nil
-}
-
 func (m *DeleteRequest) GetHeader() *Header {
 	if m != nil {
 		return m.Header
@@ -1003,92 +1024,11 @@ func (m *DeleteRequest) GetVersion() *Version {
 	return nil
 }
 
-func (m *DeleteRequest) GetLocal() *Local {
-	if x, ok := m.GetKind().(*DeleteRequest_Local); ok {
-		return x.Local
+func (m *DeleteRequest) GetKind() *ConfigKind {
+	if m != nil {
+		return m.Kind
 	}
 	return nil
-}
-
-func (m *DeleteRequest) GetGlobal() *Global {
-	if x, ok := m.GetKind().(*DeleteRequest_Global); ok {
-		return x.Global
-	}
-	return nil
-}
-
-// XXX_OneofFuncs is for the internal use of the proto package.
-func (*DeleteRequest) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
-	return _DeleteRequest_OneofMarshaler, _DeleteRequest_OneofUnmarshaler, _DeleteRequest_OneofSizer, []interface{}{
-		(*DeleteRequest_Local)(nil),
-		(*DeleteRequest_Global)(nil),
-	}
-}
-
-func _DeleteRequest_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
-	m := msg.(*DeleteRequest)
-	// kind
-	switch x := m.Kind.(type) {
-	case *DeleteRequest_Local:
-		_ = b.EncodeVarint(3<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.Local); err != nil {
-			return err
-		}
-	case *DeleteRequest_Global:
-		_ = b.EncodeVarint(4<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.Global); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("DeleteRequest.Kind has unexpected type %T", x)
-	}
-	return nil
-}
-
-func _DeleteRequest_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
-	m := msg.(*DeleteRequest)
-	switch tag {
-	case 3: // kind.local
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(Local)
-		err := b.DecodeMessage(msg)
-		m.Kind = &DeleteRequest_Local{msg}
-		return true, err
-	case 4: // kind.global
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(Global)
-		err := b.DecodeMessage(msg)
-		m.Kind = &DeleteRequest_Global{msg}
-		return true, err
-	default:
-		return false, nil
-	}
-}
-
-func _DeleteRequest_OneofSizer(msg proto.Message) (n int) {
-	m := msg.(*DeleteRequest)
-	// kind
-	switch x := m.Kind.(type) {
-	case *DeleteRequest_Local:
-		s := proto.Size(x.Local)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *DeleteRequest_Global:
-		s := proto.Size(x.Global)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	return n
 }
 
 type DeleteResponse struct {
@@ -1103,7 +1043,7 @@ func (m *DeleteResponse) Reset()         { *m = DeleteResponse{} }
 func (m *DeleteResponse) String() string { return proto.CompactTextString(m) }
 func (*DeleteResponse) ProtoMessage()    {}
 func (*DeleteResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configpb_04ce12243efde1ff, []int{13}
+	return fileDescriptor_configpb_60457d6fa9a6d52b, []int{14}
 }
 func (m *DeleteResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1151,6 +1091,7 @@ func init() {
 	proto.RegisterType((*Version)(nil), "configpb.Version")
 	proto.RegisterType((*Local)(nil), "configpb.Local")
 	proto.RegisterType((*Global)(nil), "configpb.Global")
+	proto.RegisterType((*ConfigKind)(nil), "configpb.ConfigKind")
 	proto.RegisterType((*ConfigEntry)(nil), "configpb.ConfigEntry")
 	proto.RegisterType((*Header)(nil), "configpb.Header")
 	proto.RegisterType((*CreateRequest)(nil), "configpb.CreateRequest")
@@ -1462,6 +1403,62 @@ func (m *Global) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
+func (m *ConfigKind) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ConfigKind) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Kind != nil {
+		nn2, err := m.Kind.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += nn2
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
+}
+
+func (m *ConfigKind_Local) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.Local != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintConfigpb(dAtA, i, uint64(m.Local.Size()))
+		n3, err := m.Local.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n3
+	}
+	return i, nil
+}
+func (m *ConfigKind_Global) MarshalTo(dAtA []byte) (int, error) {
+	i := 0
+	if m.Global != nil {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintConfigpb(dAtA, i, uint64(m.Global.Size()))
+		n4, err := m.Global.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n4
+	}
+	return i, nil
+}
 func (m *ConfigEntry) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1477,13 +1474,6 @@ func (m *ConfigEntry) MarshalTo(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.Kind != nil {
-		nn2, err := m.Kind.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += nn2
-	}
 	if len(m.Name) > 0 {
 		dAtA[i] = 0x1a
 		i++
@@ -1502,34 +1492,6 @@ func (m *ConfigEntry) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
-func (m *ConfigEntry_Local) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.Local != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintConfigpb(dAtA, i, uint64(m.Local.Size()))
-		n3, err := m.Local.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n3
-	}
-	return i, nil
-}
-func (m *ConfigEntry_Global) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.Global != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintConfigpb(dAtA, i, uint64(m.Global.Size()))
-		n4, err := m.Global.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n4
-	}
-	return i, nil
-}
 func (m *Header) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1817,9 +1779,19 @@ func (m *UpdateRequest) MarshalTo(dAtA []byte) (int, error) {
 		}
 		i += n16
 	}
+	if m.Kind != nil {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintConfigpb(dAtA, i, uint64(m.Kind.Size()))
+		n17, err := m.Kind.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n17
+	}
 	if len(m.Entries) > 0 {
 		for _, msg := range m.Entries {
-			dAtA[i] = 0x1a
+			dAtA[i] = 0x22
 			i++
 			i = encodeVarintConfigpb(dAtA, i, uint64(msg.Size()))
 			n, err := msg.MarshalTo(dAtA[i:])
@@ -1854,31 +1826,31 @@ func (m *UpdateResponse) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0xa
 		i++
 		i = encodeVarintConfigpb(dAtA, i, uint64(m.Header.Size()))
-		n17, err := m.Header.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n17
-	}
-	if m.Status != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintConfigpb(dAtA, i, uint64(m.Status.Size()))
-		n18, err := m.Status.MarshalTo(dAtA[i:])
+		n18, err := m.Header.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n18
 	}
-	if m.Version != nil {
-		dAtA[i] = 0x1a
+	if m.Status != nil {
+		dAtA[i] = 0x12
 		i++
-		i = encodeVarintConfigpb(dAtA, i, uint64(m.Version.Size()))
-		n19, err := m.Version.MarshalTo(dAtA[i:])
+		i = encodeVarintConfigpb(dAtA, i, uint64(m.Status.Size()))
+		n19, err := m.Status.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n19
+	}
+	if m.Version != nil {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintConfigpb(dAtA, i, uint64(m.Version.Size()))
+		n20, err := m.Version.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n20
 	}
 	if len(m.Config) > 0 {
 		dAtA[i] = 0x22
@@ -1911,28 +1883,31 @@ func (m *DeleteRequest) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0xa
 		i++
 		i = encodeVarintConfigpb(dAtA, i, uint64(m.Header.Size()))
-		n20, err := m.Header.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n20
-	}
-	if m.Version != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintConfigpb(dAtA, i, uint64(m.Version.Size()))
-		n21, err := m.Version.MarshalTo(dAtA[i:])
+		n21, err := m.Header.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
 		i += n21
 	}
-	if m.Kind != nil {
-		nn22, err := m.Kind.MarshalTo(dAtA[i:])
+	if m.Version != nil {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintConfigpb(dAtA, i, uint64(m.Version.Size()))
+		n22, err := m.Version.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += nn22
+		i += n22
+	}
+	if m.Kind != nil {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintConfigpb(dAtA, i, uint64(m.Kind.Size()))
+		n23, err := m.Kind.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n23
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -1940,34 +1915,6 @@ func (m *DeleteRequest) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
-func (m *DeleteRequest_Local) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.Local != nil {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintConfigpb(dAtA, i, uint64(m.Local.Size()))
-		n23, err := m.Local.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n23
-	}
-	return i, nil
-}
-func (m *DeleteRequest_Global) MarshalTo(dAtA []byte) (int, error) {
-	i := 0
-	if m.Global != nil {
-		dAtA[i] = 0x22
-		i++
-		i = encodeVarintConfigpb(dAtA, i, uint64(m.Global.Size()))
-		n24, err := m.Global.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n24
-	}
-	return i, nil
-}
 func (m *DeleteResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1987,21 +1934,21 @@ func (m *DeleteResponse) MarshalTo(dAtA []byte) (int, error) {
 		dAtA[i] = 0xa
 		i++
 		i = encodeVarintConfigpb(dAtA, i, uint64(m.Header.Size()))
-		n25, err := m.Header.MarshalTo(dAtA[i:])
+		n24, err := m.Header.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n25
+		i += n24
 	}
 	if m.Status != nil {
 		dAtA[i] = 0x12
 		i++
 		i = encodeVarintConfigpb(dAtA, i, uint64(m.Status.Size()))
-		n26, err := m.Status.MarshalTo(dAtA[i:])
+		n25, err := m.Status.MarshalTo(dAtA[i:])
 		if err != nil {
 			return 0, err
 		}
-		i += n26
+		i += n25
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -2079,12 +2026,39 @@ func (m *Global) Size() (n int) {
 	return n
 }
 
-func (m *ConfigEntry) Size() (n int) {
+func (m *ConfigKind) Size() (n int) {
 	var l int
 	_ = l
 	if m.Kind != nil {
 		n += m.Kind.Size()
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *ConfigKind_Local) Size() (n int) {
+	var l int
+	_ = l
+	if m.Local != nil {
+		l = m.Local.Size()
+		n += 1 + l + sovConfigpb(uint64(l))
+	}
+	return n
+}
+func (m *ConfigKind_Global) Size() (n int) {
+	var l int
+	_ = l
+	if m.Global != nil {
+		l = m.Global.Size()
+		n += 1 + l + sovConfigpb(uint64(l))
+	}
+	return n
+}
+func (m *ConfigEntry) Size() (n int) {
+	var l int
+	_ = l
 	l = len(m.Name)
 	if l > 0 {
 		n += 1 + l + sovConfigpb(uint64(l))
@@ -2099,24 +2073,6 @@ func (m *ConfigEntry) Size() (n int) {
 	return n
 }
 
-func (m *ConfigEntry_Local) Size() (n int) {
-	var l int
-	_ = l
-	if m.Local != nil {
-		l = m.Local.Size()
-		n += 1 + l + sovConfigpb(uint64(l))
-	}
-	return n
-}
-func (m *ConfigEntry_Global) Size() (n int) {
-	var l int
-	_ = l
-	if m.Global != nil {
-		l = m.Global.Size()
-		n += 1 + l + sovConfigpb(uint64(l))
-	}
-	return n
-}
 func (m *Header) Size() (n int) {
 	var l int
 	_ = l
@@ -2244,6 +2200,10 @@ func (m *UpdateRequest) Size() (n int) {
 		l = m.Version.Size()
 		n += 1 + l + sovConfigpb(uint64(l))
 	}
+	if m.Kind != nil {
+		l = m.Kind.Size()
+		n += 1 + l + sovConfigpb(uint64(l))
+	}
 	if len(m.Entries) > 0 {
 		for _, e := range m.Entries {
 			l = e.Size()
@@ -2293,7 +2253,8 @@ func (m *DeleteRequest) Size() (n int) {
 		n += 1 + l + sovConfigpb(uint64(l))
 	}
 	if m.Kind != nil {
-		n += m.Kind.Size()
+		l = m.Kind.Size()
+		n += 1 + l + sovConfigpb(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -2301,24 +2262,6 @@ func (m *DeleteRequest) Size() (n int) {
 	return n
 }
 
-func (m *DeleteRequest_Local) Size() (n int) {
-	var l int
-	_ = l
-	if m.Local != nil {
-		l = m.Local.Size()
-		n += 1 + l + sovConfigpb(uint64(l))
-	}
-	return n
-}
-func (m *DeleteRequest_Global) Size() (n int) {
-	var l int
-	_ = l
-	if m.Global != nil {
-		l = m.Global.Size()
-		n += 1 + l + sovConfigpb(uint64(l))
-	}
-	return n
-}
 func (m *DeleteResponse) Size() (n int) {
 	var l int
 	_ = l
@@ -2730,7 +2673,7 @@ func (m *Global) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *ConfigEntry) Unmarshal(dAtA []byte) error {
+func (m *ConfigKind) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -2753,10 +2696,10 @@ func (m *ConfigEntry) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: ConfigEntry: wiretype end group for non-group")
+			return fmt.Errorf("proto: ConfigKind: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ConfigEntry: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: ConfigKind: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -2789,7 +2732,7 @@ func (m *ConfigEntry) Unmarshal(dAtA []byte) error {
 			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
-			m.Kind = &ConfigEntry_Local{v}
+			m.Kind = &ConfigKind_Local{v}
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -2821,8 +2764,59 @@ func (m *ConfigEntry) Unmarshal(dAtA []byte) error {
 			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
-			m.Kind = &ConfigEntry_Global{v}
+			m.Kind = &ConfigKind_Global{v}
 			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipConfigpb(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthConfigpb
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ConfigEntry) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowConfigpb
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ConfigEntry: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ConfigEntry: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
 		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
@@ -3807,6 +3801,39 @@ func (m *UpdateRequest) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Kind", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowConfigpb
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthConfigpb
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Kind == nil {
+				m.Kind = &ConfigKind{}
+			}
+			if err := m.Kind.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Entries", wireType)
 			}
 			var msglen int
@@ -4134,7 +4161,7 @@ func (m *DeleteRequest) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Local", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Kind", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -4158,43 +4185,12 @@ func (m *DeleteRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			v := &Local{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if m.Kind == nil {
+				m.Kind = &ConfigKind{}
+			}
+			if err := m.Kind.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
-			m.Kind = &DeleteRequest_Local{v}
-			iNdEx = postIndex
-		case 4:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Global", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowConfigpb
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthConfigpb
-			}
-			postIndex := iNdEx + msglen
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			v := &Global{}
-			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			m.Kind = &DeleteRequest_Global{v}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -4440,51 +4436,52 @@ var (
 	ErrIntOverflowConfigpb   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("configpb.proto", fileDescriptor_configpb_04ce12243efde1ff) }
+func init() { proto.RegisterFile("configpb.proto", fileDescriptor_configpb_60457d6fa9a6d52b) }
 
-var fileDescriptor_configpb_04ce12243efde1ff = []byte{
-	// 687 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x56, 0xcd, 0x6e, 0xd3, 0x40,
-	0x10, 0xce, 0xc6, 0xee, 0xa6, 0x19, 0x93, 0x34, 0x5d, 0xa5, 0x60, 0x05, 0x88, 0x82, 0x0f, 0x34,
-	0x2a, 0x52, 0x2b, 0x05, 0x24, 0x4e, 0x3d, 0xb4, 0x69, 0x48, 0xa2, 0x56, 0x09, 0xda, 0xfe, 0x70,
-	0xac, 0xdc, 0x78, 0x09, 0x11, 0xae, 0x37, 0xd8, 0x4e, 0x25, 0xde, 0x03, 0x09, 0x1e, 0x00, 0x21,
-	0x78, 0x0a, 0x0e, 0x5c, 0x38, 0x22, 0x4e, 0x1c, 0x51, 0x79, 0x0c, 0x2e, 0xa8, 0xbb, 0xb6, 0xb3,
-	0x6e, 0x0e, 0xa5, 0x87, 0x4a, 0x39, 0x65, 0xe7, 0x6f, 0xf7, 0x9b, 0x6f, 0x3e, 0x8f, 0x02, 0xc5,
-	0x01, 0xf7, 0x5e, 0x8e, 0x86, 0xe3, 0x93, 0xf5, 0xb1, 0xcf, 0x43, 0x4e, 0x16, 0x63, 0xbb, 0x52,
-	0x1e, 0xf2, 0x21, 0x17, 0xce, 0x8d, 0x8b, 0x93, 0x8c, 0x57, 0x96, 0xfc, 0x49, 0x10, 0x8a, 0xa3,
-	0x74, 0x58, 0x3f, 0x11, 0xe0, 0xfd, 0xd0, 0x0e, 0x27, 0x01, 0xd9, 0x00, 0x7d, 0xc0, 0x1d, 0x66,
-	0xa2, 0x1a, 0xaa, 0x17, 0x1b, 0x77, 0xd7, 0x93, 0xab, 0x65, 0x3c, 0xfa, 0x69, 0x72, 0x87, 0x51,
-	0x91, 0x48, 0x4c, 0xc8, 0x9d, 0xb2, 0x20, 0xb0, 0x87, 0xcc, 0xcc, 0xd6, 0x50, 0x3d, 0x4f, 0x63,
-	0x93, 0x3c, 0x82, 0xdc, 0x19, 0xf3, 0x83, 0x11, 0xf7, 0x4c, 0xad, 0x86, 0xea, 0x46, 0x63, 0x79,
-	0x7a, 0xdb, 0x91, 0x0c, 0xd0, 0x38, 0xc3, 0x7a, 0x0e, 0x30, 0xbd, 0x9a, 0x18, 0x90, 0x3b, 0xec,
-	0xed, 0xf6, 0xfa, 0x2f, 0x7a, 0xa5, 0x0c, 0xc1, 0x90, 0xed, 0xef, 0x96, 0x10, 0x01, 0xc0, 0xcf,
-	0xb6, 0xba, 0x7b, 0xad, 0x9d, 0x52, 0x96, 0x2c, 0x43, 0x61, 0xff, 0x60, 0x6b, 0xaf, 0x75, 0x7c,
-	0xd4, 0xa2, 0xfb, 0xdd, 0x7e, 0xaf, 0xa4, 0x91, 0x22, 0x40, 0xaf, 0x7f, 0x70, 0xdc, 0xec, 0x6c,
-	0xf5, 0xda, 0xad, 0x92, 0x6e, 0x3d, 0x85, 0x5c, 0xf4, 0x0a, 0x29, 0xc3, 0x82, 0xcb, 0x07, 0xb6,
-	0x2b, 0xba, 0xd2, 0xa9, 0x34, 0xc8, 0x6d, 0xc0, 0x43, 0x97, 0x9f, 0xd8, 0xae, 0x00, 0xae, 0xd3,
-	0xc8, 0xb2, 0xd6, 0x60, 0x61, 0x4f, 0x24, 0x3c, 0x80, 0x5b, 0x03, 0x7e, 0x3a, 0xe6, 0x1e, 0xf3,
-	0xc2, 0xe3, 0x91, 0x23, 0xaa, 0xf3, 0xd4, 0x48, 0x7c, 0x5d, 0xc7, 0x7a, 0x08, 0xb8, 0x2d, 0xaa,
-	0xc8, 0x3d, 0xc8, 0x27, 0x81, 0x28, 0x73, 0xea, 0xb0, 0xde, 0x21, 0x30, 0x9a, 0xa2, 0xf9, 0x96,
-	0x17, 0xfa, 0x6f, 0xc9, 0xaa, 0x8a, 0xc8, 0x68, 0x2c, 0x4d, 0x99, 0x11, 0x4f, 0x77, 0x32, 0x31,
-	0xc8, 0xb5, 0x14, 0x48, 0xa3, 0x51, 0x9a, 0x66, 0xca, 0x87, 0x3b, 0x99, 0x18, 0x38, 0x21, 0xa0,
-	0x7b, 0xf6, 0x29, 0x13, 0x6c, 0xe7, 0xa9, 0x38, 0x5f, 0xb4, 0x7e, 0x66, 0xbb, 0x13, 0x66, 0xea,
-	0xc2, 0x29, 0x8d, 0x6d, 0x0c, 0xfa, 0xeb, 0x91, 0xe7, 0x58, 0xab, 0x80, 0x3b, 0xcc, 0x76, 0x98,
-	0x4f, 0xee, 0x03, 0x0c, 0xdc, 0x49, 0x10, 0x32, 0x3f, 0xee, 0x54, 0xa7, 0xf9, 0xc8, 0xd3, 0x75,
-	0xac, 0xaf, 0x08, 0x0a, 0x4d, 0x9f, 0xd9, 0x21, 0xa3, 0xec, 0xcd, 0x84, 0x05, 0x21, 0xa9, 0x03,
-	0x7e, 0x25, 0x4a, 0xa3, 0x16, 0x14, 0x60, 0xf2, 0x4a, 0x1a, 0xc5, 0x55, 0x1d, 0x64, 0xaf, 0xd2,
-	0x41, 0x9a, 0x46, 0xed, 0x12, 0x8d, 0x33, 0x13, 0xd1, 0x67, 0x26, 0x72, 0x31, 0x55, 0x79, 0xbb,
-	0xb9, 0x20, 0x82, 0x91, 0x65, 0x7d, 0x41, 0x50, 0x8c, 0x3b, 0x08, 0xc6, 0xdc, 0x0b, 0xd8, 0x35,
-	0x5a, 0xa8, 0x03, 0x0e, 0x84, 0x3a, 0x67, 0xa7, 0x20, 0x55, 0x4b, 0xa3, 0xf8, 0xb5, 0x44, 0xaf,
-	0x60, 0xd5, 0x53, 0x58, 0x3f, 0x22, 0x80, 0x36, 0x0b, 0xe7, 0x9c, 0x6a, 0xeb, 0x13, 0x02, 0x43,
-	0xc0, 0x9c, 0x77, 0x3e, 0xdf, 0x23, 0x28, 0x1c, 0x8e, 0x9d, 0x9b, 0x57, 0xef, 0x06, 0xe4, 0x98,
-	0x17, 0xfa, 0x23, 0x16, 0x98, 0x5a, 0x4d, 0xab, 0x1b, 0x8d, 0x95, 0x69, 0xb2, 0xf2, 0xf9, 0xd3,
-	0x38, 0x4b, 0xa8, 0x32, 0x46, 0x36, 0xef, 0x2c, 0x7e, 0x43, 0x50, 0xd8, 0x61, 0x2e, 0xbb, 0x71,
-	0x16, 0x93, 0xe5, 0xa8, 0xfd, 0xf7, 0x72, 0xd4, 0xaf, 0x5a, 0x8e, 0xc9, 0xca, 0x73, 0xa0, 0x18,
-	0x37, 0x71, 0x73, 0x84, 0x37, 0xfe, 0x22, 0xc0, 0x72, 0xe0, 0x64, 0x13, 0xb0, 0xdc, 0x3b, 0xe4,
-	0x8e, 0x22, 0x06, 0x75, 0x97, 0x56, 0xcc, 0xd9, 0x80, 0xc4, 0x66, 0x65, 0xc8, 0x13, 0xd0, 0xda,
-	0x2c, 0x24, 0x65, 0xa5, 0xb5, 0x64, 0x33, 0x54, 0x56, 0x2e, 0x79, 0x93, 0xaa, 0x4d, 0xc0, 0x52,
-	0x56, 0xea, 0xa3, 0xa9, 0x4f, 0x40, 0x7d, 0x34, 0xad, 0x40, 0x59, 0x2e, 0x49, 0x52, 0xcb, 0x53,
-	0xb3, 0x57, 0xcb, 0xd3, 0x7c, 0x5a, 0x99, 0xed, 0xf2, 0xaf, 0xcf, 0x8b, 0xe8, 0xfb, 0x79, 0x15,
-	0xfd, 0x38, 0xaf, 0xa2, 0xdf, 0xe7, 0x55, 0xf4, 0xe1, 0x4f, 0x35, 0x73, 0x82, 0xc5, 0x9f, 0x8d,
-	0xc7, 0xff, 0x02, 0x00, 0x00, 0xff, 0xff, 0x82, 0x3c, 0xbc, 0x34, 0xaf, 0x08, 0x00, 0x00,
+var fileDescriptor_configpb_60457d6fa9a6d52b = []byte{
+	// 693 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x56, 0xcd, 0x6e, 0xd3, 0x4a,
+	0x14, 0xce, 0x24, 0xee, 0xa4, 0x39, 0xbe, 0x49, 0xd3, 0x51, 0x7a, 0xaf, 0x95, 0x0b, 0x51, 0x98,
+	0x05, 0xb5, 0x8a, 0xd4, 0x4a, 0x01, 0xa9, 0xab, 0x2e, 0xda, 0x34, 0x24, 0x51, 0xab, 0x04, 0x4d,
+	0x7f, 0x58, 0x56, 0x6e, 0x3c, 0x04, 0x0b, 0xd7, 0x13, 0x6c, 0xa7, 0x12, 0x6f, 0xc1, 0x92, 0x07,
+	0x40, 0x08, 0x9e, 0x02, 0xb1, 0x63, 0x89, 0x58, 0xb1, 0x44, 0xe5, 0x31, 0xd8, 0xa0, 0xce, 0xd8,
+	0xb1, 0xdd, 0x2c, 0x50, 0x17, 0x95, 0xb2, 0xf2, 0x9c, 0xff, 0xef, 0x7c, 0xe7, 0xcc, 0xc8, 0x50,
+	0x19, 0x09, 0xef, 0x85, 0x33, 0x9e, 0x9c, 0x6f, 0x4e, 0x7c, 0x11, 0x0a, 0xb2, 0x1c, 0xcb, 0xf5,
+	0xda, 0x58, 0x8c, 0x85, 0x54, 0x6e, 0x5d, 0x9f, 0x94, 0xbd, 0xbe, 0xe2, 0x4f, 0x83, 0x50, 0x1e,
+	0x95, 0x82, 0x7e, 0x47, 0x80, 0x8f, 0x42, 0x2b, 0x9c, 0x06, 0x64, 0x0b, 0xb4, 0x91, 0xb0, 0xb9,
+	0x81, 0x9a, 0xc8, 0xac, 0xb4, 0xfe, 0xdf, 0x9c, 0xa5, 0x56, 0xf6, 0xe8, 0xd3, 0x16, 0x36, 0x67,
+	0xd2, 0x91, 0x18, 0x50, 0xbc, 0xe0, 0x41, 0x60, 0x8d, 0xb9, 0x91, 0x6f, 0x22, 0xb3, 0xc4, 0x62,
+	0x91, 0x3c, 0x82, 0xe2, 0x25, 0xf7, 0x03, 0x47, 0x78, 0x46, 0xa1, 0x89, 0x4c, 0xbd, 0xb5, 0x9a,
+	0x64, 0x3b, 0x55, 0x06, 0x16, 0x7b, 0xd0, 0x67, 0x00, 0x49, 0x6a, 0xa2, 0x43, 0xf1, 0x64, 0x70,
+	0x30, 0x18, 0x3e, 0x1f, 0x54, 0x73, 0x04, 0x43, 0x7e, 0x78, 0x50, 0x45, 0x04, 0x00, 0x3f, 0xdd,
+	0xed, 0x1f, 0x76, 0xf6, 0xab, 0x79, 0xb2, 0x0a, 0xe5, 0xa3, 0xe3, 0xdd, 0xc3, 0xce, 0xd9, 0x69,
+	0x87, 0x1d, 0xf5, 0x87, 0x83, 0x6a, 0x81, 0x54, 0x00, 0x06, 0xc3, 0xe3, 0xb3, 0x76, 0x6f, 0x77,
+	0xd0, 0xed, 0x54, 0x35, 0xba, 0x0d, 0xc5, 0xa8, 0x0a, 0xa9, 0xc1, 0x92, 0x2b, 0x46, 0x96, 0x2b,
+	0xbb, 0xd2, 0x98, 0x12, 0xc8, 0xbf, 0x80, 0xc7, 0xae, 0x38, 0xb7, 0x5c, 0x09, 0x5c, 0x63, 0x91,
+	0x44, 0x37, 0x60, 0xe9, 0x50, 0x3a, 0x3c, 0x80, 0x7f, 0x46, 0xe2, 0x62, 0x22, 0x3c, 0xee, 0x85,
+	0x67, 0x8e, 0x2d, 0xa3, 0x4b, 0x4c, 0x9f, 0xe9, 0xfa, 0x36, 0x7d, 0x08, 0xb8, 0x2b, 0xa3, 0xc8,
+	0x3d, 0x28, 0xcd, 0x0c, 0x91, 0x67, 0xa2, 0xa0, 0x0e, 0x40, 0x5b, 0xf6, 0x7e, 0xe0, 0x78, 0x36,
+	0x59, 0x4f, 0xe3, 0xd1, 0x5b, 0x2b, 0x09, 0x2f, 0xb2, 0x70, 0x2f, 0x17, 0x43, 0xdc, 0xc8, 0x40,
+	0xd4, 0x5b, 0xd5, 0xc4, 0x53, 0x95, 0xed, 0xe5, 0x62, 0xd8, 0x7b, 0x18, 0xb4, 0x57, 0x8e, 0x67,
+	0xd3, 0x6d, 0xd0, 0x55, 0xa9, 0x8e, 0x17, 0xfa, 0x6f, 0x08, 0x01, 0xcd, 0xb3, 0x2e, 0xb8, 0x1c,
+	0x41, 0x89, 0xc9, 0xf3, 0x35, 0x1f, 0x97, 0x96, 0x3b, 0xe5, 0x86, 0x26, 0x95, 0x4a, 0xa0, 0xeb,
+	0x80, 0x7b, 0xdc, 0xb2, 0xb9, 0x4f, 0xee, 0x03, 0x8c, 0xdc, 0x69, 0x10, 0x72, 0x3f, 0x6e, 0x5b,
+	0x63, 0xa5, 0x48, 0xd3, 0xb7, 0xe9, 0x67, 0x04, 0xe5, 0xb6, 0xcf, 0xad, 0x90, 0x33, 0xfe, 0x7a,
+	0xca, 0x83, 0x90, 0x98, 0x80, 0x5f, 0xca, 0xd0, 0xa8, 0xa3, 0x14, 0x4e, 0x95, 0x92, 0x45, 0xf6,
+	0xf4, 0x52, 0xe4, 0xff, 0xb6, 0x14, 0x59, 0x4e, 0x0b, 0x37, 0x38, 0x9d, 0x1b, 0x8f, 0x36, 0x37,
+	0x9e, 0xeb, 0x11, 0xab, 0xec, 0xc6, 0x92, 0x34, 0x46, 0x12, 0xfd, 0x84, 0xa0, 0x12, 0x77, 0x10,
+	0x4c, 0x84, 0x17, 0xf0, 0x5b, 0xb4, 0x60, 0x02, 0x0e, 0xe4, 0xaa, 0xce, 0x0f, 0x45, 0xad, 0x30,
+	0x8b, 0xec, 0xb7, 0xba, 0x01, 0x29, 0xac, 0x5a, 0x06, 0xeb, 0x7b, 0x04, 0xd0, 0xe5, 0xe1, 0x82,
+	0x53, 0x4d, 0x3f, 0x20, 0xd0, 0x25, 0xcc, 0x45, 0xe7, 0xf3, 0x0b, 0x82, 0xf2, 0xc9, 0xc4, 0xbe,
+	0xfb, 0xed, 0x35, 0xd5, 0x85, 0x8c, 0xa0, 0xd6, 0x12, 0xcf, 0xe4, 0x25, 0x60, 0xd2, 0x83, 0x6c,
+	0x41, 0x91, 0x7b, 0xa1, 0xef, 0xf0, 0xc0, 0xd0, 0x9a, 0x05, 0x53, 0x6f, 0xad, 0xdd, 0x74, 0x96,
+	0x77, 0x99, 0xc5, 0x5e, 0x72, 0x7f, 0xe3, 0x1e, 0x16, 0x9d, 0xef, 0xb7, 0x08, 0xca, 0xfb, 0xdc,
+	0xe5, 0x8b, 0xc3, 0x37, 0xb5, 0xa1, 0x12, 0x23, 0xba, 0x3b, 0xf6, 0x5a, 0xbf, 0x11, 0x60, 0x55,
+	0x9a, 0xec, 0x00, 0x56, 0xcf, 0x0d, 0xf9, 0x2f, 0x05, 0x2b, 0xfd, 0x84, 0xd6, 0x8d, 0x79, 0x83,
+	0xc2, 0x46, 0x73, 0xe4, 0x09, 0x14, 0xba, 0x3c, 0x24, 0xa9, 0x96, 0x92, 0x07, 0xa1, 0xbe, 0x76,
+	0x43, 0x3b, 0x8b, 0xda, 0x01, 0xac, 0x76, 0x24, 0x5d, 0x34, 0xb3, 0xf9, 0xe9, 0xa2, 0xd9, 0x75,
+	0x52, 0xe1, 0x8a, 0xa4, 0x74, 0x78, 0x66, 0x90, 0xe9, 0xf0, 0x2c, 0x9f, 0x34, 0xb7, 0x57, 0xfb,
+	0xf1, 0x71, 0x19, 0x7d, 0xbd, 0x6a, 0xa0, 0x6f, 0x57, 0x0d, 0xf4, 0xf3, 0xaa, 0x81, 0xde, 0xfd,
+	0x6a, 0xe4, 0xce, 0xb1, 0xfc, 0xe1, 0x78, 0xfc, 0x27, 0x00, 0x00, 0xff, 0xff, 0xb2, 0x9f, 0x51,
+	0xc7, 0xb3, 0x08, 0x00, 0x00,
 }
