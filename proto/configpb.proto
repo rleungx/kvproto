@@ -20,13 +20,11 @@ message Status {
     enum StatusCode {
         UNKNOWN = 0;
         OK = 1;
-        FAILED = 2;
-        STALE_VERSION = 3;
-        NOT_CHANGE = 4;
+        STALE_VERSION = 2;
+        NOT_CHANGE = 3;
     }
     StatusCode code = 1;
     string message = 2;
-    Version version = 3;
 }
 
 // The version is used to tell the configuration which can be shared
