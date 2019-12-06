@@ -20,7 +20,7 @@ message Status {
     enum StatusCode {
         UNKNOWN = 0;
         OK = 1;
-        STALE_VERSION = 2;
+        WRONG_VERSION = 2;
         NOT_CHANGE = 3;
     }
     StatusCode code = 1;
@@ -114,4 +114,5 @@ message DeleteRequest {
 message DeleteResponse {
     Header header = 1;
     Status status = 2;
+    Version version = 3;
 }
