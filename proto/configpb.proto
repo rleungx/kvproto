@@ -22,6 +22,8 @@ message Status {
         OK = 1;
         WRONG_VERSION = 2;
         NOT_CHANGE = 3;
+        COMPONENT_NOT_FOUND = 4;
+        COMPONENT_ID_NOT_FOUND = 5;
     }
     StatusCode code = 1;
     string message = 2;
