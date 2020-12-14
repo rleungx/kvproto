@@ -128,6 +128,7 @@ message TsoResponse {
 
     uint32 count = 2;
     Timestamp timestamp = 3;
+    uint64 cpu_usage = 4;
 }
 
 message BootstrapRequest {
