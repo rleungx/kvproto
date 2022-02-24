@@ -606,6 +606,7 @@ message StoreHeartbeatResponse {
     string cluster_version = 3;
     bool require_detailed_report = 4;
     RecoveryPlan plan = 5;
+    metapb.StoreState store_state = 6;
 }
 
 message ScatterRegionRequest {
