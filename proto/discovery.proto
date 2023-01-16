@@ -16,7 +16,13 @@ service Discovery {
 
 	rpc Deregister(DeregisterRequest) returns (DeregisterResponse) {};
 
-	rpc GetService(GetServiceRequest) returns (GetServiceResponse) {};
+	rpc Campaign(CampaignRequest) returns (CampaignResponse) {};
+
+	rpc KeepAlive(KeepAliveRequest) returns (KeepAliveResponse) {};
+
+	rpc GetServiceEndpoint(GetServiceEndpointRequest) returns (GetServiceEndpointResponse) {};
+
+	rpc GetAllServiceEndpoints(GetAllServiceEndpointsRequest) returns (GetAllServiceEndpointsResponse) {};
 }
 
 message RegisterRequest {
@@ -37,11 +43,38 @@ message DeregisterResponse {
 	Error error = 1;
 }
 
-message GetServiceRequest {
+message CampaignRequest {
+	string service_name = 1;
+	string endpoint = 2;
+}
+
+message CampaignResponse {
+	Error error = 1;
+}
+
+message KeepAliveRequest {
+	string service_name = 1;
+	string endpoint = 2;
+}
+
+message KeepAliveResponse {
+	Error error = 1;
+}
+
+message GetServiceEndpointRequest {
 	string service_name = 1;
 }
 
-message GetServiceResponse {
+message GetServiceEndpointResponse {
+	Error error = 1;
+	string endpoint = 2;
+}
+
+message GetAllServiceEndpointsRequest {
+	string service_name = 1;
+}
+
+message GetAllServiceEndpointsResponse {
 	Error error = 1;
 	repeated string endpoints = 2;
 }

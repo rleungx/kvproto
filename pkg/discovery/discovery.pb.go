@@ -232,25 +232,26 @@ func (m *DeregisterResponse) GetError() *Error {
 	return nil
 }
 
-type GetServiceRequest struct {
+type CampaignRequest struct {
 	ServiceName          string   `protobuf:"bytes,1,opt,name=service_name,json=serviceName,proto3" json:"service_name,omitempty"`
+	Endpoint             string   `protobuf:"bytes,2,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *GetServiceRequest) Reset()         { *m = GetServiceRequest{} }
-func (m *GetServiceRequest) String() string { return proto.CompactTextString(m) }
-func (*GetServiceRequest) ProtoMessage()    {}
-func (*GetServiceRequest) Descriptor() ([]byte, []int) {
+func (m *CampaignRequest) Reset()         { *m = CampaignRequest{} }
+func (m *CampaignRequest) String() string { return proto.CompactTextString(m) }
+func (*CampaignRequest) ProtoMessage()    {}
+func (*CampaignRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_1e7ff60feb39c8d0, []int{4}
 }
-func (m *GetServiceRequest) XXX_Unmarshal(b []byte) error {
+func (m *CampaignRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *GetServiceRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *CampaignRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_GetServiceRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_CampaignRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -260,26 +261,331 @@ func (m *GetServiceRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, e
 		return b[:n], nil
 	}
 }
-func (m *GetServiceRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetServiceRequest.Merge(m, src)
+func (m *CampaignRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CampaignRequest.Merge(m, src)
 }
-func (m *GetServiceRequest) XXX_Size() int {
+func (m *CampaignRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *GetServiceRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetServiceRequest.DiscardUnknown(m)
+func (m *CampaignRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_CampaignRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GetServiceRequest proto.InternalMessageInfo
+var xxx_messageInfo_CampaignRequest proto.InternalMessageInfo
 
-func (m *GetServiceRequest) GetServiceName() string {
+func (m *CampaignRequest) GetServiceName() string {
 	if m != nil {
 		return m.ServiceName
 	}
 	return ""
 }
 
-type GetServiceResponse struct {
+func (m *CampaignRequest) GetEndpoint() string {
+	if m != nil {
+		return m.Endpoint
+	}
+	return ""
+}
+
+type CampaignResponse struct {
+	Error                *Error   `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CampaignResponse) Reset()         { *m = CampaignResponse{} }
+func (m *CampaignResponse) String() string { return proto.CompactTextString(m) }
+func (*CampaignResponse) ProtoMessage()    {}
+func (*CampaignResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1e7ff60feb39c8d0, []int{5}
+}
+func (m *CampaignResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *CampaignResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_CampaignResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *CampaignResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CampaignResponse.Merge(m, src)
+}
+func (m *CampaignResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *CampaignResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_CampaignResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CampaignResponse proto.InternalMessageInfo
+
+func (m *CampaignResponse) GetError() *Error {
+	if m != nil {
+		return m.Error
+	}
+	return nil
+}
+
+type KeepAliveRequest struct {
+	ServiceName          string   `protobuf:"bytes,1,opt,name=service_name,json=serviceName,proto3" json:"service_name,omitempty"`
+	Endpoint             string   `protobuf:"bytes,2,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *KeepAliveRequest) Reset()         { *m = KeepAliveRequest{} }
+func (m *KeepAliveRequest) String() string { return proto.CompactTextString(m) }
+func (*KeepAliveRequest) ProtoMessage()    {}
+func (*KeepAliveRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1e7ff60feb39c8d0, []int{6}
+}
+func (m *KeepAliveRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *KeepAliveRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_KeepAliveRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *KeepAliveRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_KeepAliveRequest.Merge(m, src)
+}
+func (m *KeepAliveRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *KeepAliveRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_KeepAliveRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_KeepAliveRequest proto.InternalMessageInfo
+
+func (m *KeepAliveRequest) GetServiceName() string {
+	if m != nil {
+		return m.ServiceName
+	}
+	return ""
+}
+
+func (m *KeepAliveRequest) GetEndpoint() string {
+	if m != nil {
+		return m.Endpoint
+	}
+	return ""
+}
+
+type KeepAliveResponse struct {
+	Error                *Error   `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *KeepAliveResponse) Reset()         { *m = KeepAliveResponse{} }
+func (m *KeepAliveResponse) String() string { return proto.CompactTextString(m) }
+func (*KeepAliveResponse) ProtoMessage()    {}
+func (*KeepAliveResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1e7ff60feb39c8d0, []int{7}
+}
+func (m *KeepAliveResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *KeepAliveResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_KeepAliveResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *KeepAliveResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_KeepAliveResponse.Merge(m, src)
+}
+func (m *KeepAliveResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *KeepAliveResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_KeepAliveResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_KeepAliveResponse proto.InternalMessageInfo
+
+func (m *KeepAliveResponse) GetError() *Error {
+	if m != nil {
+		return m.Error
+	}
+	return nil
+}
+
+type GetServiceEndpointRequest struct {
+	ServiceName          string   `protobuf:"bytes,1,opt,name=service_name,json=serviceName,proto3" json:"service_name,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetServiceEndpointRequest) Reset()         { *m = GetServiceEndpointRequest{} }
+func (m *GetServiceEndpointRequest) String() string { return proto.CompactTextString(m) }
+func (*GetServiceEndpointRequest) ProtoMessage()    {}
+func (*GetServiceEndpointRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1e7ff60feb39c8d0, []int{8}
+}
+func (m *GetServiceEndpointRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GetServiceEndpointRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GetServiceEndpointRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *GetServiceEndpointRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetServiceEndpointRequest.Merge(m, src)
+}
+func (m *GetServiceEndpointRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *GetServiceEndpointRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetServiceEndpointRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetServiceEndpointRequest proto.InternalMessageInfo
+
+func (m *GetServiceEndpointRequest) GetServiceName() string {
+	if m != nil {
+		return m.ServiceName
+	}
+	return ""
+}
+
+type GetServiceEndpointResponse struct {
+	Error                *Error   `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
+	Endpoint             string   `protobuf:"bytes,2,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetServiceEndpointResponse) Reset()         { *m = GetServiceEndpointResponse{} }
+func (m *GetServiceEndpointResponse) String() string { return proto.CompactTextString(m) }
+func (*GetServiceEndpointResponse) ProtoMessage()    {}
+func (*GetServiceEndpointResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1e7ff60feb39c8d0, []int{9}
+}
+func (m *GetServiceEndpointResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GetServiceEndpointResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GetServiceEndpointResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *GetServiceEndpointResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetServiceEndpointResponse.Merge(m, src)
+}
+func (m *GetServiceEndpointResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *GetServiceEndpointResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetServiceEndpointResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetServiceEndpointResponse proto.InternalMessageInfo
+
+func (m *GetServiceEndpointResponse) GetError() *Error {
+	if m != nil {
+		return m.Error
+	}
+	return nil
+}
+
+func (m *GetServiceEndpointResponse) GetEndpoint() string {
+	if m != nil {
+		return m.Endpoint
+	}
+	return ""
+}
+
+type GetAllServiceEndpointsRequest struct {
+	ServiceName          string   `protobuf:"bytes,1,opt,name=service_name,json=serviceName,proto3" json:"service_name,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetAllServiceEndpointsRequest) Reset()         { *m = GetAllServiceEndpointsRequest{} }
+func (m *GetAllServiceEndpointsRequest) String() string { return proto.CompactTextString(m) }
+func (*GetAllServiceEndpointsRequest) ProtoMessage()    {}
+func (*GetAllServiceEndpointsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1e7ff60feb39c8d0, []int{10}
+}
+func (m *GetAllServiceEndpointsRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GetAllServiceEndpointsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GetAllServiceEndpointsRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *GetAllServiceEndpointsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetAllServiceEndpointsRequest.Merge(m, src)
+}
+func (m *GetAllServiceEndpointsRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *GetAllServiceEndpointsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetAllServiceEndpointsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetAllServiceEndpointsRequest proto.InternalMessageInfo
+
+func (m *GetAllServiceEndpointsRequest) GetServiceName() string {
+	if m != nil {
+		return m.ServiceName
+	}
+	return ""
+}
+
+type GetAllServiceEndpointsResponse struct {
 	Error                *Error   `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
 	Endpoints            []string `protobuf:"bytes,2,rep,name=endpoints,proto3" json:"endpoints,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -287,18 +593,18 @@ type GetServiceResponse struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *GetServiceResponse) Reset()         { *m = GetServiceResponse{} }
-func (m *GetServiceResponse) String() string { return proto.CompactTextString(m) }
-func (*GetServiceResponse) ProtoMessage()    {}
-func (*GetServiceResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1e7ff60feb39c8d0, []int{5}
+func (m *GetAllServiceEndpointsResponse) Reset()         { *m = GetAllServiceEndpointsResponse{} }
+func (m *GetAllServiceEndpointsResponse) String() string { return proto.CompactTextString(m) }
+func (*GetAllServiceEndpointsResponse) ProtoMessage()    {}
+func (*GetAllServiceEndpointsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1e7ff60feb39c8d0, []int{11}
 }
-func (m *GetServiceResponse) XXX_Unmarshal(b []byte) error {
+func (m *GetAllServiceEndpointsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *GetServiceResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *GetAllServiceEndpointsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_GetServiceResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_GetAllServiceEndpointsResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -308,26 +614,26 @@ func (m *GetServiceResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, 
 		return b[:n], nil
 	}
 }
-func (m *GetServiceResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetServiceResponse.Merge(m, src)
+func (m *GetAllServiceEndpointsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetAllServiceEndpointsResponse.Merge(m, src)
 }
-func (m *GetServiceResponse) XXX_Size() int {
+func (m *GetAllServiceEndpointsResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *GetServiceResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetServiceResponse.DiscardUnknown(m)
+func (m *GetAllServiceEndpointsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetAllServiceEndpointsResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GetServiceResponse proto.InternalMessageInfo
+var xxx_messageInfo_GetAllServiceEndpointsResponse proto.InternalMessageInfo
 
-func (m *GetServiceResponse) GetError() *Error {
+func (m *GetAllServiceEndpointsResponse) GetError() *Error {
 	if m != nil {
 		return m.Error
 	}
 	return nil
 }
 
-func (m *GetServiceResponse) GetEndpoints() []string {
+func (m *GetAllServiceEndpointsResponse) GetEndpoints() []string {
 	if m != nil {
 		return m.Endpoints
 	}
@@ -345,7 +651,7 @@ func (m *Error) Reset()         { *m = Error{} }
 func (m *Error) String() string { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1e7ff60feb39c8d0, []int{6}
+	return fileDescriptor_1e7ff60feb39c8d0, []int{12}
 }
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -386,37 +692,51 @@ func init() {
 	proto.RegisterType((*RegisterResponse)(nil), "discovery.RegisterResponse")
 	proto.RegisterType((*DeregisterRequest)(nil), "discovery.DeregisterRequest")
 	proto.RegisterType((*DeregisterResponse)(nil), "discovery.DeregisterResponse")
-	proto.RegisterType((*GetServiceRequest)(nil), "discovery.GetServiceRequest")
-	proto.RegisterType((*GetServiceResponse)(nil), "discovery.GetServiceResponse")
+	proto.RegisterType((*CampaignRequest)(nil), "discovery.CampaignRequest")
+	proto.RegisterType((*CampaignResponse)(nil), "discovery.CampaignResponse")
+	proto.RegisterType((*KeepAliveRequest)(nil), "discovery.KeepAliveRequest")
+	proto.RegisterType((*KeepAliveResponse)(nil), "discovery.KeepAliveResponse")
+	proto.RegisterType((*GetServiceEndpointRequest)(nil), "discovery.GetServiceEndpointRequest")
+	proto.RegisterType((*GetServiceEndpointResponse)(nil), "discovery.GetServiceEndpointResponse")
+	proto.RegisterType((*GetAllServiceEndpointsRequest)(nil), "discovery.GetAllServiceEndpointsRequest")
+	proto.RegisterType((*GetAllServiceEndpointsResponse)(nil), "discovery.GetAllServiceEndpointsResponse")
 	proto.RegisterType((*Error)(nil), "discovery.Error")
 }
 
 func init() { proto.RegisterFile("discovery.proto", fileDescriptor_1e7ff60feb39c8d0) }
 
 var fileDescriptor_1e7ff60feb39c8d0 = []byte{
-	// 346 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x52, 0xc1, 0x4a, 0xc3, 0x40,
-	0x10, 0xed, 0x56, 0xaa, 0xcd, 0x54, 0x68, 0x3b, 0x78, 0x08, 0xb1, 0x86, 0x76, 0x0f, 0xa5, 0xa7,
-	0x08, 0x15, 0x3c, 0x88, 0x27, 0x69, 0xf1, 0x20, 0x88, 0xc4, 0x9b, 0x17, 0xa9, 0xed, 0x10, 0x42,
-	0x69, 0xb6, 0xee, 0x6e, 0x03, 0xfe, 0x89, 0x9f, 0xe0, 0xa7, 0x78, 0xf4, 0xe8, 0x51, 0xea, 0xd5,
-	0x8f, 0x90, 0x6e, 0x4c, 0x93, 0x5a, 0x05, 0x0b, 0x9e, 0x32, 0xf3, 0xde, 0xe4, 0xcd, 0xe3, 0xcd,
-	0x42, 0x75, 0x14, 0xaa, 0xa1, 0x88, 0x49, 0x3e, 0x78, 0x53, 0x29, 0xb4, 0x40, 0x6b, 0x09, 0x38,
-	0x7b, 0x81, 0x08, 0x84, 0x41, 0x0f, 0x17, 0x55, 0x32, 0xe0, 0x54, 0xe5, 0x4c, 0x69, 0x53, 0x26,
-	0x00, 0xbf, 0x82, 0xaa, 0x4f, 0x41, 0xa8, 0x34, 0x49, 0x9f, 0xee, 0x67, 0xa4, 0x34, 0xb6, 0x60,
-	0x57, 0x91, 0x8c, 0xc3, 0x21, 0xdd, 0x46, 0x83, 0x09, 0xd9, 0xac, 0xc9, 0x3a, 0x96, 0x5f, 0xf9,
-	0xc2, 0x2e, 0x07, 0x13, 0x42, 0x07, 0xca, 0x14, 0x8d, 0xa6, 0x22, 0x8c, 0xb4, 0x5d, 0x34, 0xf4,
-	0xb2, 0xe7, 0x27, 0x50, 0xcb, 0x14, 0xd5, 0x54, 0x44, 0x8a, 0xb0, 0x0d, 0x25, 0x92, 0x52, 0x48,
-	0xa3, 0x55, 0xe9, 0xd6, 0xbc, 0xcc, 0x78, 0x7f, 0x81, 0xfb, 0x09, 0xcd, 0x7d, 0xa8, 0xf7, 0x48,
-	0xfe, 0xaf, 0x9f, 0x53, 0xc0, 0xbc, 0xe6, 0x86, 0x8e, 0x8e, 0xa1, 0x7e, 0x4e, 0xfa, 0x3a, 0xd9,
-	0xf5, 0x77, 0x47, 0xfc, 0x06, 0x30, 0xff, 0xdf, 0x66, 0x5b, 0xb1, 0x01, 0x56, 0xea, 0x5f, 0xd9,
-	0xc5, 0xe6, 0x56, 0xc7, 0xf2, 0x33, 0x80, 0xb7, 0xa0, 0x64, 0xa6, 0xd1, 0x86, 0x9d, 0x09, 0x29,
-	0x35, 0x08, 0x52, 0x0b, 0x69, 0xdb, 0xfd, 0x60, 0x60, 0xf5, 0x52, 0x6d, 0xec, 0x43, 0x39, 0x3d,
-	0x09, 0x3a, 0xb9, 0x9d, 0xdf, 0x2e, 0xef, 0xec, 0xff, 0xc8, 0x25, 0xde, 0x79, 0x01, 0x2f, 0x00,
-	0xb2, 0x24, 0xb1, 0x91, 0x1b, 0x5e, 0x3b, 0x9a, 0x73, 0xf0, 0x0b, 0x9b, 0x17, 0xcb, 0x02, 0x5a,
-	0x11, 0x5b, 0xcb, 0x7b, 0x45, 0x6c, 0x3d, 0x55, 0x5e, 0x38, 0x6b, 0xbf, 0x3e, 0x95, 0xd9, 0xf3,
-	0xdc, 0x65, 0x2f, 0x73, 0x97, 0xbd, 0xcd, 0x5d, 0xf6, 0xf8, 0xee, 0x16, 0xa0, 0x26, 0x64, 0xe0,
-	0xe9, 0x70, 0x1c, 0x7b, 0xe3, 0xd8, 0xbc, 0xf6, 0xbb, 0x6d, 0xf3, 0x39, 0xfa, 0x0c, 0x00, 0x00,
-	0xff, 0xff, 0xc0, 0x35, 0x55, 0x40, 0x39, 0x03, 0x00, 0x00,
+	// 467 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x94, 0xdf, 0x8a, 0xd3, 0x40,
+	0x14, 0xc6, 0x9b, 0xd5, 0xd5, 0xe4, 0xac, 0x90, 0xec, 0x20, 0x12, 0xc7, 0x6e, 0xd8, 0x0d, 0xba,
+	0xd4, 0x9b, 0x08, 0xeb, 0x9d, 0x8a, 0xb0, 0xeb, 0x86, 0x15, 0x16, 0x64, 0x8d, 0x0f, 0xa0, 0xb1,
+	0x7b, 0x0c, 0xa1, 0x4d, 0x26, 0xce, 0x4c, 0x03, 0xbe, 0x80, 0xcf, 0xe0, 0x23, 0xf8, 0x28, 0x5e,
+	0x7a, 0xe9, 0xa5, 0xd4, 0x17, 0x91, 0x26, 0xcd, 0x9f, 0xa6, 0x89, 0x36, 0xd0, 0xab, 0xce, 0x9c,
+	0x73, 0xe6, 0x3b, 0xbf, 0x96, 0xef, 0x2b, 0xe8, 0xd7, 0xa1, 0x18, 0xb3, 0x14, 0xf9, 0x17, 0x27,
+	0xe1, 0x4c, 0x32, 0xa2, 0x95, 0x05, 0x7a, 0x37, 0x60, 0x01, 0xcb, 0xaa, 0x4f, 0x16, 0xa7, 0x7c,
+	0x80, 0xea, 0x7c, 0x26, 0x64, 0x76, 0xcc, 0x0b, 0xf6, 0x15, 0xe8, 0x1e, 0x06, 0xa1, 0x90, 0xc8,
+	0x3d, 0xfc, 0x3c, 0x43, 0x21, 0xc9, 0x11, 0xdc, 0x11, 0xc8, 0xd3, 0x70, 0x8c, 0xef, 0x63, 0x3f,
+	0x42, 0x53, 0x39, 0x54, 0x46, 0x9a, 0xb7, 0xb7, 0xac, 0xbd, 0xf1, 0x23, 0x24, 0x14, 0x54, 0x8c,
+	0xaf, 0x13, 0x16, 0xc6, 0xd2, 0xdc, 0xc9, 0xda, 0xe5, 0xdd, 0x7e, 0x06, 0x46, 0xa5, 0x28, 0x12,
+	0x16, 0x0b, 0x24, 0xc7, 0xb0, 0x8b, 0x9c, 0x33, 0x9e, 0x69, 0xed, 0x9d, 0x18, 0x4e, 0x05, 0xee,
+	0x2e, 0xea, 0x5e, 0xde, 0xb6, 0x3d, 0xd8, 0x3f, 0x47, 0xbe, 0x5d, 0x9e, 0x17, 0x40, 0xea, 0x9a,
+	0x3d, 0x89, 0xae, 0x40, 0x7f, 0xe5, 0x47, 0x89, 0x1f, 0x06, 0xf1, 0xf6, 0x7e, 0x9f, 0x4a, 0xb1,
+	0x27, 0xcd, 0x5b, 0x30, 0x2e, 0x11, 0x93, 0xd3, 0x69, 0x98, 0xe2, 0x96, 0x70, 0x9e, 0xc3, 0x7e,
+	0x4d, 0xb2, 0x27, 0xcf, 0x4b, 0xb8, 0x7f, 0x81, 0xf2, 0x5d, 0xbe, 0xca, 0x5d, 0x4a, 0x6e, 0x0e,
+	0x66, 0x7f, 0x00, 0xda, 0xf6, 0xbe, 0x1f, 0xc5, 0x3f, 0xbf, 0xde, 0x19, 0x1c, 0x5c, 0xa0, 0x3c,
+	0x9d, 0x4e, 0x1b, 0x4b, 0x44, 0x0f, 0xca, 0x4f, 0x60, 0x75, 0x69, 0xf4, 0x24, 0x1d, 0x82, 0x56,
+	0x90, 0x09, 0x73, 0xe7, 0xf0, 0xc6, 0x48, 0xf3, 0xaa, 0x82, 0x7d, 0x04, 0xbb, 0xd9, 0x34, 0x31,
+	0xe1, 0x76, 0x84, 0x42, 0xf8, 0x41, 0x81, 0x53, 0x5c, 0x4f, 0xbe, 0xde, 0x04, 0xed, 0xbc, 0xd0,
+	0x26, 0x2e, 0xa8, 0x45, 0xd4, 0x08, 0xad, 0xed, 0x6c, 0x24, 0x9a, 0x3e, 0x68, 0xed, 0xe5, 0xec,
+	0xf6, 0x80, 0x5c, 0x02, 0x54, 0x09, 0x21, 0xc3, 0xda, 0xf0, 0x5a, 0x18, 0xe9, 0x41, 0x47, 0xb7,
+	0x14, 0x73, 0x41, 0x2d, 0xec, 0xbd, 0xc2, 0xd4, 0x48, 0xd1, 0x0a, 0x53, 0x33, 0x0f, 0xf6, 0x80,
+	0xbc, 0x06, 0xad, 0xb4, 0x25, 0xa9, 0xcf, 0x36, 0xfd, 0x4f, 0x87, 0xed, 0xcd, 0x52, 0x69, 0x0c,
+	0x64, 0xdd, 0x63, 0xe4, 0x61, 0xed, 0x55, 0xa7, 0x85, 0xe9, 0xa3, 0xff, 0x4c, 0x95, 0x4b, 0x18,
+	0xdc, 0x6b, 0xb7, 0x08, 0x19, 0xad, 0x4a, 0x74, 0x3b, 0x91, 0x3e, 0xde, 0x60, 0xb2, 0x58, 0x78,
+	0x76, 0xfc, 0xeb, 0xbb, 0xaa, 0xfc, 0x98, 0x5b, 0xca, 0xcf, 0xb9, 0xa5, 0xfc, 0x9e, 0x5b, 0xca,
+	0xb7, 0x3f, 0xd6, 0x00, 0x0c, 0xc6, 0x03, 0x47, 0x86, 0x93, 0xd4, 0x99, 0xa4, 0xd9, 0xff, 0xfb,
+	0xc7, 0x5b, 0xd9, 0xc7, 0xd3, 0xbf, 0x01, 0x00, 0x00, 0xff, 0xff, 0x0a, 0x29, 0x03, 0xa4, 0x2b,
+	0x06, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -433,7 +753,10 @@ const _ = grpc.SupportPackageIsVersion4
 type DiscoveryClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	Deregister(ctx context.Context, in *DeregisterRequest, opts ...grpc.CallOption) (*DeregisterResponse, error)
-	GetService(ctx context.Context, in *GetServiceRequest, opts ...grpc.CallOption) (*GetServiceResponse, error)
+	Campaign(ctx context.Context, in *CampaignRequest, opts ...grpc.CallOption) (*CampaignResponse, error)
+	KeepAlive(ctx context.Context, in *KeepAliveRequest, opts ...grpc.CallOption) (*KeepAliveResponse, error)
+	GetServiceEndpoint(ctx context.Context, in *GetServiceEndpointRequest, opts ...grpc.CallOption) (*GetServiceEndpointResponse, error)
+	GetAllServiceEndpoints(ctx context.Context, in *GetAllServiceEndpointsRequest, opts ...grpc.CallOption) (*GetAllServiceEndpointsResponse, error)
 }
 
 type discoveryClient struct {
@@ -462,9 +785,36 @@ func (c *discoveryClient) Deregister(ctx context.Context, in *DeregisterRequest,
 	return out, nil
 }
 
-func (c *discoveryClient) GetService(ctx context.Context, in *GetServiceRequest, opts ...grpc.CallOption) (*GetServiceResponse, error) {
-	out := new(GetServiceResponse)
-	err := c.cc.Invoke(ctx, "/discovery.Discovery/GetService", in, out, opts...)
+func (c *discoveryClient) Campaign(ctx context.Context, in *CampaignRequest, opts ...grpc.CallOption) (*CampaignResponse, error) {
+	out := new(CampaignResponse)
+	err := c.cc.Invoke(ctx, "/discovery.Discovery/Campaign", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *discoveryClient) KeepAlive(ctx context.Context, in *KeepAliveRequest, opts ...grpc.CallOption) (*KeepAliveResponse, error) {
+	out := new(KeepAliveResponse)
+	err := c.cc.Invoke(ctx, "/discovery.Discovery/KeepAlive", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *discoveryClient) GetServiceEndpoint(ctx context.Context, in *GetServiceEndpointRequest, opts ...grpc.CallOption) (*GetServiceEndpointResponse, error) {
+	out := new(GetServiceEndpointResponse)
+	err := c.cc.Invoke(ctx, "/discovery.Discovery/GetServiceEndpoint", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *discoveryClient) GetAllServiceEndpoints(ctx context.Context, in *GetAllServiceEndpointsRequest, opts ...grpc.CallOption) (*GetAllServiceEndpointsResponse, error) {
+	out := new(GetAllServiceEndpointsResponse)
+	err := c.cc.Invoke(ctx, "/discovery.Discovery/GetAllServiceEndpoints", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -475,7 +825,10 @@ func (c *discoveryClient) GetService(ctx context.Context, in *GetServiceRequest,
 type DiscoveryServer interface {
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
 	Deregister(context.Context, *DeregisterRequest) (*DeregisterResponse, error)
-	GetService(context.Context, *GetServiceRequest) (*GetServiceResponse, error)
+	Campaign(context.Context, *CampaignRequest) (*CampaignResponse, error)
+	KeepAlive(context.Context, *KeepAliveRequest) (*KeepAliveResponse, error)
+	GetServiceEndpoint(context.Context, *GetServiceEndpointRequest) (*GetServiceEndpointResponse, error)
+	GetAllServiceEndpoints(context.Context, *GetAllServiceEndpointsRequest) (*GetAllServiceEndpointsResponse, error)
 }
 
 // UnimplementedDiscoveryServer can be embedded to have forward compatible implementations.
@@ -488,8 +841,17 @@ func (*UnimplementedDiscoveryServer) Register(ctx context.Context, req *Register
 func (*UnimplementedDiscoveryServer) Deregister(ctx context.Context, req *DeregisterRequest) (*DeregisterResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Deregister not implemented")
 }
-func (*UnimplementedDiscoveryServer) GetService(ctx context.Context, req *GetServiceRequest) (*GetServiceResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetService not implemented")
+func (*UnimplementedDiscoveryServer) Campaign(ctx context.Context, req *CampaignRequest) (*CampaignResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Campaign not implemented")
+}
+func (*UnimplementedDiscoveryServer) KeepAlive(ctx context.Context, req *KeepAliveRequest) (*KeepAliveResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method KeepAlive not implemented")
+}
+func (*UnimplementedDiscoveryServer) GetServiceEndpoint(ctx context.Context, req *GetServiceEndpointRequest) (*GetServiceEndpointResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetServiceEndpoint not implemented")
+}
+func (*UnimplementedDiscoveryServer) GetAllServiceEndpoints(ctx context.Context, req *GetAllServiceEndpointsRequest) (*GetAllServiceEndpointsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllServiceEndpoints not implemented")
 }
 
 func RegisterDiscoveryServer(s *grpc.Server, srv DiscoveryServer) {
@@ -532,20 +894,74 @@ func _Discovery_Deregister_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Discovery_GetService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetServiceRequest)
+func _Discovery_Campaign_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CampaignRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DiscoveryServer).GetService(ctx, in)
+		return srv.(DiscoveryServer).Campaign(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/discovery.Discovery/GetService",
+		FullMethod: "/discovery.Discovery/Campaign",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DiscoveryServer).GetService(ctx, req.(*GetServiceRequest))
+		return srv.(DiscoveryServer).Campaign(ctx, req.(*CampaignRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Discovery_KeepAlive_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(KeepAliveRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DiscoveryServer).KeepAlive(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/discovery.Discovery/KeepAlive",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DiscoveryServer).KeepAlive(ctx, req.(*KeepAliveRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Discovery_GetServiceEndpoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetServiceEndpointRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DiscoveryServer).GetServiceEndpoint(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/discovery.Discovery/GetServiceEndpoint",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DiscoveryServer).GetServiceEndpoint(ctx, req.(*GetServiceEndpointRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Discovery_GetAllServiceEndpoints_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllServiceEndpointsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DiscoveryServer).GetAllServiceEndpoints(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/discovery.Discovery/GetAllServiceEndpoints",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DiscoveryServer).GetAllServiceEndpoints(ctx, req.(*GetAllServiceEndpointsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -563,8 +979,20 @@ var _Discovery_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Discovery_Deregister_Handler,
 		},
 		{
-			MethodName: "GetService",
-			Handler:    _Discovery_GetService_Handler,
+			MethodName: "Campaign",
+			Handler:    _Discovery_Campaign_Handler,
+		},
+		{
+			MethodName: "KeepAlive",
+			Handler:    _Discovery_KeepAlive_Handler,
+		},
+		{
+			MethodName: "GetServiceEndpoint",
+			Handler:    _Discovery_GetServiceEndpoint_Handler,
+		},
+		{
+			MethodName: "GetAllServiceEndpoints",
+			Handler:    _Discovery_GetAllServiceEndpoints_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -731,7 +1159,7 @@ func (m *DeregisterResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *GetServiceRequest) Marshal() (dAtA []byte, err error) {
+func (m *CampaignRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -741,12 +1169,172 @@ func (m *GetServiceRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *GetServiceRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *CampaignRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *GetServiceRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *CampaignRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Endpoint) > 0 {
+		i -= len(m.Endpoint)
+		copy(dAtA[i:], m.Endpoint)
+		i = encodeVarintDiscovery(dAtA, i, uint64(len(m.Endpoint)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.ServiceName) > 0 {
+		i -= len(m.ServiceName)
+		copy(dAtA[i:], m.ServiceName)
+		i = encodeVarintDiscovery(dAtA, i, uint64(len(m.ServiceName)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *CampaignResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *CampaignResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CampaignResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Error != nil {
+		{
+			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintDiscovery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *KeepAliveRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *KeepAliveRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *KeepAliveRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Endpoint) > 0 {
+		i -= len(m.Endpoint)
+		copy(dAtA[i:], m.Endpoint)
+		i = encodeVarintDiscovery(dAtA, i, uint64(len(m.Endpoint)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.ServiceName) > 0 {
+		i -= len(m.ServiceName)
+		copy(dAtA[i:], m.ServiceName)
+		i = encodeVarintDiscovery(dAtA, i, uint64(len(m.ServiceName)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *KeepAliveResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *KeepAliveResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *KeepAliveResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Error != nil {
+		{
+			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintDiscovery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *GetServiceEndpointRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetServiceEndpointRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetServiceEndpointRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -765,7 +1353,7 @@ func (m *GetServiceRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *GetServiceResponse) Marshal() (dAtA []byte, err error) {
+func (m *GetServiceEndpointResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -775,12 +1363,92 @@ func (m *GetServiceResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *GetServiceResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *GetServiceEndpointResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *GetServiceResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *GetServiceEndpointResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Endpoint) > 0 {
+		i -= len(m.Endpoint)
+		copy(dAtA[i:], m.Endpoint)
+		i = encodeVarintDiscovery(dAtA, i, uint64(len(m.Endpoint)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Error != nil {
+		{
+			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintDiscovery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *GetAllServiceEndpointsRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetAllServiceEndpointsRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetAllServiceEndpointsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.ServiceName) > 0 {
+		i -= len(m.ServiceName)
+		copy(dAtA[i:], m.ServiceName)
+		i = encodeVarintDiscovery(dAtA, i, uint64(len(m.ServiceName)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *GetAllServiceEndpointsResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetAllServiceEndpointsResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetAllServiceEndpointsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -930,7 +1598,79 @@ func (m *DeregisterResponse) Size() (n int) {
 	return n
 }
 
-func (m *GetServiceRequest) Size() (n int) {
+func (m *CampaignRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.ServiceName)
+	if l > 0 {
+		n += 1 + l + sovDiscovery(uint64(l))
+	}
+	l = len(m.Endpoint)
+	if l > 0 {
+		n += 1 + l + sovDiscovery(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *CampaignResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Error != nil {
+		l = m.Error.Size()
+		n += 1 + l + sovDiscovery(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *KeepAliveRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.ServiceName)
+	if l > 0 {
+		n += 1 + l + sovDiscovery(uint64(l))
+	}
+	l = len(m.Endpoint)
+	if l > 0 {
+		n += 1 + l + sovDiscovery(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *KeepAliveResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Error != nil {
+		l = m.Error.Size()
+		n += 1 + l + sovDiscovery(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *GetServiceEndpointRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -946,7 +1686,43 @@ func (m *GetServiceRequest) Size() (n int) {
 	return n
 }
 
-func (m *GetServiceResponse) Size() (n int) {
+func (m *GetServiceEndpointResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Error != nil {
+		l = m.Error.Size()
+		n += 1 + l + sovDiscovery(uint64(l))
+	}
+	l = len(m.Endpoint)
+	if l > 0 {
+		n += 1 + l + sovDiscovery(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *GetAllServiceEndpointsRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.ServiceName)
+	if l > 0 {
+		n += 1 + l + sovDiscovery(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *GetAllServiceEndpointsResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1394,7 +2170,7 @@ func (m *DeregisterResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *GetServiceRequest) Unmarshal(dAtA []byte) error {
+func (m *CampaignRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1417,10 +2193,414 @@ func (m *GetServiceRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: GetServiceRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: CampaignRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: GetServiceRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: CampaignRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ServiceName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDiscovery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ServiceName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Endpoint", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDiscovery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Endpoint = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDiscovery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *CampaignResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDiscovery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CampaignResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CampaignResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Error", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDiscovery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Error == nil {
+				m.Error = &Error{}
+			}
+			if err := m.Error.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDiscovery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *KeepAliveRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDiscovery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: KeepAliveRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: KeepAliveRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ServiceName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDiscovery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ServiceName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Endpoint", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDiscovery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Endpoint = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDiscovery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *KeepAliveResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDiscovery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: KeepAliveResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: KeepAliveResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Error", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDiscovery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Error == nil {
+				m.Error = &Error{}
+			}
+			if err := m.Error.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDiscovery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GetServiceEndpointRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDiscovery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetServiceEndpointRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetServiceEndpointRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1477,7 +2657,7 @@ func (m *GetServiceRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *GetServiceResponse) Unmarshal(dAtA []byte) error {
+func (m *GetServiceEndpointResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1500,10 +2680,212 @@ func (m *GetServiceResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: GetServiceResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: GetServiceEndpointResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: GetServiceResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: GetServiceEndpointResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Error", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDiscovery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Error == nil {
+				m.Error = &Error{}
+			}
+			if err := m.Error.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Endpoint", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDiscovery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Endpoint = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDiscovery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GetAllServiceEndpointsRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDiscovery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetAllServiceEndpointsRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetAllServiceEndpointsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ServiceName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDiscovery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ServiceName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDiscovery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GetAllServiceEndpointsResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDiscovery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetAllServiceEndpointsResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetAllServiceEndpointsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
