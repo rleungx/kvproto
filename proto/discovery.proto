@@ -25,6 +25,7 @@ message RegisterRequest {
 }
 
 message RegisterResponse {
+	Error error = 1;
 }
 
 message DeregisterRequest {
@@ -33,6 +34,7 @@ message DeregisterRequest {
 }
 
 message DeregisterResponse {
+	Error error = 1;
 }
 
 message GetServiceRequest {
@@ -40,5 +42,10 @@ message GetServiceRequest {
 }
 
 message GetServiceResponse {
-	repeated string endpoints = 1;
+	Error error = 1;
+	repeated string endpoints = 2;
+}
+
+message Error {
+    string message = 1;
 }
