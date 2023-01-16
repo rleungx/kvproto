@@ -1,0 +1,44 @@
+syntax = "proto3";
+package discovery;
+
+import "gogoproto/gogo.proto";
+import "rustproto.proto";
+
+option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+option (rustproto.lite_runtime_all) = true;
+
+option java_package = "org.tikv.kvproto";
+
+service Discovery {
+	rpc Register(RegisterRequest) returns (RegisterResponse) {};
+
+	rpc Deregister(DeregisterRequest) returns (DeregisterResponse) {};
+
+	rpc GetService(GetServiceRequest) returns (GetServiceResponse) {};
+}
+
+message RegisterRequest {
+	string service_name = 1;
+	string endpoint = 2;
+}
+
+message RegisterResponse {
+}
+
+message DeregisterRequest {
+	string service_name = 1;
+	string endpoint = 2;
+}
+
+message DeregisterResponse {
+}
+
+message GetServiceRequest {
+	string service_name = 1;
+}
+
+message GetServiceResponse {
+	repeated string endpoints = 1;
+}
