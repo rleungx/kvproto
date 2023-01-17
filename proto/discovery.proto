@@ -23,6 +23,8 @@ service Discovery {
 	rpc GetServiceEndpoint(GetServiceEndpointRequest) returns (GetServiceEndpointResponse) {};
 
 	rpc GetAllServiceEndpoints(GetAllServiceEndpointsRequest) returns (GetAllServiceEndpointsResponse) {};
+
+	rpc Watch(WatchRequest) returns (stream WatchResponse) {}
 }
 
 message RegisterRequest {
@@ -80,6 +82,13 @@ message GetAllServiceEndpointsRequest {
 message GetAllServiceEndpointsResponse {
 	Error error = 1;
 	repeated string endpoints = 2;
+}
+
+message WatchRequest {
+    string service_name = 1;
+}
+
+message WatchResponse {
 }
 
 message Error {
