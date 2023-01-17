@@ -18,7 +18,7 @@ service Discovery {
 
 	rpc Campaign(CampaignRequest) returns (CampaignResponse) {};
 
-	rpc KeepAlive(KeepAliveRequest) returns (KeepAliveResponse) {};
+	rpc KeepAliveOnce(KeepAliveOnceRequest) returns (KeepAliveOnceResponse) {};
 
 	rpc GetServiceEndpoint(GetServiceEndpointRequest) returns (GetServiceEndpointResponse) {};
 
@@ -46,19 +46,22 @@ message DeregisterResponse {
 message CampaignRequest {
 	string service_name = 1;
 	string endpoint = 2;
+	int64 ttl = 3;
 }
 
 message CampaignResponse {
 	Error error = 1;
+	int64 lease_id = 2;
 }
 
-message KeepAliveRequest {
-	string service_name = 1;
-	string endpoint = 2;
+message KeepAliveOnceRequest {
+	int64 lease_id = 1;
 }
 
-message KeepAliveResponse {
+message KeepAliveOnceResponse {
 	Error error = 1;
+	int64 lease_id = 2;
+	int64 ttl = 3;
 }
 
 message GetServiceEndpointRequest {

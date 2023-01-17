@@ -235,6 +235,7 @@ func (m *DeregisterResponse) GetError() *Error {
 type CampaignRequest struct {
 	ServiceName          string   `protobuf:"bytes,1,opt,name=service_name,json=serviceName,proto3" json:"service_name,omitempty"`
 	Endpoint             string   `protobuf:"bytes,2,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
+	Ttl                  int64    `protobuf:"varint,3,opt,name=ttl,proto3" json:"ttl,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -287,8 +288,16 @@ func (m *CampaignRequest) GetEndpoint() string {
 	return ""
 }
 
+func (m *CampaignRequest) GetTtl() int64 {
+	if m != nil {
+		return m.Ttl
+	}
+	return 0
+}
+
 type CampaignResponse struct {
 	Error                *Error   `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
+	LeaseId              int64    `protobuf:"varint,2,opt,name=lease_id,json=leaseId,proto3" json:"lease_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -334,26 +343,32 @@ func (m *CampaignResponse) GetError() *Error {
 	return nil
 }
 
-type KeepAliveRequest struct {
-	ServiceName          string   `protobuf:"bytes,1,opt,name=service_name,json=serviceName,proto3" json:"service_name,omitempty"`
-	Endpoint             string   `protobuf:"bytes,2,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
+func (m *CampaignResponse) GetLeaseId() int64 {
+	if m != nil {
+		return m.LeaseId
+	}
+	return 0
+}
+
+type KeepAliveOnceRequest struct {
+	LeaseId              int64    `protobuf:"varint,1,opt,name=lease_id,json=leaseId,proto3" json:"lease_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *KeepAliveRequest) Reset()         { *m = KeepAliveRequest{} }
-func (m *KeepAliveRequest) String() string { return proto.CompactTextString(m) }
-func (*KeepAliveRequest) ProtoMessage()    {}
-func (*KeepAliveRequest) Descriptor() ([]byte, []int) {
+func (m *KeepAliveOnceRequest) Reset()         { *m = KeepAliveOnceRequest{} }
+func (m *KeepAliveOnceRequest) String() string { return proto.CompactTextString(m) }
+func (*KeepAliveOnceRequest) ProtoMessage()    {}
+func (*KeepAliveOnceRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_1e7ff60feb39c8d0, []int{6}
 }
-func (m *KeepAliveRequest) XXX_Unmarshal(b []byte) error {
+func (m *KeepAliveOnceRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *KeepAliveRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *KeepAliveOnceRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_KeepAliveRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_KeepAliveOnceRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -363,51 +378,46 @@ func (m *KeepAliveRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, er
 		return b[:n], nil
 	}
 }
-func (m *KeepAliveRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_KeepAliveRequest.Merge(m, src)
+func (m *KeepAliveOnceRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_KeepAliveOnceRequest.Merge(m, src)
 }
-func (m *KeepAliveRequest) XXX_Size() int {
+func (m *KeepAliveOnceRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *KeepAliveRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_KeepAliveRequest.DiscardUnknown(m)
+func (m *KeepAliveOnceRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_KeepAliveOnceRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_KeepAliveRequest proto.InternalMessageInfo
+var xxx_messageInfo_KeepAliveOnceRequest proto.InternalMessageInfo
 
-func (m *KeepAliveRequest) GetServiceName() string {
+func (m *KeepAliveOnceRequest) GetLeaseId() int64 {
 	if m != nil {
-		return m.ServiceName
+		return m.LeaseId
 	}
-	return ""
+	return 0
 }
 
-func (m *KeepAliveRequest) GetEndpoint() string {
-	if m != nil {
-		return m.Endpoint
-	}
-	return ""
-}
-
-type KeepAliveResponse struct {
+type KeepAliveOnceResponse struct {
 	Error                *Error   `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
+	LeaseId              int64    `protobuf:"varint,2,opt,name=lease_id,json=leaseId,proto3" json:"lease_id,omitempty"`
+	Ttl                  int64    `protobuf:"varint,3,opt,name=ttl,proto3" json:"ttl,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *KeepAliveResponse) Reset()         { *m = KeepAliveResponse{} }
-func (m *KeepAliveResponse) String() string { return proto.CompactTextString(m) }
-func (*KeepAliveResponse) ProtoMessage()    {}
-func (*KeepAliveResponse) Descriptor() ([]byte, []int) {
+func (m *KeepAliveOnceResponse) Reset()         { *m = KeepAliveOnceResponse{} }
+func (m *KeepAliveOnceResponse) String() string { return proto.CompactTextString(m) }
+func (*KeepAliveOnceResponse) ProtoMessage()    {}
+func (*KeepAliveOnceResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_1e7ff60feb39c8d0, []int{7}
 }
-func (m *KeepAliveResponse) XXX_Unmarshal(b []byte) error {
+func (m *KeepAliveOnceResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *KeepAliveResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *KeepAliveOnceResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_KeepAliveResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_KeepAliveOnceResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -417,23 +427,37 @@ func (m *KeepAliveResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, e
 		return b[:n], nil
 	}
 }
-func (m *KeepAliveResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_KeepAliveResponse.Merge(m, src)
+func (m *KeepAliveOnceResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_KeepAliveOnceResponse.Merge(m, src)
 }
-func (m *KeepAliveResponse) XXX_Size() int {
+func (m *KeepAliveOnceResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *KeepAliveResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_KeepAliveResponse.DiscardUnknown(m)
+func (m *KeepAliveOnceResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_KeepAliveOnceResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_KeepAliveResponse proto.InternalMessageInfo
+var xxx_messageInfo_KeepAliveOnceResponse proto.InternalMessageInfo
 
-func (m *KeepAliveResponse) GetError() *Error {
+func (m *KeepAliveOnceResponse) GetError() *Error {
 	if m != nil {
 		return m.Error
 	}
 	return nil
+}
+
+func (m *KeepAliveOnceResponse) GetLeaseId() int64 {
+	if m != nil {
+		return m.LeaseId
+	}
+	return 0
+}
+
+func (m *KeepAliveOnceResponse) GetTtl() int64 {
+	if m != nil {
+		return m.Ttl
+	}
+	return 0
 }
 
 type GetServiceEndpointRequest struct {
@@ -694,8 +718,8 @@ func init() {
 	proto.RegisterType((*DeregisterResponse)(nil), "discovery.DeregisterResponse")
 	proto.RegisterType((*CampaignRequest)(nil), "discovery.CampaignRequest")
 	proto.RegisterType((*CampaignResponse)(nil), "discovery.CampaignResponse")
-	proto.RegisterType((*KeepAliveRequest)(nil), "discovery.KeepAliveRequest")
-	proto.RegisterType((*KeepAliveResponse)(nil), "discovery.KeepAliveResponse")
+	proto.RegisterType((*KeepAliveOnceRequest)(nil), "discovery.KeepAliveOnceRequest")
+	proto.RegisterType((*KeepAliveOnceResponse)(nil), "discovery.KeepAliveOnceResponse")
 	proto.RegisterType((*GetServiceEndpointRequest)(nil), "discovery.GetServiceEndpointRequest")
 	proto.RegisterType((*GetServiceEndpointResponse)(nil), "discovery.GetServiceEndpointResponse")
 	proto.RegisterType((*GetAllServiceEndpointsRequest)(nil), "discovery.GetAllServiceEndpointsRequest")
@@ -706,37 +730,40 @@ func init() {
 func init() { proto.RegisterFile("discovery.proto", fileDescriptor_1e7ff60feb39c8d0) }
 
 var fileDescriptor_1e7ff60feb39c8d0 = []byte{
-	// 467 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x94, 0xdf, 0x8a, 0xd3, 0x40,
-	0x14, 0xc6, 0x9b, 0xd5, 0xd5, 0xe4, 0xac, 0x90, 0xec, 0x20, 0x12, 0xc7, 0x6e, 0xd8, 0x0d, 0xba,
-	0xd4, 0x9b, 0x08, 0xeb, 0x9d, 0x8a, 0xb0, 0xeb, 0x86, 0x15, 0x16, 0x64, 0x8d, 0x0f, 0xa0, 0xb1,
-	0x7b, 0x0c, 0xa1, 0x4d, 0x26, 0xce, 0x4c, 0x03, 0xbe, 0x80, 0xcf, 0xe0, 0x23, 0xf8, 0x28, 0x5e,
-	0x7a, 0xe9, 0xa5, 0xd4, 0x17, 0x91, 0x26, 0xcd, 0x9f, 0xa6, 0x89, 0x36, 0xd0, 0xab, 0xce, 0x9c,
-	0x73, 0xe6, 0x3b, 0xbf, 0x96, 0xef, 0x2b, 0xe8, 0xd7, 0xa1, 0x18, 0xb3, 0x14, 0xf9, 0x17, 0x27,
-	0xe1, 0x4c, 0x32, 0xa2, 0x95, 0x05, 0x7a, 0x37, 0x60, 0x01, 0xcb, 0xaa, 0x4f, 0x16, 0xa7, 0x7c,
-	0x80, 0xea, 0x7c, 0x26, 0x64, 0x76, 0xcc, 0x0b, 0xf6, 0x15, 0xe8, 0x1e, 0x06, 0xa1, 0x90, 0xc8,
-	0x3d, 0xfc, 0x3c, 0x43, 0x21, 0xc9, 0x11, 0xdc, 0x11, 0xc8, 0xd3, 0x70, 0x8c, 0xef, 0x63, 0x3f,
-	0x42, 0x53, 0x39, 0x54, 0x46, 0x9a, 0xb7, 0xb7, 0xac, 0xbd, 0xf1, 0x23, 0x24, 0x14, 0x54, 0x8c,
-	0xaf, 0x13, 0x16, 0xc6, 0xd2, 0xdc, 0xc9, 0xda, 0xe5, 0xdd, 0x7e, 0x06, 0x46, 0xa5, 0x28, 0x12,
-	0x16, 0x0b, 0x24, 0xc7, 0xb0, 0x8b, 0x9c, 0x33, 0x9e, 0x69, 0xed, 0x9d, 0x18, 0x4e, 0x05, 0xee,
-	0x2e, 0xea, 0x5e, 0xde, 0xb6, 0x3d, 0xd8, 0x3f, 0x47, 0xbe, 0x5d, 0x9e, 0x17, 0x40, 0xea, 0x9a,
-	0x3d, 0x89, 0xae, 0x40, 0x7f, 0xe5, 0x47, 0x89, 0x1f, 0x06, 0xf1, 0xf6, 0x7e, 0x9f, 0x4a, 0xb1,
-	0x27, 0xcd, 0x5b, 0x30, 0x2e, 0x11, 0x93, 0xd3, 0x69, 0x98, 0xe2, 0x96, 0x70, 0x9e, 0xc3, 0x7e,
-	0x4d, 0xb2, 0x27, 0xcf, 0x4b, 0xb8, 0x7f, 0x81, 0xf2, 0x5d, 0xbe, 0xca, 0x5d, 0x4a, 0x6e, 0x0e,
-	0x66, 0x7f, 0x00, 0xda, 0xf6, 0xbe, 0x1f, 0xc5, 0x3f, 0xbf, 0xde, 0x19, 0x1c, 0x5c, 0xa0, 0x3c,
-	0x9d, 0x4e, 0x1b, 0x4b, 0x44, 0x0f, 0xca, 0x4f, 0x60, 0x75, 0x69, 0xf4, 0x24, 0x1d, 0x82, 0x56,
-	0x90, 0x09, 0x73, 0xe7, 0xf0, 0xc6, 0x48, 0xf3, 0xaa, 0x82, 0x7d, 0x04, 0xbb, 0xd9, 0x34, 0x31,
-	0xe1, 0x76, 0x84, 0x42, 0xf8, 0x41, 0x81, 0x53, 0x5c, 0x4f, 0xbe, 0xde, 0x04, 0xed, 0xbc, 0xd0,
-	0x26, 0x2e, 0xa8, 0x45, 0xd4, 0x08, 0xad, 0xed, 0x6c, 0x24, 0x9a, 0x3e, 0x68, 0xed, 0xe5, 0xec,
-	0xf6, 0x80, 0x5c, 0x02, 0x54, 0x09, 0x21, 0xc3, 0xda, 0xf0, 0x5a, 0x18, 0xe9, 0x41, 0x47, 0xb7,
-	0x14, 0x73, 0x41, 0x2d, 0xec, 0xbd, 0xc2, 0xd4, 0x48, 0xd1, 0x0a, 0x53, 0x33, 0x0f, 0xf6, 0x80,
-	0xbc, 0x06, 0xad, 0xb4, 0x25, 0xa9, 0xcf, 0x36, 0xfd, 0x4f, 0x87, 0xed, 0xcd, 0x52, 0x69, 0x0c,
-	0x64, 0xdd, 0x63, 0xe4, 0x61, 0xed, 0x55, 0xa7, 0x85, 0xe9, 0xa3, 0xff, 0x4c, 0x95, 0x4b, 0x18,
-	0xdc, 0x6b, 0xb7, 0x08, 0x19, 0xad, 0x4a, 0x74, 0x3b, 0x91, 0x3e, 0xde, 0x60, 0xb2, 0x58, 0x78,
-	0x76, 0xfc, 0xeb, 0xbb, 0xaa, 0xfc, 0x98, 0x5b, 0xca, 0xcf, 0xb9, 0xa5, 0xfc, 0x9e, 0x5b, 0xca,
-	0xb7, 0x3f, 0xd6, 0x00, 0x0c, 0xc6, 0x03, 0x47, 0x86, 0x93, 0xd4, 0x99, 0xa4, 0xd9, 0xff, 0xfb,
-	0xc7, 0x5b, 0xd9, 0xc7, 0xd3, 0xbf, 0x01, 0x00, 0x00, 0xff, 0xff, 0x0a, 0x29, 0x03, 0xa4, 0x2b,
-	0x06, 0x00, 0x00,
+	// 513 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x95, 0xcd, 0x6e, 0xd3, 0x40,
+	0x10, 0xc7, 0xe3, 0x9a, 0x52, 0x7b, 0x0a, 0x8a, 0x59, 0x15, 0xe4, 0x2e, 0xad, 0x49, 0x2d, 0xa8,
+	0xc2, 0x25, 0x88, 0x72, 0x43, 0x08, 0xa9, 0xa5, 0x51, 0x85, 0x2a, 0x01, 0x32, 0x70, 0x2e, 0x6e,
+	0x32, 0x58, 0x56, 0x1d, 0xaf, 0xd9, 0xdd, 0x5a, 0xe2, 0x35, 0x38, 0xf1, 0x08, 0x3c, 0x0a, 0x47,
+	0x8e, 0x1c, 0x51, 0x78, 0x11, 0x14, 0xbb, 0xfe, 0xac, 0x4d, 0x6b, 0x29, 0xa7, 0xec, 0xce, 0xc7,
+	0x7f, 0x7e, 0x59, 0xcd, 0x3f, 0x81, 0xfe, 0xd4, 0x17, 0x13, 0x16, 0x23, 0xff, 0x3a, 0x8a, 0x38,
+	0x93, 0x8c, 0xe8, 0x79, 0x80, 0x6e, 0x78, 0xcc, 0x63, 0x49, 0xf4, 0xc9, 0xe2, 0x94, 0x16, 0xd0,
+	0x3e, 0x3f, 0x17, 0x32, 0x39, 0xa6, 0x01, 0xfb, 0x1d, 0xf4, 0x1d, 0xf4, 0x7c, 0x21, 0x91, 0x3b,
+	0xf8, 0xe5, 0x1c, 0x85, 0x24, 0x3b, 0x70, 0x4b, 0x20, 0x8f, 0xfd, 0x09, 0x9e, 0x84, 0xee, 0x0c,
+	0x4d, 0x65, 0xa0, 0x0c, 0x75, 0x67, 0xfd, 0x22, 0xf6, 0xc6, 0x9d, 0x21, 0xa1, 0xa0, 0x61, 0x38,
+	0x8d, 0x98, 0x1f, 0x4a, 0x73, 0x25, 0x49, 0xe7, 0x77, 0xfb, 0x39, 0x18, 0x85, 0xa2, 0x88, 0x58,
+	0x28, 0x90, 0xec, 0xc2, 0x2a, 0x72, 0xce, 0x78, 0xa2, 0xb5, 0xbe, 0x67, 0x8c, 0x0a, 0xf0, 0xf1,
+	0x22, 0xee, 0xa4, 0x69, 0xdb, 0x81, 0x3b, 0x87, 0xc8, 0x97, 0xcb, 0xf3, 0x02, 0x48, 0x59, 0xb3,
+	0x23, 0xd1, 0x29, 0xf4, 0x5f, 0xb9, 0xb3, 0xc8, 0xf5, 0xbd, 0x70, 0x39, 0x3c, 0xc4, 0x00, 0x55,
+	0xca, 0xc0, 0x54, 0x07, 0xca, 0x50, 0x75, 0x16, 0x47, 0xfb, 0x23, 0x18, 0xc5, 0x8c, 0x6e, 0x7c,
+	0x64, 0x13, 0xb4, 0x00, 0x5d, 0x81, 0x27, 0xfe, 0x34, 0x99, 0xa4, 0x3a, 0x6b, 0xc9, 0xfd, 0xf5,
+	0xd4, 0x7e, 0x0a, 0x1b, 0xc7, 0x88, 0xd1, 0x7e, 0xe0, 0xc7, 0xf8, 0x36, 0x9c, 0x60, 0xc6, 0x5f,
+	0x6e, 0x51, 0xaa, 0x2d, 0x01, 0xdc, 0xad, 0xb5, 0x2c, 0x0d, 0xa7, 0xe1, 0x7b, 0xbf, 0x84, 0xcd,
+	0x23, 0x94, 0xef, 0xd3, 0x77, 0x1b, 0x5f, 0xbc, 0xcf, 0xf5, 0x5f, 0xd9, 0xfe, 0x04, 0xb4, 0xa9,
+	0xbf, 0x23, 0xf2, 0xff, 0x76, 0xe7, 0x00, 0xb6, 0x8f, 0x50, 0xee, 0x07, 0x41, 0x6d, 0x88, 0xe8,
+	0x40, 0xf9, 0x19, 0xac, 0x36, 0x8d, 0x8e, 0xa4, 0x5b, 0xa0, 0x67, 0x64, 0xc2, 0x5c, 0x19, 0xa8,
+	0x43, 0xdd, 0x29, 0x02, 0xf6, 0x0e, 0xac, 0x26, 0xd5, 0xc4, 0x84, 0xb5, 0x19, 0x0a, 0xe1, 0x7a,
+	0x19, 0x4e, 0x76, 0xdd, 0xfb, 0x76, 0x03, 0xf4, 0xc3, 0x4c, 0x9b, 0x8c, 0x41, 0xcb, 0x8c, 0x4a,
+	0x68, 0x69, 0x66, 0xed, 0xf7, 0x80, 0xde, 0x6f, 0xcc, 0xa5, 0xec, 0x76, 0x8f, 0x1c, 0x03, 0x14,
+	0xfe, 0x22, 0x5b, 0xa5, 0xe2, 0x4b, 0x56, 0xa6, 0xdb, 0x2d, 0xd9, 0x5c, 0x6c, 0x0c, 0x5a, 0x66,
+	0x85, 0x0a, 0x53, 0xcd, 0x83, 0x15, 0xa6, 0xba, 0x77, 0xec, 0x1e, 0xf9, 0x00, 0xb7, 0x2b, 0x7b,
+	0x4c, 0x1e, 0x94, 0xea, 0x9b, 0x4c, 0x41, 0x07, 0xed, 0x05, 0xb9, 0xea, 0x04, 0xc8, 0xe5, 0x7d,
+	0x23, 0x0f, 0x4b, 0x9d, 0xad, 0xeb, 0x4c, 0x1f, 0x5d, 0x51, 0x95, 0x0f, 0x61, 0x70, 0xaf, 0x79,
+	0x5d, 0xc8, 0xb0, 0x2a, 0xd1, 0xbe, 0x95, 0xf4, 0xf1, 0x35, 0x2a, 0xb3, 0x81, 0x07, 0xbb, 0xbf,
+	0x7f, 0x68, 0xca, 0xcf, 0xb9, 0xa5, 0xfc, 0x9a, 0x5b, 0xca, 0x9f, 0xb9, 0xa5, 0x7c, 0xff, 0x6b,
+	0xf5, 0xc0, 0x60, 0xdc, 0x1b, 0x49, 0xff, 0x2c, 0x1e, 0x9d, 0xc5, 0xc9, 0x3f, 0xc5, 0xe9, 0xcd,
+	0xe4, 0xe3, 0xd9, 0xbf, 0x00, 0x00, 0x00, 0xff, 0xff, 0x5b, 0xf2, 0x20, 0x2c, 0x75, 0x06, 0x00,
+	0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -754,7 +781,7 @@ type DiscoveryClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	Deregister(ctx context.Context, in *DeregisterRequest, opts ...grpc.CallOption) (*DeregisterResponse, error)
 	Campaign(ctx context.Context, in *CampaignRequest, opts ...grpc.CallOption) (*CampaignResponse, error)
-	KeepAlive(ctx context.Context, in *KeepAliveRequest, opts ...grpc.CallOption) (*KeepAliveResponse, error)
+	KeepAliveOnce(ctx context.Context, in *KeepAliveOnceRequest, opts ...grpc.CallOption) (*KeepAliveOnceResponse, error)
 	GetServiceEndpoint(ctx context.Context, in *GetServiceEndpointRequest, opts ...grpc.CallOption) (*GetServiceEndpointResponse, error)
 	GetAllServiceEndpoints(ctx context.Context, in *GetAllServiceEndpointsRequest, opts ...grpc.CallOption) (*GetAllServiceEndpointsResponse, error)
 }
@@ -794,9 +821,9 @@ func (c *discoveryClient) Campaign(ctx context.Context, in *CampaignRequest, opt
 	return out, nil
 }
 
-func (c *discoveryClient) KeepAlive(ctx context.Context, in *KeepAliveRequest, opts ...grpc.CallOption) (*KeepAliveResponse, error) {
-	out := new(KeepAliveResponse)
-	err := c.cc.Invoke(ctx, "/discovery.Discovery/KeepAlive", in, out, opts...)
+func (c *discoveryClient) KeepAliveOnce(ctx context.Context, in *KeepAliveOnceRequest, opts ...grpc.CallOption) (*KeepAliveOnceResponse, error) {
+	out := new(KeepAliveOnceResponse)
+	err := c.cc.Invoke(ctx, "/discovery.Discovery/KeepAliveOnce", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -826,7 +853,7 @@ type DiscoveryServer interface {
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
 	Deregister(context.Context, *DeregisterRequest) (*DeregisterResponse, error)
 	Campaign(context.Context, *CampaignRequest) (*CampaignResponse, error)
-	KeepAlive(context.Context, *KeepAliveRequest) (*KeepAliveResponse, error)
+	KeepAliveOnce(context.Context, *KeepAliveOnceRequest) (*KeepAliveOnceResponse, error)
 	GetServiceEndpoint(context.Context, *GetServiceEndpointRequest) (*GetServiceEndpointResponse, error)
 	GetAllServiceEndpoints(context.Context, *GetAllServiceEndpointsRequest) (*GetAllServiceEndpointsResponse, error)
 }
@@ -844,8 +871,8 @@ func (*UnimplementedDiscoveryServer) Deregister(ctx context.Context, req *Deregi
 func (*UnimplementedDiscoveryServer) Campaign(ctx context.Context, req *CampaignRequest) (*CampaignResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Campaign not implemented")
 }
-func (*UnimplementedDiscoveryServer) KeepAlive(ctx context.Context, req *KeepAliveRequest) (*KeepAliveResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method KeepAlive not implemented")
+func (*UnimplementedDiscoveryServer) KeepAliveOnce(ctx context.Context, req *KeepAliveOnceRequest) (*KeepAliveOnceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method KeepAliveOnce not implemented")
 }
 func (*UnimplementedDiscoveryServer) GetServiceEndpoint(ctx context.Context, req *GetServiceEndpointRequest) (*GetServiceEndpointResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetServiceEndpoint not implemented")
@@ -912,20 +939,20 @@ func _Discovery_Campaign_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Discovery_KeepAlive_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(KeepAliveRequest)
+func _Discovery_KeepAliveOnce_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(KeepAliveOnceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DiscoveryServer).KeepAlive(ctx, in)
+		return srv.(DiscoveryServer).KeepAliveOnce(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/discovery.Discovery/KeepAlive",
+		FullMethod: "/discovery.Discovery/KeepAliveOnce",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DiscoveryServer).KeepAlive(ctx, req.(*KeepAliveRequest))
+		return srv.(DiscoveryServer).KeepAliveOnce(ctx, req.(*KeepAliveOnceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -983,8 +1010,8 @@ var _Discovery_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Discovery_Campaign_Handler,
 		},
 		{
-			MethodName: "KeepAlive",
-			Handler:    _Discovery_KeepAlive_Handler,
+			MethodName: "KeepAliveOnce",
+			Handler:    _Discovery_KeepAliveOnce_Handler,
 		},
 		{
 			MethodName: "GetServiceEndpoint",
@@ -1183,6 +1210,11 @@ func (m *CampaignRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
+	if m.Ttl != 0 {
+		i = encodeVarintDiscovery(dAtA, i, uint64(m.Ttl))
+		i--
+		dAtA[i] = 0x18
+	}
 	if len(m.Endpoint) > 0 {
 		i -= len(m.Endpoint)
 		copy(dAtA[i:], m.Endpoint)
@@ -1224,6 +1256,11 @@ func (m *CampaignResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
+	if m.LeaseId != 0 {
+		i = encodeVarintDiscovery(dAtA, i, uint64(m.LeaseId))
+		i--
+		dAtA[i] = 0x10
+	}
 	if m.Error != nil {
 		{
 			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
@@ -1239,7 +1276,7 @@ func (m *CampaignResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *KeepAliveRequest) Marshal() (dAtA []byte, err error) {
+func (m *KeepAliveOnceRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1249,12 +1286,12 @@ func (m *KeepAliveRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *KeepAliveRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *KeepAliveOnceRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *KeepAliveRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *KeepAliveOnceRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1263,24 +1300,15 @@ func (m *KeepAliveRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.Endpoint) > 0 {
-		i -= len(m.Endpoint)
-		copy(dAtA[i:], m.Endpoint)
-		i = encodeVarintDiscovery(dAtA, i, uint64(len(m.Endpoint)))
+	if m.LeaseId != 0 {
+		i = encodeVarintDiscovery(dAtA, i, uint64(m.LeaseId))
 		i--
-		dAtA[i] = 0x12
-	}
-	if len(m.ServiceName) > 0 {
-		i -= len(m.ServiceName)
-		copy(dAtA[i:], m.ServiceName)
-		i = encodeVarintDiscovery(dAtA, i, uint64(len(m.ServiceName)))
-		i--
-		dAtA[i] = 0xa
+		dAtA[i] = 0x8
 	}
 	return len(dAtA) - i, nil
 }
 
-func (m *KeepAliveResponse) Marshal() (dAtA []byte, err error) {
+func (m *KeepAliveOnceResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1290,12 +1318,12 @@ func (m *KeepAliveResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *KeepAliveResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *KeepAliveOnceResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *KeepAliveResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *KeepAliveOnceResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1303,6 +1331,16 @@ func (m *KeepAliveResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	if m.XXX_unrecognized != nil {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Ttl != 0 {
+		i = encodeVarintDiscovery(dAtA, i, uint64(m.Ttl))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.LeaseId != 0 {
+		i = encodeVarintDiscovery(dAtA, i, uint64(m.LeaseId))
+		i--
+		dAtA[i] = 0x10
 	}
 	if m.Error != nil {
 		{
@@ -1612,6 +1650,9 @@ func (m *CampaignRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovDiscovery(uint64(l))
 	}
+	if m.Ttl != 0 {
+		n += 1 + sovDiscovery(uint64(m.Ttl))
+	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -1628,25 +1669,23 @@ func (m *CampaignResponse) Size() (n int) {
 		l = m.Error.Size()
 		n += 1 + l + sovDiscovery(uint64(l))
 	}
+	if m.LeaseId != 0 {
+		n += 1 + sovDiscovery(uint64(m.LeaseId))
+	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
 
-func (m *KeepAliveRequest) Size() (n int) {
+func (m *KeepAliveOnceRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	l = len(m.ServiceName)
-	if l > 0 {
-		n += 1 + l + sovDiscovery(uint64(l))
-	}
-	l = len(m.Endpoint)
-	if l > 0 {
-		n += 1 + l + sovDiscovery(uint64(l))
+	if m.LeaseId != 0 {
+		n += 1 + sovDiscovery(uint64(m.LeaseId))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1654,7 +1693,7 @@ func (m *KeepAliveRequest) Size() (n int) {
 	return n
 }
 
-func (m *KeepAliveResponse) Size() (n int) {
+func (m *KeepAliveOnceResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1663,6 +1702,12 @@ func (m *KeepAliveResponse) Size() (n int) {
 	if m.Error != nil {
 		l = m.Error.Size()
 		n += 1 + l + sovDiscovery(uint64(l))
+	}
+	if m.LeaseId != 0 {
+		n += 1 + sovDiscovery(uint64(m.LeaseId))
+	}
+	if m.Ttl != 0 {
+		n += 1 + sovDiscovery(uint64(m.Ttl))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -2263,6 +2308,25 @@ func (m *CampaignRequest) Unmarshal(dAtA []byte) error {
 			}
 			m.Endpoint = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Ttl", wireType)
+			}
+			m.Ttl = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDiscovery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Ttl |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipDiscovery(dAtA[iNdEx:])
@@ -2350,6 +2414,25 @@ func (m *CampaignResponse) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LeaseId", wireType)
+			}
+			m.LeaseId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDiscovery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.LeaseId |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipDiscovery(dAtA[iNdEx:])
@@ -2372,7 +2455,7 @@ func (m *CampaignResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *KeepAliveRequest) Unmarshal(dAtA []byte) error {
+func (m *KeepAliveOnceRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -2395,17 +2478,17 @@ func (m *KeepAliveRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: KeepAliveRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: KeepAliveOnceRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: KeepAliveRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: KeepAliveOnceRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ServiceName", wireType)
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LeaseId", wireType)
 			}
-			var stringLen uint64
+			m.LeaseId = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowDiscovery
@@ -2415,56 +2498,11 @@ func (m *KeepAliveRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				m.LeaseId |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthDiscovery
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthDiscovery
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.ServiceName = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Endpoint", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowDiscovery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthDiscovery
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthDiscovery
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Endpoint = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipDiscovery(dAtA[iNdEx:])
@@ -2487,7 +2525,7 @@ func (m *KeepAliveRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *KeepAliveResponse) Unmarshal(dAtA []byte) error {
+func (m *KeepAliveOnceResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -2510,10 +2548,10 @@ func (m *KeepAliveResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: KeepAliveResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: KeepAliveOnceResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: KeepAliveResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: KeepAliveOnceResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -2552,6 +2590,44 @@ func (m *KeepAliveResponse) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LeaseId", wireType)
+			}
+			m.LeaseId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDiscovery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.LeaseId |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Ttl", wireType)
+			}
+			m.Ttl = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDiscovery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Ttl |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipDiscovery(dAtA[iNdEx:])
