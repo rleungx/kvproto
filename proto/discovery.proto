@@ -16,24 +16,23 @@ service Discovery {
 
 	rpc Deregister(DeregisterRequest) returns (DeregisterResponse) {};
 
-	rpc Campaign(CampaignRequest) returns (CampaignResponse) {};
-
 	rpc KeepAliveOnce(KeepAliveOnceRequest) returns (KeepAliveOnceResponse) {};
 
 	rpc GetServiceEndpoint(GetServiceEndpointRequest) returns (GetServiceEndpointResponse) {};
 
 	rpc GetAllServiceEndpoints(GetAllServiceEndpointsRequest) returns (GetAllServiceEndpointsResponse) {};
-
-	rpc Watch(WatchRequest) returns (stream WatchResponse) {}
 }
 
 message RegisterRequest {
 	string service_name = 1;
 	string endpoint = 2;
+	int64 ttl = 3;
+	repeated KeyspaceGroup keyspace_groups = 4;
 }
 
 message RegisterResponse {
 	Error error = 1;
+	int64 lease_id = 2;
 }
 
 message DeregisterRequest {
@@ -43,17 +42,6 @@ message DeregisterRequest {
 
 message DeregisterResponse {
 	Error error = 1;
-}
-
-message CampaignRequest {
-	string service_name = 1;
-	string endpoint = 2;
-	int64 ttl = 3;
-}
-
-message CampaignResponse {
-	Error error = 1;
-	int64 lease_id = 2;
 }
 
 message KeepAliveOnceRequest {
@@ -68,6 +56,7 @@ message KeepAliveOnceResponse {
 
 message GetServiceEndpointRequest {
 	string service_name = 1;
+	string keyspace_group = 2;
 }
 
 message GetServiceEndpointResponse {
@@ -77,6 +66,7 @@ message GetServiceEndpointResponse {
 
 message GetAllServiceEndpointsRequest {
 	string service_name = 1;
+	string keyspace_group = 2;
 }
 
 message GetAllServiceEndpointsResponse {
@@ -84,13 +74,11 @@ message GetAllServiceEndpointsResponse {
 	repeated string endpoints = 2;
 }
 
-message WatchRequest {
-    string service_name = 1;
-}
-
-message WatchResponse {
-}
-
 message Error {
     string message = 1;
+}
+
+message KeyspaceGroup {
+	string name = 1;
+	int64 weight = 2;
 }

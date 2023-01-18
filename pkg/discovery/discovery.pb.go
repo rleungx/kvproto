@@ -29,11 +29,13 @@ var _ = math.Inf
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type RegisterRequest struct {
-	ServiceName          string   `protobuf:"bytes,1,opt,name=service_name,json=serviceName,proto3" json:"service_name,omitempty"`
-	Endpoint             string   `protobuf:"bytes,2,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	ServiceName          string           `protobuf:"bytes,1,opt,name=service_name,json=serviceName,proto3" json:"service_name,omitempty"`
+	Endpoint             string           `protobuf:"bytes,2,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
+	Ttl                  int64            `protobuf:"varint,3,opt,name=ttl,proto3" json:"ttl,omitempty"`
+	KeyspaceGroups       []*KeyspaceGroup `protobuf:"bytes,4,rep,name=keyspace_groups,json=keyspaceGroups,proto3" json:"keyspace_groups,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
+	XXX_unrecognized     []byte           `json:"-"`
+	XXX_sizecache        int32            `json:"-"`
 }
 
 func (m *RegisterRequest) Reset()         { *m = RegisterRequest{} }
@@ -83,8 +85,23 @@ func (m *RegisterRequest) GetEndpoint() string {
 	return ""
 }
 
+func (m *RegisterRequest) GetTtl() int64 {
+	if m != nil {
+		return m.Ttl
+	}
+	return 0
+}
+
+func (m *RegisterRequest) GetKeyspaceGroups() []*KeyspaceGroup {
+	if m != nil {
+		return m.KeyspaceGroups
+	}
+	return nil
+}
+
 type RegisterResponse struct {
 	Error                *Error   `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
+	LeaseId              int64    `protobuf:"varint,2,opt,name=lease_id,json=leaseId,proto3" json:"lease_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -128,6 +145,13 @@ func (m *RegisterResponse) GetError() *Error {
 		return m.Error
 	}
 	return nil
+}
+
+func (m *RegisterResponse) GetLeaseId() int64 {
+	if m != nil {
+		return m.LeaseId
+	}
+	return 0
 }
 
 type DeregisterRequest struct {
@@ -232,124 +256,6 @@ func (m *DeregisterResponse) GetError() *Error {
 	return nil
 }
 
-type CampaignRequest struct {
-	ServiceName          string   `protobuf:"bytes,1,opt,name=service_name,json=serviceName,proto3" json:"service_name,omitempty"`
-	Endpoint             string   `protobuf:"bytes,2,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
-	Ttl                  int64    `protobuf:"varint,3,opt,name=ttl,proto3" json:"ttl,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *CampaignRequest) Reset()         { *m = CampaignRequest{} }
-func (m *CampaignRequest) String() string { return proto.CompactTextString(m) }
-func (*CampaignRequest) ProtoMessage()    {}
-func (*CampaignRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1e7ff60feb39c8d0, []int{4}
-}
-func (m *CampaignRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *CampaignRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_CampaignRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *CampaignRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CampaignRequest.Merge(m, src)
-}
-func (m *CampaignRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *CampaignRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_CampaignRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_CampaignRequest proto.InternalMessageInfo
-
-func (m *CampaignRequest) GetServiceName() string {
-	if m != nil {
-		return m.ServiceName
-	}
-	return ""
-}
-
-func (m *CampaignRequest) GetEndpoint() string {
-	if m != nil {
-		return m.Endpoint
-	}
-	return ""
-}
-
-func (m *CampaignRequest) GetTtl() int64 {
-	if m != nil {
-		return m.Ttl
-	}
-	return 0
-}
-
-type CampaignResponse struct {
-	Error                *Error   `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
-	LeaseId              int64    `protobuf:"varint,2,opt,name=lease_id,json=leaseId,proto3" json:"lease_id,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *CampaignResponse) Reset()         { *m = CampaignResponse{} }
-func (m *CampaignResponse) String() string { return proto.CompactTextString(m) }
-func (*CampaignResponse) ProtoMessage()    {}
-func (*CampaignResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1e7ff60feb39c8d0, []int{5}
-}
-func (m *CampaignResponse) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *CampaignResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_CampaignResponse.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *CampaignResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CampaignResponse.Merge(m, src)
-}
-func (m *CampaignResponse) XXX_Size() int {
-	return m.Size()
-}
-func (m *CampaignResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_CampaignResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_CampaignResponse proto.InternalMessageInfo
-
-func (m *CampaignResponse) GetError() *Error {
-	if m != nil {
-		return m.Error
-	}
-	return nil
-}
-
-func (m *CampaignResponse) GetLeaseId() int64 {
-	if m != nil {
-		return m.LeaseId
-	}
-	return 0
-}
-
 type KeepAliveOnceRequest struct {
 	LeaseId              int64    `protobuf:"varint,1,opt,name=lease_id,json=leaseId,proto3" json:"lease_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -361,7 +267,7 @@ func (m *KeepAliveOnceRequest) Reset()         { *m = KeepAliveOnceRequest{} }
 func (m *KeepAliveOnceRequest) String() string { return proto.CompactTextString(m) }
 func (*KeepAliveOnceRequest) ProtoMessage()    {}
 func (*KeepAliveOnceRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1e7ff60feb39c8d0, []int{6}
+	return fileDescriptor_1e7ff60feb39c8d0, []int{4}
 }
 func (m *KeepAliveOnceRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -410,7 +316,7 @@ func (m *KeepAliveOnceResponse) Reset()         { *m = KeepAliveOnceResponse{} }
 func (m *KeepAliveOnceResponse) String() string { return proto.CompactTextString(m) }
 func (*KeepAliveOnceResponse) ProtoMessage()    {}
 func (*KeepAliveOnceResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1e7ff60feb39c8d0, []int{7}
+	return fileDescriptor_1e7ff60feb39c8d0, []int{5}
 }
 func (m *KeepAliveOnceResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -462,6 +368,7 @@ func (m *KeepAliveOnceResponse) GetTtl() int64 {
 
 type GetServiceEndpointRequest struct {
 	ServiceName          string   `protobuf:"bytes,1,opt,name=service_name,json=serviceName,proto3" json:"service_name,omitempty"`
+	KeyspaceGroup        string   `protobuf:"bytes,2,opt,name=keyspace_group,json=keyspaceGroup,proto3" json:"keyspace_group,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -471,7 +378,7 @@ func (m *GetServiceEndpointRequest) Reset()         { *m = GetServiceEndpointReq
 func (m *GetServiceEndpointRequest) String() string { return proto.CompactTextString(m) }
 func (*GetServiceEndpointRequest) ProtoMessage()    {}
 func (*GetServiceEndpointRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1e7ff60feb39c8d0, []int{8}
+	return fileDescriptor_1e7ff60feb39c8d0, []int{6}
 }
 func (m *GetServiceEndpointRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -507,6 +414,13 @@ func (m *GetServiceEndpointRequest) GetServiceName() string {
 	return ""
 }
 
+func (m *GetServiceEndpointRequest) GetKeyspaceGroup() string {
+	if m != nil {
+		return m.KeyspaceGroup
+	}
+	return ""
+}
+
 type GetServiceEndpointResponse struct {
 	Error                *Error   `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
 	Endpoint             string   `protobuf:"bytes,2,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
@@ -519,7 +433,7 @@ func (m *GetServiceEndpointResponse) Reset()         { *m = GetServiceEndpointRe
 func (m *GetServiceEndpointResponse) String() string { return proto.CompactTextString(m) }
 func (*GetServiceEndpointResponse) ProtoMessage()    {}
 func (*GetServiceEndpointResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1e7ff60feb39c8d0, []int{9}
+	return fileDescriptor_1e7ff60feb39c8d0, []int{7}
 }
 func (m *GetServiceEndpointResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -564,6 +478,7 @@ func (m *GetServiceEndpointResponse) GetEndpoint() string {
 
 type GetAllServiceEndpointsRequest struct {
 	ServiceName          string   `protobuf:"bytes,1,opt,name=service_name,json=serviceName,proto3" json:"service_name,omitempty"`
+	KeyspaceGroup        string   `protobuf:"bytes,2,opt,name=keyspace_group,json=keyspaceGroup,proto3" json:"keyspace_group,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -573,7 +488,7 @@ func (m *GetAllServiceEndpointsRequest) Reset()         { *m = GetAllServiceEndp
 func (m *GetAllServiceEndpointsRequest) String() string { return proto.CompactTextString(m) }
 func (*GetAllServiceEndpointsRequest) ProtoMessage()    {}
 func (*GetAllServiceEndpointsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1e7ff60feb39c8d0, []int{10}
+	return fileDescriptor_1e7ff60feb39c8d0, []int{8}
 }
 func (m *GetAllServiceEndpointsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -609,6 +524,13 @@ func (m *GetAllServiceEndpointsRequest) GetServiceName() string {
 	return ""
 }
 
+func (m *GetAllServiceEndpointsRequest) GetKeyspaceGroup() string {
+	if m != nil {
+		return m.KeyspaceGroup
+	}
+	return ""
+}
+
 type GetAllServiceEndpointsResponse struct {
 	Error                *Error   `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
 	Endpoints            []string `protobuf:"bytes,2,rep,name=endpoints,proto3" json:"endpoints,omitempty"`
@@ -621,7 +543,7 @@ func (m *GetAllServiceEndpointsResponse) Reset()         { *m = GetAllServiceEnd
 func (m *GetAllServiceEndpointsResponse) String() string { return proto.CompactTextString(m) }
 func (*GetAllServiceEndpointsResponse) ProtoMessage()    {}
 func (*GetAllServiceEndpointsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1e7ff60feb39c8d0, []int{11}
+	return fileDescriptor_1e7ff60feb39c8d0, []int{9}
 }
 func (m *GetAllServiceEndpointsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -664,92 +586,6 @@ func (m *GetAllServiceEndpointsResponse) GetEndpoints() []string {
 	return nil
 }
 
-type WatchRequest struct {
-	ServiceName          string   `protobuf:"bytes,1,opt,name=service_name,json=serviceName,proto3" json:"service_name,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *WatchRequest) Reset()         { *m = WatchRequest{} }
-func (m *WatchRequest) String() string { return proto.CompactTextString(m) }
-func (*WatchRequest) ProtoMessage()    {}
-func (*WatchRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1e7ff60feb39c8d0, []int{12}
-}
-func (m *WatchRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *WatchRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_WatchRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *WatchRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WatchRequest.Merge(m, src)
-}
-func (m *WatchRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *WatchRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_WatchRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_WatchRequest proto.InternalMessageInfo
-
-func (m *WatchRequest) GetServiceName() string {
-	if m != nil {
-		return m.ServiceName
-	}
-	return ""
-}
-
-type WatchResponse struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *WatchResponse) Reset()         { *m = WatchResponse{} }
-func (m *WatchResponse) String() string { return proto.CompactTextString(m) }
-func (*WatchResponse) ProtoMessage()    {}
-func (*WatchResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1e7ff60feb39c8d0, []int{13}
-}
-func (m *WatchResponse) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *WatchResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_WatchResponse.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *WatchResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WatchResponse.Merge(m, src)
-}
-func (m *WatchResponse) XXX_Size() int {
-	return m.Size()
-}
-func (m *WatchResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_WatchResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_WatchResponse proto.InternalMessageInfo
-
 type Error struct {
 	Message              string   `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -761,7 +597,7 @@ func (m *Error) Reset()         { *m = Error{} }
 func (m *Error) String() string { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()    {}
 func (*Error) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1e7ff60feb39c8d0, []int{14}
+	return fileDescriptor_1e7ff60feb39c8d0, []int{10}
 }
 func (m *Error) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -797,63 +633,115 @@ func (m *Error) GetMessage() string {
 	return ""
 }
 
+type KeyspaceGroup struct {
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Weight               int64    `protobuf:"varint,2,opt,name=weight,proto3" json:"weight,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *KeyspaceGroup) Reset()         { *m = KeyspaceGroup{} }
+func (m *KeyspaceGroup) String() string { return proto.CompactTextString(m) }
+func (*KeyspaceGroup) ProtoMessage()    {}
+func (*KeyspaceGroup) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1e7ff60feb39c8d0, []int{11}
+}
+func (m *KeyspaceGroup) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *KeyspaceGroup) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_KeyspaceGroup.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *KeyspaceGroup) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_KeyspaceGroup.Merge(m, src)
+}
+func (m *KeyspaceGroup) XXX_Size() int {
+	return m.Size()
+}
+func (m *KeyspaceGroup) XXX_DiscardUnknown() {
+	xxx_messageInfo_KeyspaceGroup.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_KeyspaceGroup proto.InternalMessageInfo
+
+func (m *KeyspaceGroup) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *KeyspaceGroup) GetWeight() int64 {
+	if m != nil {
+		return m.Weight
+	}
+	return 0
+}
+
 func init() {
 	proto.RegisterType((*RegisterRequest)(nil), "discovery.RegisterRequest")
 	proto.RegisterType((*RegisterResponse)(nil), "discovery.RegisterResponse")
 	proto.RegisterType((*DeregisterRequest)(nil), "discovery.DeregisterRequest")
 	proto.RegisterType((*DeregisterResponse)(nil), "discovery.DeregisterResponse")
-	proto.RegisterType((*CampaignRequest)(nil), "discovery.CampaignRequest")
-	proto.RegisterType((*CampaignResponse)(nil), "discovery.CampaignResponse")
 	proto.RegisterType((*KeepAliveOnceRequest)(nil), "discovery.KeepAliveOnceRequest")
 	proto.RegisterType((*KeepAliveOnceResponse)(nil), "discovery.KeepAliveOnceResponse")
 	proto.RegisterType((*GetServiceEndpointRequest)(nil), "discovery.GetServiceEndpointRequest")
 	proto.RegisterType((*GetServiceEndpointResponse)(nil), "discovery.GetServiceEndpointResponse")
 	proto.RegisterType((*GetAllServiceEndpointsRequest)(nil), "discovery.GetAllServiceEndpointsRequest")
 	proto.RegisterType((*GetAllServiceEndpointsResponse)(nil), "discovery.GetAllServiceEndpointsResponse")
-	proto.RegisterType((*WatchRequest)(nil), "discovery.WatchRequest")
-	proto.RegisterType((*WatchResponse)(nil), "discovery.WatchResponse")
 	proto.RegisterType((*Error)(nil), "discovery.Error")
+	proto.RegisterType((*KeyspaceGroup)(nil), "discovery.KeyspaceGroup")
 }
 
 func init() { proto.RegisterFile("discovery.proto", fileDescriptor_1e7ff60feb39c8d0) }
 
 var fileDescriptor_1e7ff60feb39c8d0 = []byte{
-	// 549 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x95, 0xcf, 0x6e, 0xd3, 0x4e,
-	0x10, 0xc7, 0xe3, 0xe6, 0x97, 0x5f, 0x93, 0x69, 0xab, 0x84, 0x55, 0x01, 0x77, 0x69, 0x43, 0x6a,
-	0x41, 0x15, 0x2e, 0x81, 0x96, 0x1b, 0x42, 0x95, 0x5a, 0x1a, 0x55, 0xa8, 0x12, 0x20, 0x03, 0xe2,
-	0x58, 0xdc, 0x64, 0x30, 0x56, 0x1d, 0xaf, 0xd9, 0xdd, 0x5a, 0xe2, 0x4d, 0x78, 0x04, 0x1e, 0x85,
-	0x23, 0xe2, 0xc4, 0x11, 0x85, 0x17, 0x41, 0x59, 0xc7, 0x7f, 0x63, 0x43, 0x2d, 0xe5, 0xd4, 0xdd,
-	0x99, 0xf9, 0xce, 0x7c, 0xba, 0x9a, 0xaf, 0x03, 0xed, 0xb1, 0x23, 0x46, 0x2c, 0x40, 0xfe, 0x79,
-	0xe0, 0x73, 0x26, 0x19, 0x69, 0xc5, 0x01, 0xba, 0x69, 0x33, 0x9b, 0xa9, 0xe8, 0xc3, 0xd9, 0x29,
-	0x2c, 0xa0, 0x6d, 0x7e, 0x25, 0xa4, 0x3a, 0x86, 0x01, 0xe3, 0x15, 0xb4, 0x4d, 0xb4, 0x1d, 0x21,
-	0x91, 0x9b, 0xf8, 0xe9, 0x0a, 0x85, 0x24, 0xbb, 0xb0, 0x2e, 0x90, 0x07, 0xce, 0x08, 0xcf, 0x3d,
-	0x6b, 0x82, 0xba, 0xd6, 0xd3, 0xfa, 0x2d, 0x73, 0x6d, 0x1e, 0x7b, 0x61, 0x4d, 0x90, 0x50, 0x68,
-	0xa2, 0x37, 0xf6, 0x99, 0xe3, 0x49, 0x7d, 0x45, 0xa5, 0xe3, 0xbb, 0xf1, 0x04, 0x3a, 0x49, 0x47,
-	0xe1, 0x33, 0x4f, 0x20, 0xd9, 0x83, 0x06, 0x72, 0xce, 0xb8, 0xea, 0xb5, 0x76, 0xd0, 0x19, 0x24,
-	0xe0, 0xc3, 0x59, 0xdc, 0x0c, 0xd3, 0x86, 0x09, 0x37, 0x4e, 0x90, 0x2f, 0x97, 0xe7, 0x29, 0x90,
-	0x74, 0xcf, 0x8a, 0x44, 0x17, 0xd0, 0x7e, 0x66, 0x4d, 0x7c, 0xcb, 0xb1, 0xbd, 0xe5, 0xf0, 0x90,
-	0x0e, 0xd4, 0xa5, 0x74, 0xf5, 0x7a, 0x4f, 0xeb, 0xd7, 0xcd, 0xd9, 0xd1, 0x78, 0x0b, 0x9d, 0x64,
-	0x46, 0x35, 0x3e, 0xb2, 0x05, 0x4d, 0x17, 0x2d, 0x81, 0xe7, 0xce, 0x58, 0x4d, 0xaa, 0x9b, 0xab,
-	0xea, 0xfe, 0x7c, 0x6c, 0xec, 0xc3, 0xe6, 0x19, 0xa2, 0x7f, 0xe4, 0x3a, 0x01, 0xbe, 0xf4, 0x46,
-	0x18, 0xf1, 0xa7, 0x25, 0x5a, 0x56, 0xe2, 0xc2, 0xcd, 0x9c, 0x64, 0x69, 0x38, 0x05, 0xff, 0xf7,
-	0x21, 0x6c, 0x9d, 0xa2, 0x7c, 0x1d, 0xbe, 0xdb, 0x70, 0xfe, 0x3e, 0xd7, 0x7f, 0x65, 0xe3, 0x3d,
-	0xd0, 0x22, 0x7d, 0x45, 0xe4, 0xbf, 0xed, 0xce, 0x31, 0xec, 0x9c, 0xa2, 0x3c, 0x72, 0xdd, 0xdc,
-	0x10, 0x51, 0x81, 0xf2, 0x03, 0x74, 0xcb, 0x7a, 0x54, 0x24, 0xdd, 0x86, 0x56, 0x44, 0x26, 0xf4,
-	0x95, 0x5e, 0xbd, 0xdf, 0x32, 0x93, 0x80, 0xb1, 0x0f, 0xeb, 0xef, 0x2c, 0x39, 0xfa, 0x58, 0x01,
-	0xad, 0x0d, 0x1b, 0x73, 0x49, 0x48, 0x62, 0xec, 0x42, 0x43, 0x4d, 0x24, 0x3a, 0xac, 0x4e, 0x50,
-	0x08, 0xcb, 0x8e, 0x74, 0xd1, 0xf5, 0xe0, 0xc7, 0x7f, 0xd0, 0x3a, 0x89, 0xf8, 0xc8, 0x10, 0x9a,
-	0x91, 0xd9, 0x09, 0x4d, 0x71, 0xe7, 0xbe, 0x29, 0xf4, 0x4e, 0x61, 0x6e, 0x3e, 0xb5, 0x46, 0xce,
-	0x00, 0x12, 0x8f, 0x92, 0xed, 0x54, 0xf1, 0xc2, 0xe7, 0x80, 0xee, 0x94, 0x64, 0xe3, 0x66, 0x43,
-	0x68, 0x46, 0x76, 0xca, 0x30, 0xe5, 0x7c, 0x9c, 0x61, 0xca, 0xfb, 0xcf, 0xa8, 0x91, 0x37, 0xb0,
-	0x91, 0xf1, 0x02, 0xb9, 0x9b, 0xaa, 0x2f, 0x32, 0x16, 0xed, 0x95, 0x17, 0xc4, 0x5d, 0x47, 0x40,
-	0x16, 0x77, 0x96, 0xdc, 0x4b, 0x29, 0x4b, 0x2d, 0x41, 0xef, 0xff, 0xa3, 0x2a, 0x1e, 0xc2, 0xe0,
-	0x56, 0xf1, 0xca, 0x91, 0x7e, 0xb6, 0x45, 0xf9, 0x66, 0xd3, 0x07, 0xd7, 0xa8, 0x8c, 0x07, 0x1e,
-	0x42, 0x43, 0x2d, 0x12, 0xb9, 0x9d, 0x52, 0xa5, 0xb7, 0x91, 0xea, 0x8b, 0x89, 0x48, 0xfd, 0x48,
-	0x3b, 0xde, 0xfb, 0xf9, 0xb5, 0xa9, 0x7d, 0x9b, 0x76, 0xb5, 0xef, 0xd3, 0xae, 0xf6, 0x6b, 0xda,
-	0xd5, 0xbe, 0xfc, 0xee, 0xd6, 0xa0, 0xc3, 0xb8, 0x3d, 0x90, 0xce, 0x65, 0x30, 0xb8, 0x0c, 0xd4,
-	0xaf, 0xd5, 0xc5, 0xff, 0xea, 0xcf, 0xe3, 0x3f, 0x01, 0x00, 0x00, 0xff, 0xff, 0x8d, 0xcb, 0x2b,
-	0x74, 0xf9, 0x06, 0x00, 0x00,
+	// 551 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x55, 0xcd, 0x8e, 0x12, 0x41,
+	0x10, 0xde, 0xd9, 0xd9, 0x1f, 0xa8, 0x75, 0x17, 0xac, 0xac, 0x9b, 0xd9, 0x76, 0x17, 0xd9, 0x8e,
+	0xbb, 0xc1, 0x0b, 0x46, 0x3c, 0xea, 0x05, 0xb3, 0x84, 0x18, 0x12, 0x4d, 0x46, 0x3d, 0x23, 0x42,
+	0x39, 0x4e, 0x18, 0xe8, 0xb1, 0xbb, 0xc1, 0xec, 0x9b, 0xf8, 0x02, 0x26, 0x3e, 0x8a, 0x89, 0x17,
+	0x8f, 0x1e, 0x0d, 0xbe, 0x88, 0xa1, 0x99, 0x81, 0x19, 0x7e, 0x54, 0x12, 0x4e, 0x74, 0x55, 0x7d,
+	0x53, 0xf5, 0x7d, 0xd5, 0x55, 0x0d, 0xe4, 0x3a, 0xbe, 0x6a, 0x8b, 0x21, 0xc9, 0x9b, 0x72, 0x28,
+	0x85, 0x16, 0x98, 0x9d, 0x3a, 0xd8, 0xb1, 0x27, 0x3c, 0x61, 0xbc, 0x0f, 0xc7, 0xa7, 0x09, 0x80,
+	0xe5, 0xe4, 0x40, 0x69, 0x73, 0x9c, 0x38, 0xf8, 0x17, 0x0b, 0x72, 0x2e, 0x79, 0xbe, 0xd2, 0x24,
+	0x5d, 0xfa, 0x38, 0x20, 0xa5, 0xf1, 0x02, 0x6e, 0x29, 0x92, 0x43, 0xbf, 0x4d, 0xcd, 0x7e, 0xab,
+	0x47, 0x8e, 0x55, 0xb4, 0x4a, 0x59, 0xf7, 0x20, 0xf2, 0xbd, 0x68, 0xf5, 0x08, 0x19, 0x64, 0xa8,
+	0xdf, 0x09, 0x85, 0xdf, 0xd7, 0xce, 0xb6, 0x09, 0x4f, 0x6d, 0xcc, 0x83, 0xad, 0x75, 0xe0, 0xd8,
+	0x45, 0xab, 0x64, 0xbb, 0xe3, 0x23, 0x56, 0x21, 0xd7, 0xa5, 0x1b, 0x15, 0xb6, 0xda, 0xd4, 0xf4,
+	0xa4, 0x18, 0x84, 0xca, 0xd9, 0x29, 0xda, 0xa5, 0x83, 0x8a, 0x53, 0x9e, 0x29, 0x68, 0x44, 0x88,
+	0xfa, 0x18, 0xe0, 0x1e, 0x75, 0x93, 0xa6, 0xe2, 0x6f, 0x20, 0x3f, 0xa3, 0xa9, 0x42, 0xd1, 0x57,
+	0x84, 0x57, 0xb0, 0x4b, 0x52, 0x0a, 0x69, 0x08, 0x1e, 0x54, 0xf2, 0x89, 0x64, 0xb5, 0xb1, 0xdf,
+	0x9d, 0x84, 0xf1, 0x14, 0x32, 0x01, 0xb5, 0x14, 0x35, 0xfd, 0x8e, 0x21, 0x6b, 0xbb, 0xfb, 0xc6,
+	0x7e, 0xde, 0xe1, 0x2e, 0xdc, 0xbe, 0x26, 0xb9, 0x51, 0xfd, 0xfc, 0x29, 0x60, 0x32, 0xe7, 0x7a,
+	0x64, 0xf9, 0x23, 0x38, 0x6e, 0x10, 0x85, 0xd5, 0xc0, 0x1f, 0xd2, 0xcb, 0x7e, 0x9b, 0x62, 0x52,
+	0x49, 0x11, 0x56, 0x5a, 0x44, 0x00, 0x77, 0xe6, 0x3e, 0xd9, 0x58, 0x83, 0x16, 0x2f, 0x93, 0x13,
+	0x9c, 0xd6, 0x49, 0xbf, 0x9a, 0x34, 0xa3, 0x16, 0x89, 0x5e, 0xa3, 0x75, 0x97, 0x70, 0x94, 0x1e,
+	0x86, 0xa8, 0x81, 0x87, 0xa9, 0x1b, 0xe7, 0x6f, 0x81, 0x2d, 0x2b, 0xb3, 0xa6, 0xb2, 0xbf, 0xdd,
+	0x93, 0x0f, 0xe7, 0x75, 0xd2, 0xd5, 0x20, 0x98, 0x2b, 0xa2, 0x36, 0x2f, 0xe6, 0x3d, 0x14, 0x56,
+	0x95, 0x5a, 0x53, 0xd0, 0x19, 0x64, 0x63, 0x01, 0xca, 0xd9, 0x2e, 0xda, 0xa5, 0xac, 0x3b, 0x73,
+	0xf0, 0x0b, 0xd8, 0x35, 0x68, 0x74, 0x60, 0xbf, 0x47, 0x4a, 0xb5, 0xbc, 0x98, 0x75, 0x6c, 0xf2,
+	0x27, 0x70, 0x98, 0xda, 0x34, 0x44, 0xd8, 0x49, 0xa8, 0x33, 0x67, 0x3c, 0x81, 0xbd, 0x4f, 0xe4,
+	0x7b, 0x1f, 0x74, 0x34, 0x0e, 0x91, 0x55, 0xf9, 0x6e, 0x43, 0xf6, 0x3a, 0x26, 0x86, 0x35, 0xc8,
+	0xc4, 0x3b, 0x89, 0x2c, 0x41, 0x78, 0xee, 0x3d, 0x61, 0x77, 0x97, 0xc6, 0x26, 0xc2, 0xf9, 0x16,
+	0x36, 0x00, 0x66, 0xfb, 0x82, 0x67, 0x09, 0xf0, 0xc2, 0x6a, 0xb2, 0xf3, 0x15, 0xd1, 0x69, 0xb2,
+	0xd7, 0x63, 0x79, 0x89, 0x5d, 0xc0, 0x7b, 0xa9, 0x27, 0x66, 0x71, 0xb1, 0x58, 0x71, 0x35, 0x60,
+	0x9a, 0xb5, 0x0d, 0xb8, 0x38, 0x8c, 0x78, 0x3f, 0xf1, 0xe5, 0xca, 0x95, 0x60, 0x97, 0xff, 0x40,
+	0x4d, 0x8b, 0x08, 0x38, 0x59, 0x3e, 0x24, 0x58, 0x4a, 0xa7, 0x58, 0x3d, 0xb2, 0xec, 0xc1, 0x7f,
+	0x20, 0xe3, 0x82, 0xcf, 0xae, 0x7e, 0x7e, 0xcd, 0x58, 0xdf, 0x46, 0x05, 0xeb, 0xc7, 0xa8, 0x60,
+	0xfd, 0x1a, 0x15, 0xac, 0xcf, 0xbf, 0x0b, 0x5b, 0x90, 0x17, 0xd2, 0x2b, 0x6b, 0xbf, 0x3b, 0x2c,
+	0x77, 0x87, 0xe6, 0x3f, 0xe2, 0xdd, 0x9e, 0xf9, 0x79, 0xfc, 0x27, 0x00, 0x00, 0xff, 0xff, 0x7e,
+	0xe7, 0x17, 0xdc, 0x6f, 0x06, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -870,11 +758,9 @@ const _ = grpc.SupportPackageIsVersion4
 type DiscoveryClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	Deregister(ctx context.Context, in *DeregisterRequest, opts ...grpc.CallOption) (*DeregisterResponse, error)
-	Campaign(ctx context.Context, in *CampaignRequest, opts ...grpc.CallOption) (*CampaignResponse, error)
 	KeepAliveOnce(ctx context.Context, in *KeepAliveOnceRequest, opts ...grpc.CallOption) (*KeepAliveOnceResponse, error)
 	GetServiceEndpoint(ctx context.Context, in *GetServiceEndpointRequest, opts ...grpc.CallOption) (*GetServiceEndpointResponse, error)
 	GetAllServiceEndpoints(ctx context.Context, in *GetAllServiceEndpointsRequest, opts ...grpc.CallOption) (*GetAllServiceEndpointsResponse, error)
-	Watch(ctx context.Context, in *WatchRequest, opts ...grpc.CallOption) (Discovery_WatchClient, error)
 }
 
 type discoveryClient struct {
@@ -897,15 +783,6 @@ func (c *discoveryClient) Register(ctx context.Context, in *RegisterRequest, opt
 func (c *discoveryClient) Deregister(ctx context.Context, in *DeregisterRequest, opts ...grpc.CallOption) (*DeregisterResponse, error) {
 	out := new(DeregisterResponse)
 	err := c.cc.Invoke(ctx, "/discovery.Discovery/Deregister", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *discoveryClient) Campaign(ctx context.Context, in *CampaignRequest, opts ...grpc.CallOption) (*CampaignResponse, error) {
-	out := new(CampaignResponse)
-	err := c.cc.Invoke(ctx, "/discovery.Discovery/Campaign", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -939,47 +816,13 @@ func (c *discoveryClient) GetAllServiceEndpoints(ctx context.Context, in *GetAll
 	return out, nil
 }
 
-func (c *discoveryClient) Watch(ctx context.Context, in *WatchRequest, opts ...grpc.CallOption) (Discovery_WatchClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_Discovery_serviceDesc.Streams[0], "/discovery.Discovery/Watch", opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &discoveryWatchClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type Discovery_WatchClient interface {
-	Recv() (*WatchResponse, error)
-	grpc.ClientStream
-}
-
-type discoveryWatchClient struct {
-	grpc.ClientStream
-}
-
-func (x *discoveryWatchClient) Recv() (*WatchResponse, error) {
-	m := new(WatchResponse)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
 // DiscoveryServer is the server API for Discovery service.
 type DiscoveryServer interface {
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
 	Deregister(context.Context, *DeregisterRequest) (*DeregisterResponse, error)
-	Campaign(context.Context, *CampaignRequest) (*CampaignResponse, error)
 	KeepAliveOnce(context.Context, *KeepAliveOnceRequest) (*KeepAliveOnceResponse, error)
 	GetServiceEndpoint(context.Context, *GetServiceEndpointRequest) (*GetServiceEndpointResponse, error)
 	GetAllServiceEndpoints(context.Context, *GetAllServiceEndpointsRequest) (*GetAllServiceEndpointsResponse, error)
-	Watch(*WatchRequest, Discovery_WatchServer) error
 }
 
 // UnimplementedDiscoveryServer can be embedded to have forward compatible implementations.
@@ -992,9 +835,6 @@ func (*UnimplementedDiscoveryServer) Register(ctx context.Context, req *Register
 func (*UnimplementedDiscoveryServer) Deregister(ctx context.Context, req *DeregisterRequest) (*DeregisterResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Deregister not implemented")
 }
-func (*UnimplementedDiscoveryServer) Campaign(ctx context.Context, req *CampaignRequest) (*CampaignResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Campaign not implemented")
-}
 func (*UnimplementedDiscoveryServer) KeepAliveOnce(ctx context.Context, req *KeepAliveOnceRequest) (*KeepAliveOnceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method KeepAliveOnce not implemented")
 }
@@ -1003,9 +843,6 @@ func (*UnimplementedDiscoveryServer) GetServiceEndpoint(ctx context.Context, req
 }
 func (*UnimplementedDiscoveryServer) GetAllServiceEndpoints(ctx context.Context, req *GetAllServiceEndpointsRequest) (*GetAllServiceEndpointsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllServiceEndpoints not implemented")
-}
-func (*UnimplementedDiscoveryServer) Watch(req *WatchRequest, srv Discovery_WatchServer) error {
-	return status.Errorf(codes.Unimplemented, "method Watch not implemented")
 }
 
 func RegisterDiscoveryServer(s *grpc.Server, srv DiscoveryServer) {
@@ -1044,24 +881,6 @@ func _Discovery_Deregister_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DiscoveryServer).Deregister(ctx, req.(*DeregisterRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Discovery_Campaign_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CampaignRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DiscoveryServer).Campaign(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/discovery.Discovery/Campaign",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DiscoveryServer).Campaign(ctx, req.(*CampaignRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1120,27 +939,6 @@ func _Discovery_GetAllServiceEndpoints_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Discovery_Watch_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(WatchRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(DiscoveryServer).Watch(m, &discoveryWatchServer{stream})
-}
-
-type Discovery_WatchServer interface {
-	Send(*WatchResponse) error
-	grpc.ServerStream
-}
-
-type discoveryWatchServer struct {
-	grpc.ServerStream
-}
-
-func (x *discoveryWatchServer) Send(m *WatchResponse) error {
-	return x.ServerStream.SendMsg(m)
-}
-
 var _Discovery_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "discovery.Discovery",
 	HandlerType: (*DiscoveryServer)(nil),
@@ -1152,10 +950,6 @@ var _Discovery_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Deregister",
 			Handler:    _Discovery_Deregister_Handler,
-		},
-		{
-			MethodName: "Campaign",
-			Handler:    _Discovery_Campaign_Handler,
 		},
 		{
 			MethodName: "KeepAliveOnce",
@@ -1170,13 +964,7 @@ var _Discovery_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Discovery_GetAllServiceEndpoints_Handler,
 		},
 	},
-	Streams: []grpc.StreamDesc{
-		{
-			StreamName:    "Watch",
-			Handler:       _Discovery_Watch_Handler,
-			ServerStreams: true,
-		},
-	},
+	Streams:  []grpc.StreamDesc{},
 	Metadata: "discovery.proto",
 }
 
@@ -1203,6 +991,25 @@ func (m *RegisterRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	if m.XXX_unrecognized != nil {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.KeyspaceGroups) > 0 {
+		for iNdEx := len(m.KeyspaceGroups) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.KeyspaceGroups[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintDiscovery(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x22
+		}
+	}
+	if m.Ttl != 0 {
+		i = encodeVarintDiscovery(dAtA, i, uint64(m.Ttl))
+		i--
+		dAtA[i] = 0x18
 	}
 	if len(m.Endpoint) > 0 {
 		i -= len(m.Endpoint)
@@ -1244,6 +1051,11 @@ func (m *RegisterResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	if m.XXX_unrecognized != nil {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.LeaseId != 0 {
+		i = encodeVarintDiscovery(dAtA, i, uint64(m.LeaseId))
+		i--
+		dAtA[i] = 0x10
 	}
 	if m.Error != nil {
 		{
@@ -1324,96 +1136,6 @@ func (m *DeregisterResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	if m.XXX_unrecognized != nil {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.Error != nil {
-		{
-			size, err := m.Error.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintDiscovery(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *CampaignRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *CampaignRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *CampaignRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.Ttl != 0 {
-		i = encodeVarintDiscovery(dAtA, i, uint64(m.Ttl))
-		i--
-		dAtA[i] = 0x18
-	}
-	if len(m.Endpoint) > 0 {
-		i -= len(m.Endpoint)
-		copy(dAtA[i:], m.Endpoint)
-		i = encodeVarintDiscovery(dAtA, i, uint64(len(m.Endpoint)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if len(m.ServiceName) > 0 {
-		i -= len(m.ServiceName)
-		copy(dAtA[i:], m.ServiceName)
-		i = encodeVarintDiscovery(dAtA, i, uint64(len(m.ServiceName)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *CampaignResponse) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *CampaignResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *CampaignResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.LeaseId != 0 {
-		i = encodeVarintDiscovery(dAtA, i, uint64(m.LeaseId))
-		i--
-		dAtA[i] = 0x10
 	}
 	if m.Error != nil {
 		{
@@ -1535,6 +1257,13 @@ func (m *GetServiceEndpointRequest) MarshalToSizedBuffer(dAtA []byte) (int, erro
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
+	if len(m.KeyspaceGroup) > 0 {
+		i -= len(m.KeyspaceGroup)
+		copy(dAtA[i:], m.KeyspaceGroup)
+		i = encodeVarintDiscovery(dAtA, i, uint64(len(m.KeyspaceGroup)))
+		i--
+		dAtA[i] = 0x12
+	}
 	if len(m.ServiceName) > 0 {
 		i -= len(m.ServiceName)
 		copy(dAtA[i:], m.ServiceName)
@@ -1615,6 +1344,13 @@ func (m *GetAllServiceEndpointsRequest) MarshalToSizedBuffer(dAtA []byte) (int, 
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
+	if len(m.KeyspaceGroup) > 0 {
+		i -= len(m.KeyspaceGroup)
+		copy(dAtA[i:], m.KeyspaceGroup)
+		i = encodeVarintDiscovery(dAtA, i, uint64(len(m.KeyspaceGroup)))
+		i--
+		dAtA[i] = 0x12
+	}
 	if len(m.ServiceName) > 0 {
 		i -= len(m.ServiceName)
 		copy(dAtA[i:], m.ServiceName)
@@ -1673,67 +1409,6 @@ func (m *GetAllServiceEndpointsResponse) MarshalToSizedBuffer(dAtA []byte) (int,
 	return len(dAtA) - i, nil
 }
 
-func (m *WatchRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *WatchRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *WatchRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if len(m.ServiceName) > 0 {
-		i -= len(m.ServiceName)
-		copy(dAtA[i:], m.ServiceName)
-		i = encodeVarintDiscovery(dAtA, i, uint64(len(m.ServiceName)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *WatchResponse) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *WatchResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *WatchResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return len(dAtA) - i, nil
-}
-
 func (m *Error) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1768,6 +1443,45 @@ func (m *Error) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *KeyspaceGroup) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *KeyspaceGroup) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *KeyspaceGroup) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Weight != 0 {
+		i = encodeVarintDiscovery(dAtA, i, uint64(m.Weight))
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintDiscovery(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintDiscovery(dAtA []byte, offset int, v uint64) int {
 	offset -= sovDiscovery(v)
 	base := offset
@@ -1793,6 +1507,15 @@ func (m *RegisterRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovDiscovery(uint64(l))
 	}
+	if m.Ttl != 0 {
+		n += 1 + sovDiscovery(uint64(m.Ttl))
+	}
+	if len(m.KeyspaceGroups) > 0 {
+		for _, e := range m.KeyspaceGroups {
+			l = e.Size()
+			n += 1 + l + sovDiscovery(uint64(l))
+		}
+	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -1808,6 +1531,9 @@ func (m *RegisterResponse) Size() (n int) {
 	if m.Error != nil {
 		l = m.Error.Size()
 		n += 1 + l + sovDiscovery(uint64(l))
+	}
+	if m.LeaseId != 0 {
+		n += 1 + sovDiscovery(uint64(m.LeaseId))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1844,48 +1570,6 @@ func (m *DeregisterResponse) Size() (n int) {
 	if m.Error != nil {
 		l = m.Error.Size()
 		n += 1 + l + sovDiscovery(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *CampaignRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.ServiceName)
-	if l > 0 {
-		n += 1 + l + sovDiscovery(uint64(l))
-	}
-	l = len(m.Endpoint)
-	if l > 0 {
-		n += 1 + l + sovDiscovery(uint64(l))
-	}
-	if m.Ttl != 0 {
-		n += 1 + sovDiscovery(uint64(m.Ttl))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *CampaignResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.Error != nil {
-		l = m.Error.Size()
-		n += 1 + l + sovDiscovery(uint64(l))
-	}
-	if m.LeaseId != 0 {
-		n += 1 + sovDiscovery(uint64(m.LeaseId))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1940,6 +1624,10 @@ func (m *GetServiceEndpointRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovDiscovery(uint64(l))
 	}
+	l = len(m.KeyspaceGroup)
+	if l > 0 {
+		n += 1 + l + sovDiscovery(uint64(l))
+	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -1976,6 +1664,10 @@ func (m *GetAllServiceEndpointsRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovDiscovery(uint64(l))
 	}
+	l = len(m.KeyspaceGroup)
+	if l > 0 {
+		n += 1 + l + sovDiscovery(uint64(l))
+	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -2004,34 +1696,6 @@ func (m *GetAllServiceEndpointsResponse) Size() (n int) {
 	return n
 }
 
-func (m *WatchRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.ServiceName)
-	if l > 0 {
-		n += 1 + l + sovDiscovery(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *WatchResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
 func (m *Error) Size() (n int) {
 	if m == nil {
 		return 0
@@ -2041,6 +1705,25 @@ func (m *Error) Size() (n int) {
 	l = len(m.Message)
 	if l > 0 {
 		n += 1 + l + sovDiscovery(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *KeyspaceGroup) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovDiscovery(uint64(l))
+	}
+	if m.Weight != 0 {
+		n += 1 + sovDiscovery(uint64(m.Weight))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -2147,6 +1830,59 @@ func (m *RegisterRequest) Unmarshal(dAtA []byte) error {
 			}
 			m.Endpoint = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Ttl", wireType)
+			}
+			m.Ttl = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDiscovery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Ttl |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field KeyspaceGroups", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDiscovery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.KeyspaceGroups = append(m.KeyspaceGroups, &KeyspaceGroup{})
+			if err := m.KeyspaceGroups[len(m.KeyspaceGroups)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipDiscovery(dAtA[iNdEx:])
@@ -2234,6 +1970,25 @@ func (m *RegisterResponse) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LeaseId", wireType)
+			}
+			m.LeaseId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDiscovery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.LeaseId |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipDiscovery(dAtA[iNdEx:])
@@ -2436,246 +2191,6 @@ func (m *DeregisterResponse) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipDiscovery(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthDiscovery
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *CampaignRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowDiscovery
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: CampaignRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: CampaignRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ServiceName", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowDiscovery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthDiscovery
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthDiscovery
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.ServiceName = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Endpoint", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowDiscovery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthDiscovery
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthDiscovery
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Endpoint = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 3:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Ttl", wireType)
-			}
-			m.Ttl = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowDiscovery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Ttl |= int64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		default:
-			iNdEx = preIndex
-			skippy, err := skipDiscovery(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthDiscovery
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *CampaignResponse) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowDiscovery
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: CampaignResponse: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: CampaignResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Error", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowDiscovery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthDiscovery
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthDiscovery
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Error == nil {
-				m.Error = &Error{}
-			}
-			if err := m.Error.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 2:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field LeaseId", wireType)
-			}
-			m.LeaseId = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowDiscovery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.LeaseId |= int64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipDiscovery(dAtA[iNdEx:])
@@ -2954,6 +2469,38 @@ func (m *GetServiceEndpointRequest) Unmarshal(dAtA []byte) error {
 			}
 			m.ServiceName = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field KeyspaceGroup", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDiscovery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.KeyspaceGroup = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipDiscovery(dAtA[iNdEx:])
@@ -3156,6 +2703,38 @@ func (m *GetAllServiceEndpointsRequest) Unmarshal(dAtA []byte) error {
 			}
 			m.ServiceName = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field KeyspaceGroup", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDiscovery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.KeyspaceGroup = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipDiscovery(dAtA[iNdEx:])
@@ -3297,140 +2876,6 @@ func (m *GetAllServiceEndpointsResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *WatchRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowDiscovery
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: WatchRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: WatchRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field ServiceName", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowDiscovery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthDiscovery
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthDiscovery
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.ServiceName = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipDiscovery(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthDiscovery
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *WatchResponse) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowDiscovery
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: WatchResponse: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: WatchResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		default:
-			iNdEx = preIndex
-			skippy, err := skipDiscovery(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthDiscovery
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
 func (m *Error) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -3492,6 +2937,108 @@ func (m *Error) Unmarshal(dAtA []byte) error {
 			}
 			m.Message = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDiscovery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *KeyspaceGroup) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDiscovery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: KeyspaceGroup: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: KeyspaceGroup: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDiscovery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDiscovery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Weight", wireType)
+			}
+			m.Weight = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDiscovery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Weight |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipDiscovery(dAtA[iNdEx:])
