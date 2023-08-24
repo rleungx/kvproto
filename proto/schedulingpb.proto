@@ -16,6 +16,7 @@ option java_package = "org.tikv.kvproto";
 service Scheduling {
     rpc PutStore(pdpb.PutStoreRequest) returns (pdpb.PutStoreResponse) {}
     rpc StoreHeartbeat(pdpb.StoreHeartbeatRequest) returns (pdpb.StoreHeartbeatResponse) {}
+    rpc RegionHeartbeat(stream pdpb.RegionHeartbeatRequest) returns (stream pdpb.RegionHeartbeatResponse) {}
 }
 
 message RequestHeader {

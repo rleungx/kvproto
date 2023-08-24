@@ -18813,6 +18813,13 @@
                 "name": "StoreHeartbeat",
                 "in_type": "pdpb.StoreHeartbeatRequest",
                 "out_type": "pdpb.StoreHeartbeatResponse"
+              },
+              {
+                "name": "RegionHeartbeat",
+                "in_type": "pdpb.RegionHeartbeatRequest",
+                "out_type": "pdpb.RegionHeartbeatResponse",
+                "in_streamed": true,
+                "out_streamed": true
               }
             ]
           }
