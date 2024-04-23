@@ -467,6 +467,7 @@ message RegionHeartbeatRequest {
     // (Serverless) Approximate size of key-value pairs for billing.
     // It's counted on size of user key & value (excluding metadata fields), before compression, and latest versions only.
     uint64 approximate_kv_size = 18;
+    bool update_meta = 19;
 }
 
 message ChangePeer {

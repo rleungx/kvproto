@@ -13977,6 +13977,11 @@
                 "id": 18,
                 "name": "approximate_kv_size",
                 "type": "uint64"
+              },
+              {
+                "id": 19,
+                "name": "update_meta",
+                "type": "bool"
               }
             ],
             "reserved_ids": [
