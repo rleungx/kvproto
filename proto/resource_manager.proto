@@ -26,8 +26,13 @@ service ResourceManager {
   rpc AcquireTokenBuckets(stream TokenBucketsRequest) returns (stream TokenBucketsResponse) {}
 }
 
+message Keyspace {
+  uint32 id = 1;
+}
+
 message ListResourceGroupsRequest{
   bool with_ru_stats = 1;
+  Keyspace keyspace = 2;
 }
 
 message ListResourceGroupsResponse{
@@ -38,6 +43,7 @@ message ListResourceGroupsResponse{
 message GetResourceGroupRequest {
   string resource_group_name = 1;
   bool with_ru_stats = 2;
+  Keyspace keyspace = 3;
 }
 
 message GetResourceGroupResponse{
@@ -47,6 +53,7 @@ message GetResourceGroupResponse{
 
 message DeleteResourceGroupRequest {
   string resource_group_name = 1;
+  Keyspace keyspace = 2;
 }
 
 message DeleteResourceGroupResponse{
@@ -89,6 +96,7 @@ message TokenBucketRequest {
     // label background request.
     bool is_background = 5;
     bool is_tiflash = 6;
+    Keyspace keyspace = 7;
 }
 
 message TokenBucketsResponse {
@@ -102,6 +110,7 @@ message TokenBucketResponse {
   repeated GrantedRUTokenBucket granted_r_u_tokens = 2;
   // Raw mode
   repeated GrantedRawResourceTokenBucket granted_resource_tokens = 3;
+  Keyspace keyspace = 4;
 }
 
 message GrantedRUTokenBucket {
@@ -169,6 +178,7 @@ message ResourceGroup {
   BackgroundSettings background_settings = 7;
   // RU consumption statistics.
   Consumption RUStats = 8;
+  Keyspace keyspace = 9;
 }
 
 message GroupRequestUnitSettings {

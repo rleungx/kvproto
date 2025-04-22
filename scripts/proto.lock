@@ -20201,12 +20201,27 @@
         ],
         "messages": [
           {
+            "name": "Keyspace",
+            "fields": [
+              {
+                "id": 1,
+                "name": "id",
+                "type": "uint32"
+              }
+            ]
+          },
+          {
             "name": "ListResourceGroupsRequest",
             "fields": [
               {
                 "id": 1,
                 "name": "with_ru_stats",
                 "type": "bool"
+              },
+              {
+                "id": 2,
+                "name": "keyspace",
+                "type": "Keyspace"
               }
             ]
           },
@@ -20238,6 +20253,11 @@
                 "id": 2,
                 "name": "with_ru_stats",
                 "type": "bool"
+              },
+              {
+                "id": 3,
+                "name": "keyspace",
+                "type": "Keyspace"
               }
             ]
           },
@@ -20263,6 +20283,11 @@
                 "id": 1,
                 "name": "resource_group_name",
                 "type": "string"
+              },
+              {
+                "id": 2,
+                "name": "keyspace",
+                "type": "Keyspace"
               }
             ]
           },
@@ -20361,6 +20386,11 @@
                 "id": 6,
                 "name": "is_tiflash",
                 "type": "bool"
+              },
+              {
+                "id": 7,
+                "name": "keyspace",
+                "type": "Keyspace"
               }
             ],
             "messages": [
@@ -20423,6 +20453,11 @@
                 "name": "granted_resource_tokens",
                 "type": "GrantedRawResourceTokenBucket",
                 "is_repeated": true
+              },
+              {
+                "id": 4,
+                "name": "keyspace",
+                "type": "Keyspace"
               }
             ]
           },
@@ -20583,6 +20618,11 @@
                 "id": 8,
                 "name": "RUStats",
                 "type": "Consumption"
+              },
+              {
+                "id": 9,
+                "name": "keyspace",
+                "type": "Keyspace"
               }
             ]
           },
